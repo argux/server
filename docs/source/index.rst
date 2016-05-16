@@ -18,6 +18,9 @@ Contents:
    rest/index
    cli
 
+   development/index
+
+
 Indices and tables
 ==================
 
