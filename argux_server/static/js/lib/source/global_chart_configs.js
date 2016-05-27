@@ -43,7 +43,9 @@ var history_chart_config = {
                     beginAtZero: true,
                     suggestedMin: 0.0,
                     suggestedMax: 1.0,
-                    callback: function(value) { return value }
+                    callback: function(value) {
+                        return ''+Math.round(value*10)/10;
+                    }
                 },
                 scaleLabel: {
                     show: true
