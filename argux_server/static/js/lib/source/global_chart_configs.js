@@ -42,7 +42,8 @@ var history_chart_config = {
                 ticks: {
                     beginAtZero: true,
                     suggestedMin: 0.0,
-                    suggestedMax: 1.0
+                    suggestedMax: 1.0,
+                    callback: function(value) { return value }
                 },
                 scaleLabel: {
                     show: true

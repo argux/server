@@ -89,7 +89,8 @@ var history_chart_config = {
                 ticks: {
                     beginAtZero: true,
                     suggestedMin: 0.0,
-                    suggestedMax: 1.0
+                    suggestedMax: 1.0,
+                    callback: function(value) { return value }
                 },
                 scaleLabel: {
                     show: true
@@ -450,6 +451,7 @@ function update_chart (obj, chart, config) {
                     data: [{'x': '0', 'y': '1'}]
                 };
                 var datapoints = [];
+                var item_unit_prefix = '';
                 if(item.color !== undefined && item.color !== null){
                     color = item.color;
                 } else {
@@ -505,12 +507,17 @@ function update_chart (obj, chart, config) {
                 dataset.data = datapoints;
                 config.data.datasets.push(dataset);
 
-                var tickSymbol = item.unit.symbol;
-                config.options.scales.yAxes.ticks = {};
-                config.options.scales.yAxes.ticks.callback =
-                    function(tickValue) {
-                        alert(tickSymbol);
-                        return tickValue+'>'+tickSymbol;
+                var tickSymbol = '';
+                if (item.unit) {
+                    tickSymbol = item.unit.symbol;
+                }
+                config.options.scales.yAxes[0].ticks.callback =
+                    function(value) {
+                        if(item_unit_prefix !== ''){
+                            return ''+Math.round(value*10)/10+' '+item_unit_prefix+tickSymbol;
+                        } else {
+                            return ''+Math.round(value*10)/10;
+                        }
                     };
 
             });
