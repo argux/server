@@ -7,10 +7,6 @@ var palette = [
     "#0000ff",
 ];
 
-var UnitScale = Chart.Scale.extend({
-
-});
-
 var history_chart_config = {
     type: 'line',
     data: {
@@ -46,14 +42,7 @@ var history_chart_config = {
                 ticks: {
                     beginAtZero: true,
                     suggestedMin: 0.0,
-                    suggestedMax: 1.0,
-                    callback: function(value) {
-                        if(unit.symbol){
-                            return ''+Math.round(value*10)/10+' '+item_unit_prefix+unit.symbol;
-                        } else {
-                            return ''+Math.round(value*10)/10;
-                        }
-                    }
+                    suggestedMax: 1.0
                 },
                 scaleLabel: {
                     show: true
@@ -125,5 +114,3 @@ function get_palette_color(counter) {
 
     return [color, counter];
 }
-
-Chart.scaleService.registerScaleType('unitScale', UnitScale, defaultConfigObject);

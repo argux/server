@@ -74,8 +74,15 @@ function update_chart (obj, chart, config) {
                 });
 
                 dataset.data = datapoints;
+                config.data.datasets.push(dataset);
 
-                config.data.datasets.push(dataset)
+                var tickSymbol = item.unit.symbol;
+                config.options.scales.yAxes.ticks = {};
+                config.options.scales.yAxes.ticks.callback =
+                    function(tickValue) {
+                        alert(tickSymbol);
+                        return tickValue+'>'+tickSymbol;
+                    };
 
             });
             chart.update();

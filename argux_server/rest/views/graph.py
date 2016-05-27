@@ -288,6 +288,11 @@ class RestGraphViews(RestView):
 
             old_value = value
 
+        # Make sure we do not return None
+        if max_value is None:
+            max_value = 0
+            min_value = 0
+
         return (
             {
                 'avg': values,
