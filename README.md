@@ -3,6 +3,7 @@
 [![Code Climate](https://codeclimate.com/github/argux/server/badges/gpa.svg)](https://codeclimate.com/github/argux/server)
 [![Code Health](https://landscape.io/github/argux/server/master/landscape.svg?style=flat)](https://landscape.io/github/argux/server/master)
 [![Documentation Status](https://readthedocs.org/projects/argux-server/badge/?version=latest)](http://argux-server.readthedocs.org/en/latest/?badge=latest)
+[![Join the chat at https://gitter.im/argux/server](https://badges.gitter.im/argux/server.svg)](https://gitter.im/argux/server?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 ## Install Argux Server ##
 
