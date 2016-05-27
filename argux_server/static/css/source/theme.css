@@ -88,3 +88,7 @@ h1 > a {
 .nav-pills {
     margin-bottom: 10px;
 }
+
+.modal-xl > .modal-content {
+    width: 90%;
+}

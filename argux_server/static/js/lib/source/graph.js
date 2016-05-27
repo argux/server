@@ -105,6 +105,23 @@ function update_chart (obj, chart, config) {
 }
 
 $(function() {
+    $('.btn-graph-full').click(function() {
+        $('#graph-full-modal').modal('show');
+        var graph_id = $(this).data('graphid');
+        var obj  = $('#graph-full-chart-body');
+        var canvas = $('<canvas/>');
+        obj.empty();
+        obj.append(canvas);
+        obj.data('graphid', graph_id);
+        var ctx = canvas[0].getContext("2d");
+
+        // Create a copy of the history_chart_config so we can use
+        // a different configuration for each chart.
+        var config = $.extend(true, {}, history_chart_config);
+        var chart = new Chart(ctx, config);
+
+        update_chart (obj, chart, config);
+    });
     $('.argux-chart').each(function (index) {
         var obj = $(this);
 

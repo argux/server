@@ -6,7 +6,9 @@
                 <span class="glyphicon glyphicon-pencil"></span>
             </button>
             <button type="button"
-                    class="btn btn-default btn-xs">
+                    class="btn btn-default btn-xs btn-graph-full"
+                tal:attributes="data-graphid graph_id"
+            >
                 <span class="glyphicon glyphicon-resize-full"></span>
             </button>
         </div>

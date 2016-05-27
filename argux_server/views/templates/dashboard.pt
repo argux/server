@@ -51,6 +51,7 @@
     <div metal:use-macro="load: graph.pt"
          tal:define='graph_id 9'></div>
     </div>
+    <div metal:use-macro="load: graph_full.pt"></div>
 </div>
 
 </html>
