@@ -64,6 +64,7 @@ curl -X POST \
     $SERVER/$REST_URI/$HOST_URI/$HOST_NAME/item/cpu.load.avg\\\[15\\\]
 
 
+
 # Store item with name and description
 curl -X POST \
     -b $COOKIE_FILE \

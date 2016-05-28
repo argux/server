@@ -1,4 +1,18 @@
-<div class="">
-    <div data-item='localhost:cpu.load.avg[1]'>
+<div class="panel panel-default argux-chart" tal:attributes="data-graphid graph_id">
+    <div class="panel-heading heading"><span class="title">[ Graph-Title ]</span>
+        <div class="pull-right">
+            <button type="button"
+                    class="btn btn-default btn-xs">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+            <button type="button"
+                    class="btn btn-default btn-xs btn-graph-full"
+                tal:attributes="data-graphid graph_id"
+            >
+                <span class="glyphicon glyphicon-resize-full"></span>
+            </button>
+        </div>
+    </div>
+    <div class="panel-body chart-body">
     </div>
 </div>

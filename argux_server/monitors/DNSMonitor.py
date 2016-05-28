@@ -76,7 +76,7 @@ class DNSMonitor(AbstractMonitor):
                             except Exception as err:
                                 print(">> "+str(err))
                 except Exception as err:
-                    print(">< "+str(err))
+                    print("DNS Monitor Error: "+str(err))
 
             try:
                 time.sleep(15)

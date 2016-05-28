@@ -1,8 +1,14 @@
 import unittest
+import os
+import configparser
 
 from pyramid import testing
 from pyramid import request
 from pyramid.registry import Registry
+
+from sqlalchemy import (
+    create_engine
+)
 
 from sqlalchemy.orm import (
     scoped_session,
@@ -11,57 +17,24 @@ from sqlalchemy.orm import (
 
 from zope.sqlalchemy import ZopeTransactionExtension
 
+import transaction
+from sqlalchemy.orm.session import Session
+
 from argux_server.rest.views.auth import RestAuthenticationViews
 
-def _initTestingDB():
-    from sqlalchemy import create_engine
-    import transaction
-    from argux_server.models import (
-        DB_SESSION,
-        BASE,
-        ItemType,
-        TriggerSeverity,
-        HashMethod
-        )
-    from argux_server.dao.UserDAO import UserDAO
+from argux_server.scripts import initializedb
 
-    engine = create_engine('sqlite://')
-    BASE.metadata.create_all(engine)
-    session = scoped_session(sessionmaker(extension=ZopeTransactionExtension()))
-    session.configure(bind=engine)
-    with transaction.manager:
-        model = ItemType(name='int', description='Integer field')
-        session.add(model)
-        model = ItemType(name='float', description='Floating point')
-        session.add(model)
-        model = ItemType(name='text', description='Text')
-        session.add(model)
-
-        model = TriggerSeverity(level=1, key="info", name="Information")
-        session.add(model)
-        model = TriggerSeverity(level=2, key="warn", name="Warning")
-        session.add(model)
-        model = TriggerSeverity(level=3, key="crit", name="Critical")
-        session.add(model)
-
-        model = HashMethod(name='bcrypt', allowed=True)
-        session.add(model)
-
-        user_dao = UserDAO(session)
-        user_dao.create_user('', 'admin', 'admin', hash_method='bcrypt')
-        
-    return session 
 
 class RestAuthViewsTests(unittest.TestCase):
 
     def setUp(self):
-        _initTestingDB()
+        config_file = os.environ['ARGUX_CONFIG']
+        config = configparser.ConfigParser()
+        config.read(config_file)
+
+        settings = config['app:main']
+
         from argux_server import main
-        settings = {
-            'sqlalchemy.url': 'sqlite://',
-            'session.secure_cookie': 'false',
-            'rest.pretty_json': 'true'
-        }
         app = main({}, **settings)
         from webtest import TestApp
         self.testapp = TestApp(app)

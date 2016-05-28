@@ -1,4 +1,11 @@
 
+var unit = {};
+
+var palette = [
+    "#ff0000",
+    "#00ff00",
+    "#0000ff",
+];
 
 var history_chart_config = {
     type: 'line',
@@ -37,11 +44,7 @@ var history_chart_config = {
                     suggestedMin: 0.0,
                     suggestedMax: 1.0,
                     callback: function(value) {
-                        if(unit.symbol){
-                            return ''+Math.round(value*10)/10+' '+item_unit_prefix+unit.symbol;
-                        } else {
-                            return ''+Math.round(value*10)/10;
-                        }
+                        return ''+Math.round(value*10)/10;
                     }
                 },
                 scaleLabel: {
@@ -91,3 +94,26 @@ var host_overview_chart_config = {
         }
     }
 };
+
+function hex2rgba(color, opacity) {
+    color = color.replace('#','');
+
+    r = parseInt(color.substring(0,2), 16);
+    g = parseInt(color.substring(2,4), 16);
+    b = parseInt(color.substring(4,6), 16);
+
+    return 'rgba('+r+','+g+','+b+','+opacity+')';
+}
+
+function get_palette_color(counter) {
+
+    if(counter >= palette.length) {
+        counter = 0;
+    }
+
+    color = palette[counter];
+
+    counter++;
+
+    return [color, counter];
+}

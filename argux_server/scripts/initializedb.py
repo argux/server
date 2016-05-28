@@ -79,15 +79,7 @@ def initialise_units():
     model = Unit(name='Bits', symbol='b', metric_prefix=prefix)
     DB_SESSION.add(model)
 
-
-def main():
-    """Main function for Initialisation script."""
-    if len(sys.argv) < 2:
-        usage(sys.argv)
-    config_uri = sys.argv[1]
-    options = parse_vars(sys.argv[2:])
-    setup_logging(config_uri)
-    settings = get_appsettings(config_uri, options=options)
+def initdb(settings):
     engine = engine_from_config(settings, 'sqlalchemy.')
     DB_SESSION.configure(bind=engine)
     BASE.metadata.create_all(engine)
@@ -100,3 +92,15 @@ def main():
 
         user_dao = UserDAO(DB_SESSION)
         user_dao.create_user('', 'admin', 'admin', hash_method='bcrypt')
+
+
+def main():
+    """Main function for Initialisation script."""
+    if len(sys.argv) < 2:
+        usage(sys.argv)
+    config_uri = sys.argv[1]
+    options = parse_vars(sys.argv[2:])
+    setup_logging(config_uri)
+    settings = get_appsettings(config_uri, options=options)
+    initdb(settings)
+

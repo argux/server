@@ -8,7 +8,7 @@ from tests.mock import dao
 
 from argux_server.rest.views.item import RestItemViews
 
-class RestValuesViewsTests(unittest.TestCase):
+class RestGraphViewsTests(unittest.TestCase):
     def setUp(self):
         self.config = testing.setUp()
 

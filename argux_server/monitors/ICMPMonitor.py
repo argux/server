@@ -95,7 +95,7 @@ class ICMPMonitor(AbstractMonitor):
         ICMP checks are executed at 60second intervals.
         """
 
-        time.sleep(60)
+        time.sleep(20)
         self.client.login()
 
         # Thread body.
@@ -110,7 +110,7 @@ class ICMPMonitor(AbstractMonitor):
                         except Exception as e:
                             print(str(e))
             except Exception as e:
-                print(str(e))
+                print("ICMP Monitor Error: "+str(e))
 
             try:
                 time.sleep(60)

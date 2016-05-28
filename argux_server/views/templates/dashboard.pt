@@ -9,7 +9,49 @@
     </script>
 </div>
 
+<div metal:fill-slot="custom-js">
+    <script src="${request.static_url('argux_server:static/js/ext/color.min.js')}"></script>
+    <script src="${request.static_url('argux_server:static/js/ext/Chart.min.js')}"></script>
+</div>
+
 <div metal:fill-slot="content">
+    <div class="col-sm-6 col-md-4">
+    <div metal:use-macro="load: graph.pt"
+         tal:define='graph_id 1'></div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+    <div metal:use-macro="load: graph.pt"
+         tal:define='graph_id 2'></div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+    <div metal:use-macro="load: graph.pt"
+         tal:define='graph_id 3'></div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+    <div metal:use-macro="load: graph.pt"
+         tal:define='graph_id 4'></div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+    <div metal:use-macro="load: graph.pt"
+         tal:define='graph_id 5'></div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+    <div metal:use-macro="load: graph.pt"
+         tal:define='graph_id 6'></div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+    <div metal:use-macro="load: graph.pt"
+         tal:define='graph_id 7'></div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+    <div metal:use-macro="load: graph.pt"
+         tal:define='graph_id 8'></div>
+    </div>
+    <div class="col-sm-6 col-md-4">
+    <div metal:use-macro="load: graph.pt"
+         tal:define='graph_id 9'></div>
+    </div>
+    <div metal:use-macro="load: graph_full.pt"></div>
 </div>
 
 </html>

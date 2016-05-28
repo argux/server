@@ -1,5 +1,5 @@
-
 SERVER=http://localhost:7000
+ARGUX_BASE=/
 REST_URI=rest/1.0
 HOST_URI=host
 
@@ -29,29 +29,10 @@ curl -X POST \
 
 CSRF_TOKEN=`cat $HEADER_FILE | grep -i X-CSRF-TOKEN | awk -F : '{ print $2 }'`
 
-for i in {1..5}
-do
+echo $SERVER/$REST_URI/graph/6
 
-cmd="date -v-"$i"M +%FT%TZ"
-
-for a in 1 5 15
-do
-    TS=`$cmd`
-    RND=$(((RANDOM%100)))
-
-    VAL=5.$RND
-
-    curl -X POST \
-        -b $COOKIE_FILE \
-        -H "Content-Type: application/json" \
-        -H "X-CSRF-Token: $CSRF_TOKEN" \
-        -d "{
-            \"value\":\"$VAL\",
-            \"timestamp\":\"$TS\"
-            }" \
-        $SERVER/$REST_URI/$HOST_URI/$HOST_NAME/item/cpu.load.avg\\\[$a\\\]/values
-done
-done
-
-unlink $COOKIE_FILE
-unlink $HEADER_FILE
+curl -X GET \
+    -b $COOKIE_FILE \
+    -H "Content-Type: application/json" \
+    -H "X-CSRF-Token: $CSRF_TOKEN" \
+    $SERVER/$REST_URI/graph/6?get_values=true

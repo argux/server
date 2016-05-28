@@ -154,6 +154,11 @@ def main(global_config, **settings):
     config.add_route('rest_note_1',
                      '/rest/1.0/note')
 
+    config.add_route('rest_graph_1',
+                     '/rest/1.0/graph/{id}')
+    config.add_route('rest_graphs_1',
+                     '/rest/1.0/graph')
+
     config.add_route('rest_itemtype_details_1',
                      '/rest/1.0/itemtype/{itemtype}/detail')
     config.add_route('rest_itemtype_detail_1',
