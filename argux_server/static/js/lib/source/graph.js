@@ -1,4 +1,4 @@
-function update_chart (obj, chart, config) {
+function update_chart (obj, chart, config, repeat) {
     var chart_id = obj.data('graphid');
 
     rest.call({
@@ -94,12 +94,14 @@ function update_chart (obj, chart, config) {
             chart.update();
         },
         complete: function() {
-            setTimeout(
-                update_chart,
-                10000,
-                obj,
-                chart,
-                config);
+            if (repeat === true) {
+                setTimeout(
+                    update_chart,
+                    10000,
+                    obj,
+                    chart,
+                    config);
+            }
         }
     });
 }
@@ -120,7 +122,7 @@ $(function() {
         var config = $.extend(true, {}, history_chart_config);
         var chart = new Chart(ctx, config);
 
-        update_chart (obj, chart, config);
+        update_chart (obj, chart, config, false);
     });
     $('.argux-chart').each(function (index) {
         var obj = $(this);
@@ -135,6 +137,6 @@ $(function() {
         var config = $.extend(true, {}, history_chart_config);
         var chart = new Chart(ctx, config);
 
-        update_chart (obj, chart, config);
+        update_chart (obj, chart, config, true);
     });
 });
