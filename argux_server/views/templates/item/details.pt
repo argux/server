@@ -3,5 +3,6 @@
          class="col-md-6">
         <div metal:use-macro="load: ../graph.pt"
              tal:define='graph_id argux_item.default_graph_id'></div>
+        <div metal:use-macro="load: ../graph_full.pt"></div>
     </div>
 </div>

@@ -13,17 +13,7 @@
     </script>
 </div>
 
-<div metal:fill-slot="custom-js">
-    <script src="${request.static_url('argux_server:static/js/ext/color.min.js')}"></script>
-    <script src="${request.static_url('argux_server:static/js/ext/Chart.min.js')}"></script>
-    <script src="${request.static_url('argux_server:static/js/ext/bootstrap-datetimepicker.min.js')}"></script>
-    <script src="${request.static_url('argux_server:static/argux.js')}"></script>
-    <script src="${request.static_url('argux_server:static/item.js')}"></script>
-</div>
-
 <div metal:fill-slot="custom-css">
-    <link href="${request.static_url('argux_server:static/css/ext/bootstrap-datetimepicker.min.css')}" rel="stylesheet">
-    <link href="${request.static_url('argux_server:static/css/argux.css')}" rel="stylesheet">
 </div>
 
 <div metal:fill-slot="content">
