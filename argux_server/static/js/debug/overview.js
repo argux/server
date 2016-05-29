@@ -11,7 +11,6 @@ $(function() {
                 '<strong>Problem:</strong> ' + xhr.responseJSON.message
             );
         } else {
-            alert('a');
             $('#create-host-modal').modal('hide');
             host.get_host_overview({'complete_callback': get_host_complete_callback});
         }

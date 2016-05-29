@@ -65,7 +65,8 @@
     <div metal:define-slot="all-js">
     <script src="${request.static_url('argux_server:static/js/ext/jquery.min.js')}"></script>
     <script src="${request.static_url('argux_server:static/js/ext/bootstrap.min.js')}"></script>
-    <script src="${request.static_url('argux_server:static/js/ext/Chart.bundle.min.js')}"></script>
+    <script src="${request.static_url('argux_server:static/js/ext/moment.min.js')}"></script>
+    <script src="${request.static_url('argux_server:static/js/ext/Chart.min.js')}"></script>
     <script src="${request.static_url('argux_server:static/js/lib/argux.js')}"></script>
     <div metal:define-slot="custom-js"></div>
     </div>
