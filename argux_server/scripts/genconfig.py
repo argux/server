@@ -48,14 +48,14 @@ def main():
         config['app:main']['rest.pretty_json'] = 'true'
         config['app:main']['pyramid.reload_templates'] = 'true'
         config['app:main']['pyramid.includes'] = \
-            'pyramid_debugtoolbar pyramid_tm'
+            'pyramid_debugtoolbar'
     else:
         config['app:main']['rest.pretty_json'] = 'false'
         config['app:main']['pyramid.reload_templates'] = 'false'
 
     wsgi = cli.option_question(
         'WSGI Server?',
-        ['pserve', 'uwsgi'],
+        ['pserve (waitress)', 'uwsgi'],
         default='pserve')
     if wsgi == 'pserve':
         config['server:main'] = {}
