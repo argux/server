@@ -6,6 +6,7 @@ from sqlalchemy import (
     Integer,
     Text,
     ForeignKey,
+    DateTime,
     Boolean
 )
 
@@ -34,6 +35,7 @@ class Monitor(BASE):
     monitor_type_id = Column(Integer, ForeignKey('monitor_type.id'), nullable=False)
     monitor_type = relationship('MonitorType', backref='monitors')
     active = Column(Boolean, nullable=False, default=True)
+    last_run = Column(DateTime, nullable=True, default=None)
 
 
 Index(
