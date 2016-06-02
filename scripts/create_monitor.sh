@@ -52,6 +52,7 @@ curl -X POST \
     -H "Content-Type: application/json" \
     -H "X-CSRF-Token: $CSRF_TOKEN" \
     -d "{
+        \"active\": false,
         \"options\":{
             \"interval\":\"15s\"
             }
@@ -63,6 +64,7 @@ curl -X POST \
     -H "Content-Type: application/json" \
     -H "X-CSRF-Token: $CSRF_TOKEN" \
     -d "{
+        \"active\": false,
         \"options\":{
             \"interval\":\"15s\"
             }
