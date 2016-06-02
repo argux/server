@@ -44,7 +44,7 @@ class User(BASE):
     Store user (and it's credentials) in the database.
     """
 
-    __tablename__ = 'users'
+    __tablename__ = 'user'
     id = Column(Integer, primary_key=True)  # pylint: disable=invalid-name
     name = Column(Text, nullable=False)
     passwd_hash = Column(Binary, default=None, nullable=True)

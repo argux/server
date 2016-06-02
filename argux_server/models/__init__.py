@@ -25,6 +25,8 @@ from .TriggerSeverity import TriggerSeverity
 from .Note import Note
 
 from .User import User, HashMethod
+from .UserGroup import UserGroup
+from .UserGroupMember import UserGroupMember
 
 from .HistoryGraph import HistoryGraph, HistoryGraphItem
 
