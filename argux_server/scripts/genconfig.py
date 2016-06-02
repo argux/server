@@ -47,8 +47,12 @@ def main():
     if enable_debug:
         config['app:main']['rest.pretty_json'] = 'true'
         config['app:main']['pyramid.reload_templates'] = 'true'
-        config['app:main']['pyramid.includes'] = \
-            'pyramid_debugtoolbar'
+        enable_pyramid_debug = cli.yesno_question(
+            'Enable Pyramid debug-toolbar?',
+            default='n')
+        if enable_pyramid_debug:
+            config['app:main']['pyramid.includes'] = \
+                'pyramid_debugtoolbar'
     else:
         config['app:main']['rest.pretty_json'] = 'false'
         config['app:main']['pyramid.reload_templates'] = 'false'
