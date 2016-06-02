@@ -35,7 +35,7 @@ class RestGraphViews(RestView):
     @view_config(
         route_name='rest_graph_1',
         request_method='GET',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def graph_1_view_read(self):
@@ -110,7 +110,7 @@ class RestGraphViews(RestView):
     @view_config(
         route_name='rest_graph_1',
         request_method='PATCH',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def graph_1_view_update(self):
@@ -149,7 +149,7 @@ class RestGraphViews(RestView):
     @view_config(
         route_name='rest_graph_1',
         request_method='DELETE',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def graph_1_view_delete(self):
@@ -160,7 +160,7 @@ class RestGraphViews(RestView):
     @view_config(
         route_name='rest_graphs_1',
         request_method='GET',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def graphs_1_view_read(self):
@@ -169,7 +169,7 @@ class RestGraphViews(RestView):
     @view_config(
         route_name='rest_graphs_1',
         request_method='POST',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def graphs_1_view_create(self):

@@ -30,7 +30,7 @@ class RestUserViews(RestView):
     @view_config(
         route_name='rest_admin_user_1',
         request_method='POST',
-        check_csrf=True,
+        require_csrf=True,
         permission='admin'
     )
     def admin_user_1_view_create(self):
@@ -67,7 +67,7 @@ class RestUserViews(RestView):
     @view_config(
         route_name='rest_admin_user_1',
         request_method='GET',
-        check_csrf=True,
+        require_csrf=True,
         permission='admin'
     )
     def admin_user_1_view_read(self):
@@ -76,7 +76,7 @@ class RestUserViews(RestView):
     @view_config(
         route_name='rest_admin_user_1',
         request_method='DELETE',
-        check_csrf=True,
+        require_csrf=True,
         permission='admin'
     )
     def admin_user_1_view_delete(self):
@@ -85,8 +85,18 @@ class RestUserViews(RestView):
     @view_config(
         route_name='rest_admin_users_1',
         request_method='GET',
-        check_csrf=True,
+        require_csrf=True,
         permission='admin'
     )
     def admin_users_1_view_get(self):
-        return {'ok':'ok'}
+        d_users = self.dao.user_dao.get_users()
+
+        users = []
+        for user in d_users:
+            users.append({
+                "name": user.name
+            })
+
+        return {
+            'users':users
+        }

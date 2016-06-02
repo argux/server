@@ -11,7 +11,7 @@ with open(os.path.join(HERE, 'CHANGES.txt')) as f:
     CHANGES = f.read()
 
 REQUIRES = [
-    'pyramid == 1.6.1',
+    'pyramid == 1.7',
     'pyramid_chameleon',
     'pyramid_debugtoolbar',
     'pyramid_tm',

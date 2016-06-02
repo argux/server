@@ -30,7 +30,7 @@ class RestHostViews(RestView):
 
     @view_config(
         route_name='rest_hosts_1',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def hosts_1_view(self):
@@ -55,7 +55,7 @@ class RestHostViews(RestView):
 
     @view_config(
         route_name='rest_host_1',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def host_1_view(self):

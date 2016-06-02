@@ -88,11 +88,10 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="${request.static_url('argux_server:static/js/jquery.min.js')}"></script>
-    <script src="${request.static_url('argux_server:static/js/bootstrap.min.js')}"></script>
-    <script src="${request.static_url('argux_server:static/js/moment.min.js')}"></script>
-    <script src="${request.static_url('argux_server:static/js/color.min.js')}"></script>
-    <script src="${request.static_url('argux_server:static/js/Chart.min.js')}"></script>
-    <script src="${request.static_url('argux_server:static/item.js')}"></script>
+    <script src="${request.static_url('argux_server:static/js/ext/jquery.min.js')}"></script>
+    <script src="${request.static_url('argux_server:static/js/ext/bootstrap.min.js')}"></script>
+    <script src="${request.static_url('argux_server:static/js/ext/moment.min.js')}"></script>
+    <script src="${request.static_url('argux_server:static/js/ext/Chart.min.js')}"></script>
+    <script src="${request.static_url('argux_server:static/js/lib/argux.js')}"></script>
   </body>
 </html>

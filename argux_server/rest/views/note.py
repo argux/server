@@ -25,7 +25,7 @@ class RestNoteViews(RestView):
 
     @view_config(
         route_name='rest_note_1',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def note_1_view(self):

@@ -35,7 +35,7 @@ class RestItemViews(RestView):
     @view_config(
         route_name='rest_item_1',
         request_method='GET',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def item_1_view_read(self):
@@ -65,7 +65,7 @@ class RestItemViews(RestView):
     @view_config(
         route_name='rest_item_1',
         request_method='POST',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def item_1_view_create(self):
@@ -128,7 +128,7 @@ class RestItemViews(RestView):
     @view_config(
         route_name='rest_item_values_1',
         request_method='POST',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def item_values_1_view(self):
@@ -161,7 +161,7 @@ class RestItemViews(RestView):
 
     @view_config(
         route_name='rest_item_details_1',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def item_details_1_view(self):

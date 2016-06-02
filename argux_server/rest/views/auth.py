@@ -63,7 +63,7 @@ class RestAuthenticationViews(RestView):
     @view_config(
         route_name='rest_logout_1',
         request_method='POST',
-        check_csrf=True,
+        require_csrf=True,
         permission='logout'
     )
     def logout_1_view(self):

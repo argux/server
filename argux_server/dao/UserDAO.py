@@ -37,7 +37,10 @@ class UserDAO(BaseDAO):
         self.db_session.add(user)
 
     def get_user(self, name):
-        return None
+        user = self.db_session.query(User)\
+            .filter(User.name == name)\
+            .first()
+        return user
 
     def validate_user(self, name, password):
         user = self.db_session.query(User)\
@@ -50,3 +53,9 @@ class UserDAO(BaseDAO):
                     password,
                     user.passwd_hash) 
         return False
+
+    def get_users(self):
+        users = self.db_session.query(User)\
+            .all()
+
+        return users

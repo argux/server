@@ -25,6 +25,8 @@ from .models import (
 
 from argux_server import dao
 
+from argux_server.auth import user
+
 from argux_server.trigger import TriggerWorker
 
 from argux_server.monitors import (
@@ -41,7 +43,8 @@ class RootFactory(object):
     """
 
     __acl__ = [
-        (Allow, 'g:admin', ALL_PERMISSIONS),
+        (Allow, 'group:admin', ALL_PERMISSIONS),
+        (Allow, 'group:admin', 'admin'),
         (Allow, Authenticated, 'view'),
         (Allow, Everyone, 'koffie')
     ]
@@ -71,7 +74,9 @@ def main(global_config, **settings):
         httponly=True,
         reissue_time=120)
 
-    authentication_policy = SessionAuthenticationPolicy()
+    authentication_policy = SessionAuthenticationPolicy(
+        callback=user.get_principals
+    )
     authorization_policy = ACLAuthorizationPolicy()
 
     config = Configurator(
@@ -85,7 +90,10 @@ def main(global_config, **settings):
     config.include('pyramid_chameleon')
     config.include('pyramid_tm')
 
-    config.add_static_view('static', 'static', cache_max_age=3600)
+    config.add_static_view(
+        'static',
+        'argux_server:static/',
+        cache_max_age=3600)
 
     config.add_route('home',
                      '/')

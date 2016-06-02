@@ -22,7 +22,7 @@ class RestHostAddressViews(RestView):
     @view_config(
         route_name='rest_host_address_1',
         request_method='POST',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def host_address_1_view_create(self):
@@ -48,7 +48,7 @@ class RestHostAddressViews(RestView):
     @view_config(
         route_name='rest_host_addresses_1',
         request_method='GET',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def host_addresses_1_view_get(self):

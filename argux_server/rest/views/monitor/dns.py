@@ -30,7 +30,7 @@ class RestDNSMonitorDomainViews(RestView):
     @view_config(
         route_name='rest_dns_monitor_domain_1',
         request_method='POST',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def dns_domain_1_view_create(self):
@@ -66,7 +66,7 @@ class RestDNSMonitorDomainViews(RestView):
     @view_config(
         route_name='rest_dns_monitor_domain_1',
         request_method='DELETE',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def dns_domain_1_view_delete(self):
@@ -85,7 +85,7 @@ class RestDNSMonitorDomainViews(RestView):
     @view_config(
         route_name='rest_dns_monitor_domains_1',
         request_method='GET',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def dns_domains_1_view_get(self):

@@ -8,6 +8,7 @@ from pyramid.response import Response
 from pyramid.httpexceptions import (
     HTTPOk,
     HTTPNotFound,
+    HTTPForbidden,
     HTTPFound
 )
 

@@ -28,7 +28,7 @@ class RestTriggerViews(RestView):
     @view_config(
         route_name='rest_triggers_1',
         request_method='POST',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def trigger_1_view_create(self):
@@ -89,7 +89,7 @@ class RestTriggerViews(RestView):
     @view_config(
         route_name='rest_triggers_1',
         request_method='GET',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def trigger_1_view_read(self):
@@ -136,7 +136,7 @@ class RestTriggerViews(RestView):
     @view_config(
         route_name='rest_trigger_1',
         request_method='DELETE',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def trigger_1_view_delete(self):
@@ -155,7 +155,7 @@ class RestTriggerViews(RestView):
     @view_config(
         route_name='rest_trigger_validate_1',
         request_method='POST',
-        check_csrf=True,
+        require_csrf=True,
         permission='view'
     )
     def trigger_1_validate(self):
