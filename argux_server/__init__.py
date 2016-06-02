@@ -68,7 +68,9 @@ def main(global_config, **settings):
         'SEECREET',
         cookie_name='argux_server',
         secure=secure_cookie,
-        httponly=True)
+        httponly=True,
+        reissue_time=120)
+
     authentication_policy = SessionAuthenticationPolicy()
     authorization_policy = ACLAuthorizationPolicy()
 
