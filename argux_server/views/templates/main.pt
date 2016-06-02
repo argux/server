@@ -52,6 +52,9 @@
             </div>
             <div id="navbar-footer" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
                 <ul class="nav navbar-nav navbar-right">
+                    <li tal:condition="'group:admin' in request.effective_principals">
+                        <a href="/admin">Admin</a>
+                    </li>
                     <li><a target="_blank" href="https://argux-server.readthedocs.org">Docs</a></li>
                 </ul>
             </div>
