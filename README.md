@@ -32,10 +32,10 @@
 # Dependencies
 Argux depends the following software
 
- - pyramid 1.6.0
+ - pyramid 1.7.0
  - bootstrap 3.3.5 (http://getbootstrap.com)
  - bootstrap-datetimepicker (https://github.com/Eonasdan/bootstrap-datetimepicker)
- - chartjs (http://chartjs.org)
+ - chartjs (http://chartjs.org) 2.1.3
  - bcrypt 2.0.0
 
 ## Development
