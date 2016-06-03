@@ -5,7 +5,7 @@ import requests
 
 from requests.exceptions import (
     ConnectionError,
-    HTTPError,
+    HTTPError
 )
 
 from argux_server.util import (
@@ -58,6 +58,10 @@ class AbstractRESTClient:
                 self.base_url + path,
                 cookies = self.cookies,
                 headers = self.headers)
+
+            # Check if a new cookie is provided.
+            if 'argux_server' in response.cookies:
+                self.cookies['argux_server'] = response.cookies['argux_server']
         except ConnectionError as e:
             raise e
         except HTTPError as e:
@@ -72,6 +76,10 @@ class AbstractRESTClient:
                 data = data,
                 cookies = self.cookies,
                 headers = self.headers)
+
+            # Check if a new cookie is provided.
+            if 'argux_server' in response.cookies:
+                self.cookies['argux_server'] = response.cookies['argux_server']
         except ConnectionError as e:
             raise e
         except HTTPError as e:
@@ -85,6 +93,10 @@ class AbstractRESTClient:
                 self.base_url + path,
                 cookies = self.cookies,
                 headers = self.headers)
+
+            # Check if a new cookie is provided.
+            if 'argux_server' in response.cookies:
+                self.cookies['argux_server'] = response.cookies['argux_server']
         except ConnectionError as e:
             raise e
         except HTTPError as e:
@@ -141,8 +153,6 @@ class RESTClient(AbstractRESTClient):
             raise e
         except HTTPError as e:
             raise e
-        except MaxRetryError as e:
-            return []
 
         try:
             json_response = response.json()

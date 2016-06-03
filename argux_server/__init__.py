@@ -72,7 +72,8 @@ def main(global_config, **settings):
         cookie_name='argux_server',
         secure=secure_cookie,
         httponly=True,
-        reissue_time=120)
+        reissue_time=0,
+        timeout=1800)
 
     authentication_policy = SessionAuthenticationPolicy(
         callback=user.get_principals
