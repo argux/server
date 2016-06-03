@@ -434,6 +434,8 @@ user = {
             error : args.error,
             complete : args.complete
         });
+    },
+    create: function(args) {
     }
 };
 
