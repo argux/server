@@ -20,8 +20,21 @@ $(function() {
 
     }
 
-    function create_user_error() {
-
+    function create_user_error(xhr, ajaxOptions, thrownError) {
+        if (xhr.status != 201) {
+            var sel = $('.modal-form-alerts');
+            sel.empty();
+            sel.append(
+                '<div class="alert alert-danger alert-dismissible">'+
+                '<strong>Problem:</strong> ' + xhr.responseJSON.message
+            );
+        } else {
+            $('#create-user-modal').modal('hide');
+            $('#create-user-modal input').val('');
+            user.get_users({
+                success : get_users_success_callback,
+            });
+        }
     }
 
     if (ARGUX_ACTION === 'admin.users') {
@@ -29,13 +42,18 @@ $(function() {
             success : get_users_success_callback,
             complete : get_users_complete_callback
         });
+        $('#create-user-modal').on('shown.bs.modal', function() {
+            $('#create-user-modal input').val('');
+        });
 
-        $('#user-form').submit(function(event) {
+        $('#new-user-form').submit(function(event) {
             event.preventDefault();
             user.create({
-                username: $('#user-name').val(),
+                username: $('#new-username').val(),
+                password: $('#new-pass').val(),
                 error : create_user_error
             })
         });
+        $('#create-user-modal input').val('');
     }    
 });

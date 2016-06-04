@@ -30,7 +30,7 @@
             <div class="modal-content">
 
                 <!-- Add User -->
-                <form id="user-form" action="" autocomplete="off">
+                <form id="new-user-form" action="" autocomplete="nope" method="POST">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">New User<strong></h4>
@@ -38,10 +38,10 @@
                 <div class="modal-body">
                     <div role="tabpanel" class="tab-pane active" id="edit">
                         <div class="modal-form-alerts"></div>
-                        <label for="user-name">Username</label>
-                        <input type="text" class="form-control" id="user-name"/>
-                        <label for="password">Password</label>
-                        <input type="password" class="form-control" id="password"/>
+                        <label for="new-username">Username</label>
+                        <input type="text" class="form-control username" id="new-username" autocomplete="nope"/>
+                        <label for="new-pass">Password</label>
+                        <input type="password" class="form-control" id="new-pass" autocomplete="nope"/>
                     </div>
                 </div>
                 <div class="modal-footer">

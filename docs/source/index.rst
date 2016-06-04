@@ -13,6 +13,7 @@ Contents:
 
    intro
    getting-started
+   admin/index
    monitor/index
    rest/index
    cli

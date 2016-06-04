@@ -34,7 +34,7 @@ class RestUserViews(RestView):
         permission='admin'
     )
     def admin_user_1_view_create(self):
-        username = self.request.matchdict['user']
+        username = self.request.matchdict['username'].lower()
 
         if len(self.request.body) > 0:
             try:
