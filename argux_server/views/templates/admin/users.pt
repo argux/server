@@ -17,7 +17,9 @@
         <table class="table table-condensed">
         <thead>
         <tr>
-            <th>Username</th><th>Locked</th>
+            <th>Username</th>
+            <th>Locked</th>
+            <th></th>
         </tr>
         </thead>
         <tbody id="users">
@@ -48,6 +50,37 @@
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Create user</button>
                 </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby=""
+         id="dmcm">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <form id="remove-user-form" action="">
+                    <div class="modal-header">
+                        <button type="button"
+                                class="close"
+                                data-dismiss="modal"
+                                aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title">Remove User?<h4>
+                    </div>
+                    <div class="modal-body">
+                        <div role="tabpanel" class="tab-pane active">
+                        <input type="hidden" id="remove-username"></input>
+                        <p id="remove-user-message">Do you really want to remove user...</p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Remove User</button>
+                    </div>
                 </form>
             </div>
         </div>

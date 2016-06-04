@@ -80,6 +80,19 @@ class RestUserViews(RestView):
         permission='admin'
     )
     def admin_user_1_view_delete(self):
+        username = self.request.matchdict['username'].lower()
+
+        # Make sure we don't remove the userid of the currently logged in user
+        if username == self.request.authenticated_userid:
+            return Response(
+                status='400 Bad Request',
+                content_type='application/json',
+                body=json.dumps({
+                    "error": "400 Bad Request",
+                    "message" : "Cannot remove userid of session-owner."
+                }))
+
+        self.dao.user_dao.delete_user(username)
         return {'ok': 'ok'}
 
     @view_config(

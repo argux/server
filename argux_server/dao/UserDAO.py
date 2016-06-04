@@ -59,3 +59,13 @@ class UserDAO(BaseDAO):
             .all()
 
         return users
+
+    def delete_user(self, username):
+        """
+        Delete monitor object for host/address of a specific type.
+        """
+        user = self.get_user(username)
+        if user is not None:
+            self.db_session.delete(user)
+
+        return
