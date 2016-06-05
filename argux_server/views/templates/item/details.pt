@@ -1,4 +1,5 @@
 <div class="section-body">
+    <div metal:extend-macro='load: ./timeframe.pt'></div>
     <div tal:condition="argux_item.itemtype.name in ['int','float']"
          class="col-md-6">
         <div metal:use-macro="load: ../graph.pt"

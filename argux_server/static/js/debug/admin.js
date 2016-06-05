@@ -9,7 +9,6 @@ $(function() {
                 'Do you want to remove the user "' +
                 username + '"');
             $('#dmcm').modal('show');
-
         });
 
     }

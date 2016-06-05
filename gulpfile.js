@@ -13,7 +13,8 @@ gulp.task('concatenate_js_lib', function() {
             'argux_server/static/js/lib/source/host.js',
             'argux_server/static/js/lib/source/monitors.js',
             'argux_server/static/js/lib/source/user.js',
-            'argux_server/static/js/lib/source/graph.js'
+            'argux_server/static/js/lib/source/graph.js',
+            'argux_server/static/js/lib/source/timeframe.js'
         ]),
         concat('argux.js'),
         gulp.dest('argux_server/static/js/lib/debug')

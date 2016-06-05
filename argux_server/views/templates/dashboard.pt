@@ -15,6 +15,7 @@
 </div>
 
 <div metal:fill-slot="content">
+    <div metal:extend-macro='load: ./timeframe.pt'></div>
     <div class="col-sm-6 col-md-4">
     <div metal:use-macro="load: graph.pt"
          tal:define='graph_id 1'></div>
