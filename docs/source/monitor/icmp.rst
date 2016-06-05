@@ -13,6 +13,8 @@ Create a new ICMP Monitor
 Delete an ICMP Monitor
 ^^^^^^^^^^^^^^^^^^^^^^
 A monitor can be deleted by clicking on the ``trashcan`` icon on the right.
+
 .. NOTE::
    Consider pausing a monitor instead by clicking on the ``pause`` button on the right.
+
 .. image:: images/icmp_monitor_delete.png
