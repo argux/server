@@ -5,7 +5,11 @@ function update_chart (obj, chart, config, repeat) {
         url: ARGUX_BASE + 
              "/rest/1.0/graph/" +
              chart_id +
-             "?get_values=true",
+             "?get_values=true"+
+             "&start="+
+             ARGUX_TIMEFRAME_START+
+             "&end="+
+             ARGUX_TIMEFRAME_END,
         dataType: "json",
         success: function(json) {
             obj.children(".heading").children(".title").text(json.name);

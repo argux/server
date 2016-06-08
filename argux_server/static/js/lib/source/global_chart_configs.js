@@ -1,3 +1,5 @@
+var ARGUX_TIMEFRAME_START;
+var ARGUX_TIMEFRAME_END;
 
 var unit = {};
 

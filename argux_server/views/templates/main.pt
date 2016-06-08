@@ -73,7 +73,7 @@
     <script src="${request.static_url('argux_server:static/js/ext/bootstrap-select.min.js')}"></script>
     <script src="${request.static_url('argux_server:static/js/ext/bootstrap-datetimepicker.min.js')}"></script>
     <script src="${request.static_url('argux_server:static/js/ext/Chart.min.js')}"></script>
-    <script src="${request.static_url('argux_server:static/js/lib/argux.js')}"></script>
+    <script src="${request.static_url('argux_server:static/js/lib/debug/argux.js')}"></script>
     <div metal:define-slot="custom-js"></div>
     </div>
   </body>
