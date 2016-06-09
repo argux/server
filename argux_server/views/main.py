@@ -28,7 +28,9 @@ from . import BaseView
 
 class MainViews(BaseView):
 
-    @forbidden_view_config()
+    @forbidden_view_config(
+        accept='text/html'
+    )
     def forbidden_view(self):
         if self.request.authenticated_userid:
             return HTTPForbidden()
@@ -37,6 +39,13 @@ class MainViews(BaseView):
             'login',
             _query=(('next', self.request.path),))
         return HTTPFound(location=url)
+
+    @forbidden_view_config(
+        accept='application/json',
+        renderer='json'
+    )
+    def forbidden_view(self):
+        return HTTPForbidden()
 
     @view_config(
         route_name='login',
