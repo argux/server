@@ -6,6 +6,10 @@ import platform
 import re
 import subprocess
 
+from requests.exceptions import (
+    HTTPError
+)
+
 from datetime import datetime
 
 from .AbstractMonitor import AbstractMonitor
@@ -137,16 +141,21 @@ class ICMPMonitor(AbstractMonitor):
         host = monitor['host']
 
         item_key = 'icmpping[env=local,addr='+address+',responsetime]'
-        client.create_item(
-            host,
-            item_key,
-            params = {
-                'name': 'Ping response-time from '+address+' to (local)',
-                'type': 'float',
-                'category': 'Network',
-                'unit': 'Seconds',
-                'description': '',
-            })
+        try:
+            client.create_item(
+                host,
+                item_key,
+                params = {
+                    'name': 'Ping response-time from '+address+' to (local)',
+                    'type': 'float',
+                    'category': 'Network',
+                    'unit': 'Seconds',
+                    'description': '',
+                })
+        except HTTPError as err:
+            # If a status_code is 403, try to login again
+            if err.response.status_code == 403:
+                self.client.login()
 
         ping_cmd = PING[system_name].format(address=address)
 
