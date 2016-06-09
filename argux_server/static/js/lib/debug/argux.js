@@ -581,6 +581,7 @@ function update_chart (obj, chart, config, repeat) {
                     data: [{'x': '0', 'y': '1'}]
                 };
                 var datapoints = [];
+                datapoints.push({x: ARGUX_TIMEFRAME_START});
                 var item_unit_prefix = '';
                 if(item.color !== undefined && item.color !== null){
                     color = item.color;
@@ -633,6 +634,8 @@ function update_chart (obj, chart, config, repeat) {
                         x: value.ts,
                         y: item_value});
                 });
+
+                datapoints.push({x: ARGUX_TIMEFRAME_END});
 
                 dataset.data = datapoints;
                 config.data.datasets.push(dataset);
