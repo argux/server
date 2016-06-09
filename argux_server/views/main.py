@@ -44,7 +44,7 @@ class MainViews(BaseView):
         accept='application/json',
         renderer='json'
     )
-    def forbidden_view(self):
+    def json_forbidden_view(self):
         return HTTPForbidden()
 
     @view_config(
