@@ -143,4 +143,8 @@ $(function() {
 
         update_chart (obj, chart, config, true);
     });
+    /*
+    $('#timeframe-window').on('timeframe:change', function(ev) {
+    });
+    */
 });

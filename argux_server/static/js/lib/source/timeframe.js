@@ -19,6 +19,9 @@ $(function() {
     $('#timeframe-start').on("dp.change", function(e) {
         $('#timeframe-end').data("DateTimePicker").minDate(e.date);
         ARGUX_TIMEFRAME_START = e.date.format('YYYY-MM-DDTHH:mm:ss');
+
+        $('#timeframe-window').trigger('timeframe:change');
+
         if(auto_time === false) {
             $('#timeframe-window').val('custom').change();
         }
@@ -26,6 +29,9 @@ $(function() {
     $('#timeframe-end').on("dp.change", function(e) {
         $('#timeframe-start').data("DateTimePicker").maxDate(e.date);
         ARGUX_TIMEFRAME_END = e.date.format('YYYY-MM-DDTHH:mm:ss');
+
+        $('#timeframe-window').trigger('timeframe:change');
+
         if(auto_time === false) {
             $('#timeframe-window').val('custom').change();
         }
