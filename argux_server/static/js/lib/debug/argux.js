@@ -697,10 +697,9 @@ $(function() {
         var config = $.extend(true, {}, history_chart_config);
         var chart = new Chart(ctx, config);
 
+        $('#timeframe-window').on('timeframe:change', function(ev) {
+            update_chart (obj, chart, config, false);
+        });
         update_chart (obj, chart, config, true);
     });
-    /*
-    $('#timeframe-window').on('timeframe:change', function(ev) {
-    });
-    */
 });
