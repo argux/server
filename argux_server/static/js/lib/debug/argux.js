@@ -47,6 +47,7 @@ rest = {
 
 var ARGUX_TIMEFRAME_START;
 var ARGUX_TIMEFRAME_END;
+var ARGUX_TIMEFRAME_INTERVAL = 60;
 
 var unit = {};
 
@@ -214,21 +215,27 @@ $(function() {
         switch($(this).val()) {
             case '60m':
                 start_time = end_time.subtract(60, 'minutes');
+                ARGUX_TIMEFRAME_INTERVAL = 60;
                 break;
             case '6h':
                 start_time = end_time.subtract(6, 'hours');
+                ARGUX_TIMEFRAME_INTERVAL = 120;
                 break;
             case '12h':
                 start_time = end_time.subtract(12, 'hours');
+                ARGUX_TIMEFRAME_INTERVAL = 300;
                 break;
             case '24h':
                 start_time = end_time.subtract(24, 'hours');
+                ARGUX_TIMEFRAME_INTERVAL = 600;
                 break;
             case '7d':
                 start_time = end_time.subtract(7, 'days');
+                ARGUX_TIMEFRAME_INTERVAL = 3600;
                 break;
             case '1M':
                 start_time = end_time.subtract(1, 'months');
+                ARGUX_TIMEFRAME_INTERVAL = 14400;
                 break;
             case 'custom':
                 break;
@@ -565,7 +572,9 @@ function update_chart (obj, chart, config, repeat) {
              "&start="+
              ARGUX_TIMEFRAME_START+
              "&end="+
-             ARGUX_TIMEFRAME_END,
+             ARGUX_TIMEFRAME_END+
+             "&interval="+
+             ARGUX_TIMEFRAME_INTERVAL,
         dataType: "json",
         success: function(json) {
             obj.children(".heading").children(".title").text(json.name);

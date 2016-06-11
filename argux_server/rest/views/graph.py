@@ -256,9 +256,9 @@ class RestGraphViews(RestView):
             start_time=start,
             end_time=end)
 
-        old_value = None
         interval_values = []
         interval_start = None
+        interval_end = None
 
         print(interval)
 
@@ -277,6 +277,20 @@ class RestGraphViews(RestView):
                 max_value = None
                 min_value = None
 
+                if interval_end is not None:
+                    tdelta = interval_start.timestamp - interval_end.timestamp
+
+                    # Allow for some uncertainty in timestamps,
+                    # if the difference between two measurements
+                    # is larger then 1.5 times the interval, add
+                    # a NULL/None value.
+                    if tdelta.seconds > (1.5*interval):
+                        for a in range(0, int(tdelta.seconds/interval)):
+                            values.append({
+                                'ts': (interval_end.timestamp + timedelta(seconds=(a*interval))).strftime(DATE_FMT),
+                                'value': None
+                            })
+
                 for item in interval_values:
                     if max_value is None:
                         max_value = item.value
@@ -293,6 +307,7 @@ class RestGraphViews(RestView):
                             tf_max_value = max_value
 
                     sum_value += item.value
+                    interval_end = item 
 
                 if len(interval_values) > 0:
                     avg_value = sum_value / len(interval_values)
@@ -313,8 +328,6 @@ class RestGraphViews(RestView):
                 interval_start = value
                 interval_values = []
                 interval_values.append(value)
-
-            old_value = value
 
         return (
             {

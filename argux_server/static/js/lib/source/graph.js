@@ -9,7 +9,9 @@ function update_chart (obj, chart, config, repeat) {
              "&start="+
              ARGUX_TIMEFRAME_START+
              "&end="+
-             ARGUX_TIMEFRAME_END,
+             ARGUX_TIMEFRAME_END+
+             "&interval="+
+             ARGUX_TIMEFRAME_INTERVAL,
         dataType: "json",
         success: function(json) {
             obj.children(".heading").children(".title").text(json.name);
