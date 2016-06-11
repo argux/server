@@ -313,15 +313,15 @@ class RestGraphViews(RestView):
                     avg_value = sum_value / len(interval_values)
 
                     values.append({
-                        'ts': interval_start.timestamp.strftime(DATE_FMT),
+                        'ts': interval_end.timestamp.strftime(DATE_FMT),
                         'value': str(avg_value)
                     })
                     max_values.append({
-                        'ts': interval_start.timestamp.strftime(DATE_FMT),
+                        'ts': interval_end.timestamp.strftime(DATE_FMT),
                         'value': str(max_value)
                     })
                     min_values.append({
-                        'ts': interval_start.timestamp.strftime(DATE_FMT),
+                        'ts': interval_end.timestamp.strftime(DATE_FMT),
                         'value': str(min_value)
                     })
 
