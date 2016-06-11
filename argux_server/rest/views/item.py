@@ -293,11 +293,16 @@ class RestItemViews(RestView):
 
         for index, value in enumerate(d_values):
             # Fill in the gaps between values.
-            # This section of the code assumes 1 minute gaps, which is silly.
             # The interval should be known somehow (maybe configurable in the item?).
             # Also, it should calculate min/max/avg values.
+
             if old_value:
                 tdelta = value.timestamp - old_value.timestamp
+
+                # Allow for some uncertainty in timestamps,
+                # if the difference between two measurements
+                # is larger then 1.5 times the interval, add
+                # a NULL/None value.
                 if tdelta.seconds > (1.5*interval):
                     for a in range(0, int(tdelta.seconds/interval)):
                         values.append({
