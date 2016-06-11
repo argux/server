@@ -248,50 +248,73 @@ class RestGraphViews(RestView):
         values = []
         max_values = []
         min_values = []
-        max_value = None
-        min_value = None
+
+        tf_max_value = None
+        tf_min_value = None
         d_values = self.dao.item_dao.get_values(
             item,
             start_time=start,
             end_time=end)
 
         old_value = None
+        interval_values = []
+        interval_start = None
+
+        print(interval)
 
         for index, value in enumerate(d_values):
-            # Fill in the gaps between values.
-            # This section of the code assumes 1 minute gaps, which is silly.
-            # The interval should be known somehow (maybe configurable in the item?).
-            # Also, it should calculate min/max/avg values.
-            if old_value:
-                tdelta = value.timestamp - old_value.timestamp
-                if tdelta.seconds > (1.5*interval):
-                    for a in range(0, int(tdelta.seconds/interval)):
-                        values.append({
-                            'ts': (old_value.timestamp + timedelta(minutes=a)).strftime(DATE_FMT),
-                            'value': None
-                        })
 
-            if max_value is None:
-                max_value = value.value
-                min_value = value.value
+            # Start interval with first value
+            if interval_start is None:
+                interval_start = value
+                tf_max_value = value.value
+                tf_min_value = value.value
 
-            if value.value < min_value:
-                min_value = value.value
+            if (value.timestamp - interval_start.timestamp) < timedelta(seconds=interval):
+                interval_values.append(value)
+            else:
+                sum_value = 0
+                max_value = None
+                min_value = None
 
-            if value.value > max_value:
-                max_value = value.value
+                for item in interval_values:
+                    if max_value is None:
+                        max_value = item.value
+                        min_value = item.value
 
-            values.append({
-                'ts': value.timestamp.strftime(DATE_FMT),
-                'value': str(value.value)
-            })
+                    if item.value < min_value:
+                        min_value = item.value
+                        if min_value > tf_min_value:
+                            tf_min_value = min_value
+
+                    if item.value > max_value:
+                        max_value = item.value
+                        if max_value > tf_max_value:
+                            tf_max_value = max_value
+
+                    sum_value += item.value
+
+                if len(interval_values) > 0:
+                    avg_value = sum_value / len(interval_values)
+
+                    values.append({
+                        'ts': interval_start.timestamp.strftime(DATE_FMT),
+                        'value': str(avg_value)
+                    })
+                    max_values.append({
+                        'ts': interval_start.timestamp.strftime(DATE_FMT),
+                        'value': str(max_value)
+                    })
+                    min_values.append({
+                        'ts': interval_start.timestamp.strftime(DATE_FMT),
+                        'value': str(min_value)
+                    })
+
+                interval_start = value
+                interval_values = []
+                interval_values.append(value)
 
             old_value = value
-
-        # Make sure we do not return None
-        if max_value is None:
-            max_value = 0
-            min_value = 0
 
         return (
             {
@@ -299,6 +322,6 @@ class RestGraphViews(RestView):
                 'max': max_values,
                 'min': min_values
             },
-            max_value,
-            min_value
+            tf_max_value,
+            tf_min_value
         )
