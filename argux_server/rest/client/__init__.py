@@ -36,6 +36,12 @@ class AbstractRESTClient:
             'Accept': 'application/json'
         }
 
+    def __check_status_code(self, response):
+        if not response.status_code in (
+                requests.codes.ok,
+                requests.codes.created):
+            response.raise_for_status()
+
     def login(self):
         payload = {
             'username': self.username,
@@ -46,6 +52,8 @@ class AbstractRESTClient:
                 self.base_url+'/rest/1.0/login',
                 headers=self.headers,
                 data=json.dumps(payload))
+
+            self.__check_status_code(response)
 
             self.cookies['argux_server'] = response.cookies['argux_server']
             self.headers['X-Csrf-token'] = response.headers['X-Csrf-token']
@@ -58,6 +66,8 @@ class AbstractRESTClient:
                 self.base_url + path,
                 cookies = self.cookies,
                 headers = self.headers)
+
+            self.__check_status_code(response)
 
             # Check if a new cookie is provided.
             if 'argux_server' in response.cookies:
@@ -77,6 +87,8 @@ class AbstractRESTClient:
                 cookies = self.cookies,
                 headers = self.headers)
 
+            self.__check_status_code(response)
+
             # Check if a new cookie is provided.
             if 'argux_server' in response.cookies:
                 self.cookies['argux_server'] = response.cookies['argux_server']
@@ -93,6 +105,8 @@ class AbstractRESTClient:
                 self.base_url + path,
                 cookies = self.cookies,
                 headers = self.headers)
+
+            self.__check_status_code(response)
 
             # Check if a new cookie is provided.
             if 'argux_server' in response.cookies:
