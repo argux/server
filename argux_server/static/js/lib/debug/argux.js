@@ -603,9 +603,8 @@ function update_chart (obj, chart, config, repeat) {
                 dataset['borderColor'] = hex2rgba(color, 1);
                 dataset['backgroundColor'] = hex2rgba(color, 0.2);
 
-                if(item['color-fill'] === false) {
+                if(item['color-fill'] === 'false') {
                     dataset['fill'] = false;
-                    dataset['backgroundColor'] = null;
                 } else {
                     dataset['fill'] = true;
                 }

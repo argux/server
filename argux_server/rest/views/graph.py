@@ -78,6 +78,7 @@ class RestGraphViews(RestView):
                 'key': d_item.key,
                 'host': d_item.host.name,
                 'color-fill': 'false',
+                'color': '#cc9900',
             }
 
             if d_item.unit_id:
@@ -114,6 +115,7 @@ class RestGraphViews(RestView):
                 'key': d_item.key,
                 'host': d_item.host.name,
                 'color-fill': 'false',
+                'color': '#996600',
             }
 
             if d_item.unit_id:
