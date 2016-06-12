@@ -40,7 +40,6 @@ class RestGraphViews(RestView):
     )
     def graph_1_view_read(self):
         graph_id = self.request.matchdict['id']
-        get_values = self.request.params.get('get_values', 'false')
 
         items = []
         max_value = 0
@@ -52,10 +51,47 @@ class RestGraphViews(RestView):
                 status='404 Not Found',
                 content_type='application/json')
 
+        q_start = self.request.params.get('start', None)
+        q_end = self.request.params.get('end', None)
+
         d_items = self.dao.graph_dao.graph_get_items(graph)
         for d_item in d_items:
+            if (q_start != None):
+                start = dateutil.parser.parse(q_start)
+            else:
+                start = datetime.now() - timedelta(minutes=15)
+
+            if q_end != None:
+                end = dateutil.parser.parse(q_end)
+            else:
+                end = datetime.now()
+
+            try:
+                interval = int(self.request.params.get('interval', '60'))
+            except ValueError:
+                interval = 60
+
+            (values, max_val, min_val) = self.__get_values(d_item, start, end, interval)
+
             item = {
-                'name': d_item.name,
+                'name': d_item.name + ' (max)',
+                'key': d_item.key,
+                'host': d_item.host.name,
+                'color-fill': 'false',
+            }
+
+            if d_item.unit_id:
+                item['unit'] = {
+                    'name': d_item.unit.name,
+                    'symbol': d_item.unit.symbol,
+                }
+
+            item['values'] = values['max']
+
+            items.append(item)
+
+            item = {
+                'name': d_item.name + ' (avg)',
                 'key': d_item.key,
                 'host': d_item.host.name,
             }
@@ -63,41 +99,38 @@ class RestGraphViews(RestView):
             if d_item.color is not None:
                 item['color'] = d_item.color
 
-            if get_values == 'true':
-                q_start = self.request.params.get('start', None)
-                q_end = self.request.params.get('end', None)
+            if d_item.unit_id:
+                item['unit'] = {
+                    'name': d_item.unit.name,
+                    'symbol': d_item.unit.symbol,
+                }
 
-                try:
-                    interval = int(self.request.params.get('interval', '60'))
-                except ValueError:
-                    interval = 60
-
-                if (q_start != None):
-                    start = dateutil.parser.parse(q_start)
-                else:
-                    start = datetime.now() - timedelta(minutes=15)
-
-                if q_end != None:
-                    end = dateutil.parser.parse(q_end)
-                else:
-                    end = datetime.now()
-
-                (values, max_val, min_val) = self.__get_values(d_item, start, end, interval)
-
-                item['values'] = values
-
-                if max_val > max_value:
-                    max_value = max_val
-                if min_val < min_value:
-                    min_value = min_val
-
-                if d_item.unit_id:
-                    item['unit'] = {
-                        'name': d_item.unit.name,
-                        'symbol': d_item.unit.symbol,
-                    }
+            item['values'] = values['avg']
 
             items.append(item)
+
+            item = {
+                'name': d_item.name + ' (min)',
+                'key': d_item.key,
+                'host': d_item.host.name,
+                'color-fill': 'false',
+            }
+
+            if d_item.unit_id:
+                item['unit'] = {
+                    'name': d_item.unit.name,
+                    'symbol': d_item.unit.symbol,
+                }
+
+            item['values'] = values['min']
+
+            items.append(item)
+
+            if max_val > max_value:
+                max_value = max_val
+            if min_val < min_value:
+                min_value = min_val
+
 
         return {
             'id': graph.id,
@@ -287,6 +320,14 @@ class RestGraphViews(RestView):
                     if tdelta.seconds > (1.5*interval):
                         for a in range(0, int(tdelta.seconds/interval)):
                             values.append({
+                                'ts': (interval_end.timestamp + timedelta(seconds=(a*interval))).strftime(DATE_FMT),
+                                'value': None
+                            })
+                            max_values.append({
+                                'ts': (interval_end.timestamp + timedelta(seconds=(a*interval))).strftime(DATE_FMT),
+                                'value': None
+                            })
+                            min_values.append({
                                 'ts': (interval_end.timestamp + timedelta(seconds=(a*interval))).strftime(DATE_FMT),
                                 'value': None
                             })

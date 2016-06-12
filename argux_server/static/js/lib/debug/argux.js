@@ -603,6 +603,14 @@ function update_chart (obj, chart, config, repeat) {
                 dataset['borderColor'] = hex2rgba(color, 1);
                 dataset['backgroundColor'] = hex2rgba(color, 0.2);
 
+                if(item['color-fill'] === false) {
+                    dataset['fill'] = false;
+                    dataset['backgroundColor'] = null;
+                } else {
+                    dataset['fill'] = true;
+                }
+                
+
                 if (item.unit) {
                     if (json.max_value < 0.1 && json.min_value > -0.1) {
                         item_unit_prefix = 'm';
@@ -622,7 +630,7 @@ function update_chart (obj, chart, config, repeat) {
                 }
 
 
-                $.each(item.values.avg, function(i, value) {
+                $.each(item.values, function(i, value) {
                     if(value.value != null) {
                         switch (item_unit_prefix) {
                             case '\u00B5':
