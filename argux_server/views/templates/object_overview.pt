@@ -1,8 +1,4 @@
 <div class="section-body">
-    <div tal:condition="len(hosts) == 0"
-         class="alert alert-danger">
-        <strong>Warning:</strong> No hosts configured, unable to configure monitors.
-    </div>
     <div class="panel panel-default">
         <div class="panel-heading">
             <!-- title -->

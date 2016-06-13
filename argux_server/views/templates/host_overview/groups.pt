@@ -1,34 +1,15 @@
-<div class="section-body">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Hostgroups
-      <div class="pull-right">
-        <button type="button"
-                class="btn btn-default btn-xs"
-                data-target=".bs-example-modal-lg"
-                data-toggle="modal">
-          <span class="glyphicon glyphicon-plus alert-default"></span>
-        </button>
-      </div>
+<div metal:use-macro="load: ../object_overview.pt"
+    tal:define="local object_table_title 'Host groups'; local new_object_form_title 'New Host Group'; local new_object_form_submit_title 'New Group'">
+
+<thead metal:fill-slot="object-table-head">
+    <th>Name</th>
+    <th>Hosts</th>
+</thead>
+
+<div metal:fill-slot="new-object-form">
+    <div role="tabpanel" class="tab-pane active" id="edit">
     </div>
-    <table class="table table-striped">
-      <thead>
-        <th>Name</th>
-        <th>Hosts</th>
-      </thead>
-      <tbody id='hostgroups'>
-      </tbody>
-    </table>
-  </div>
 </div>
 
-<!--
-<tr>
- <td>All</td>
- <td>
-  <ul class="list-inline">
-   <li><a href="">localhost</a></li>
-  </ul>
- </td>
-</tr>
--->
+</div>
+
