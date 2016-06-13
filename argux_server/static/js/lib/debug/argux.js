@@ -371,7 +371,7 @@ monitors = {
         });
     },
     _get_monitors_success: function(json) {
-        $('#monitors').empty();
+        $('#objects').empty();
         $.each(json.monitors, function(i, monitor) { options = '';
             $.each(monitor.options, function(key, value) {
                 options+= '<li><span style="font-weight: bold">'+key+':</span> '+value+'</li>';
@@ -385,7 +385,7 @@ monitors = {
                 state = 'paused';
                 klass = 'pause';
             }
-            $('#monitors').append(
+            $('#objects').append(
                 '<tr class="'+klass+'" ' +
                 'data-hostname="' + monitor.host +'" ' +
                 'data-address="' + monitor.address +'" ' +
@@ -513,8 +513,7 @@ monitors = {
             data : data,
             success : monitors._create_success,
             error : monitors._create_error
-        });
-    },
+        }); },
     _create_error: function(json) {
     },
     _create_success: function(json) {

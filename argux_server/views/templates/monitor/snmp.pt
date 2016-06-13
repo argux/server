@@ -1,85 +1,40 @@
-<div class="section-body">
-    <div tal:condition="len(hosts) == 0"
-         class="alert alert-danger">
-        <strong>Warning:</strong> No hosts configured, unable to configure monitors.
-    </div>
-    <div class="panel panel-default">
-        <div class="panel-heading">SNMP Monitors
-            <div class="pull-right">
-                <button tal:condition="len(hosts) > 0"
-                        type="button"
-                        class="btn btn-default btn-xs"
-                        data-target="#create-monitor-modal"
-                        data-toggle="modal">
-                    <span class="glyphicon glyphicon-plus alert-default"></span>
-                </button>
-            </div>
-        </div>
-        <table class="table table-striped">
-            <thead>
-            <th>Monitor</th>
-            <th>Options</th>
-            <th>Status</th>
-            <th></th>
-            </thead>
-            <tbody id='monitors'>
-            <tr>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-<div class="modal fade"
-     tabindex="-1"
-     role="dialog"
-     aria-labelledby="myLargeModalLabel"
-     id="create-monitor-modal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+<div metal:use-macro="load: ../object_overview.pt"
+    tal:define="local object_table_title 'SNMP Monitors'; local new_object_form_title 'New SNMP Monitor'; local new_object_form_submit_title 'New Monitor'">
 
-            <!-- Add Trigger -->
-            <form id="monitor-form" action="">
-            <div class="modal-header">
-                <button type="button"
-                        class="close"
-                        data-dismiss="modal"
-                        aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Add SNMP Monitor<h4>
-            </div>
-            <div class="modal-body">
-                <div role="tabpanel" class="tab-pane active" id="edit">
-                    <div id="monitor-form-alerts"></div>
-                    <label for="monitor-host">Host</label>
-                    <select class="form-control" id="monitor-host">
-                        <option tal:repeat="host hosts"
-                                tal:content="host.name">
-                        </option>
-                    </select>
-                    <label for="monitor-address">Address</label>
-                    <select class="form-control" id="monitor-address">
-                    </select>
-                    <label for="monitor-snmp-version">SNMP Version</label>
-                    <select class="form-control" id="monitor-snmp-version">
-                        <option>1</option>
-                        <option>2c</option>
-                        <option>3</option>
-                    </select>
-                    <label for="monitor-interval">Interval</label>
-                    <select class="form-control" id="monitor-interval">
-                        <option value='15s'>15 seconds</option>
-                        <option value='30s'>30 seconds</option>
-                        <option value='1m'>1 minute</option>
-                        <option value='5m'>5 minutes</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Add Monitor</button>
-            </div>
-            </form>
+<div metal:fill-slot="object-table-head">
+    <th>Monitor</th>
+    <th>Options</th>
+    <th>Status</th>
+    <th></th>
+</div>
+
+<div metal:fill-slot="object-table-body">
+</div>
+
+<div metal:fill-slot="new-object-form">
+    <div role="tabpanel" class="tab-pane active" id="edit">
+        <div id="monitor-form-alerts"></div>
+        <label for="monitor-host">Host</label>
+        <select class="form-control" id="monitor-host">
+            <option tal:repeat="host hosts"
+                    tal:content="host.name">
+            </option>
+        </select>
+        <label for="monitor-address">Address</label>
+        <select class="form-control" id="monitor-address">
+        </select>
+        <label for="monitor-interval">Interval</label>
+        <select class="form-control" id="monitor-interval">
+            <option value='15s'>15 seconds</option>
+            <option value='30s'>30 seconds</option>
+            <option value='1m'>1 minute</option>
+            <option value='5m'>5 minutes</option>
+        </select>
+        <div class="checkbox">
+          <label><input id="monitor-running" type="checkbox" value="running" checked>Running</label>
         </div>
     </div>
 </div>
+
+</div>
+

@@ -101,3 +101,8 @@ input[type="text"].username {
     background-color: #0f0;
     height: 40px;
 }
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+    padding: 4px;
+}
