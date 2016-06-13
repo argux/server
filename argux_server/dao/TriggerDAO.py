@@ -12,7 +12,7 @@ from argux_server.dao.util import (
 from .BaseDAO import BaseDAO
 
 
-class TriggerDAO(BaseDAO): 
+class TriggerDAO(BaseDAO):
 
     """Trigger DAO.
 

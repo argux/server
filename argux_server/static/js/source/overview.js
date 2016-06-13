@@ -3,7 +3,7 @@ var overviewChart = null;
 
 $(function() {
     function create_host_error(xhr, ajaxOptions, thrownError) {
-        if (xhr.status != 201) {
+        if (xhr.status !== 201) {
             var sel = $('.modal-form-alerts');
             sel.empty();
             sel.append(

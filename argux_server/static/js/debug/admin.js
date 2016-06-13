@@ -47,7 +47,7 @@ $(function() {
     }
 
     function create_user_error(xhr, ajaxOptions, thrownError) {
-        if (xhr.status != 201) {
+        if (xhr.status !== 201) {
             var sel = $('.modal-form-alerts');
             sel.empty();
             sel.append(
@@ -58,7 +58,7 @@ $(function() {
             $('#create-user-modal').modal('hide');
             $('#create-user-modal input').val('');
             user.get_users({
-                success : get_users_success_callback,
+                success : get_users_success_callback
             });
         }
     }

@@ -27,9 +27,9 @@ class MonitorDAO(BaseDAO):
             raise KeyError
 
         monitor = Monitor(
-            host_address = host_address,
-            monitor_type = d_type,
-            active = active)
+            host_address=host_address,
+            monitor_type=d_type,
+            active=active)
 
         self.db_session.add(monitor)
 
@@ -59,10 +59,9 @@ class MonitorDAO(BaseDAO):
         """Query all monitors for a type."""
         monitors = self.db_session.query(Monitor)\
             .filter(Monitor.monitor_type_id == (
-                self.db_session.query(MonitorType.id)\
+                self.db_session.query(MonitorType.id)
                     .filter(MonitorType.name == monitor_type)
-                )
-            )\
+            ))\
             .all()
 
         return monitors
@@ -73,20 +72,17 @@ class MonitorDAO(BaseDAO):
         """
         monitor = self.db_session.query(Monitor)\
             .filter(Monitor.monitor_type_id == (
-                self.db_session.query(MonitorType.id)\
+                self.db_session.query(MonitorType.id)
                     .filter(MonitorType.name == monitor_type)
-                )
-            )\
+            ))\
             .filter(Monitor.host_address_id == (
-                self.db_session.query(HostAddress.id)\
-                    .filter(HostAddress.name == address)\
+                self.db_session.query(HostAddress.id)
+                    .filter(HostAddress.name == address)
                     .filter(HostAddress.host_id == (
-                        self.db_session.query(Host.id)\
+                        self.db_session.query(Host.id)
                             .filter(Host.name == hostname)
-                        )
-                    )
-                )
-            )\
+                    ))
+            ))\
             .first()
 
         return monitor
@@ -109,11 +105,11 @@ class MonitorDAO(BaseDAO):
 
         if monitor is not None:
             domain = DNSMonitorDomain(
-                monitor_id = monitor.id,
-                domain = domain,
-                record_a = True,
-                record_aaaa = False,
-                record_mx = True)
+                monitor_id=monitor.id,
+                domain=domain,
+                record_a=True,
+                record_aaaa=False,
+                record_mx=True)
 
             self.db_session.add(domain)
 

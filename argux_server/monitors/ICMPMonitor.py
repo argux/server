@@ -18,6 +18,7 @@ from argux_server.rest.client import (
     RESTClient,
 )
 
+
 def parse_freebsd(monitor, output):
     """Parse FreeBSD PING output.
 
@@ -35,6 +36,7 @@ def parse_freebsd(monitor, output):
             ret_val = str(float(m.group(1))/1000)
     return ret_val
 
+
 def parse_linux(monitor, output):
     """Parse Linux PING output.
 
@@ -51,6 +53,7 @@ def parse_linux(monitor, output):
         if (m):
             ret_val = str(float(m.group(1))/1000)
     return ret_val
+
 
 def parse_sunos(monitor, output):
     """Parse Solaris PING output.
@@ -175,16 +178,5 @@ class ICMPMonitor(AbstractMonitor):
 
         except subprocess.CalledProcessError:
             val = None
-
-        #if val is not None:
-            #dao.item_dao.push_value(
-                #items['icmpping[env=local,addr='+address+',alive]'],
-                #timestamp,
-                #True)
-        #else:
-            #dao.item_dao.push_value(
-                #items['icmpping[env=local,addr='+address+',alive]'],
-                #timestamp,
-                #False)
 
         return

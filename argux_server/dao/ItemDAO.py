@@ -189,10 +189,9 @@ class ItemDAO(BaseDAO):
     def get_item_exists(self, itemname, hostname):
         item = self.db_session.query(Item)\
             .filter(Item.host_id == (
-                self.db_session.query(Host.id)\
+                self.db_session.query(Host.id)
                     .filter(Host.name == hostname)
-                )
-            )\
+            ))\
             .first()
 
         if item is None:
