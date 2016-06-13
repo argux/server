@@ -175,3 +175,18 @@ class RestTriggerViews(RestView):
             'item': item.name,
             'valid': ret
         }
+
+    @view_config(
+        route_name='rest_trigger_monitor_evaluate_1',
+        request_method='POST',
+        require_csrf=True,
+        permission='monitor_trigger'
+    )
+    def trigger_1_evaluate(self):
+
+        # Run once a minute.
+        triggers = self.dao.trigger_dao.get_all_triggers()
+        for trigger in triggers:
+            self.dao.trigger_dao.evaluate_trigger(trigger)
+
+        return {}

@@ -29,8 +29,6 @@ from argux_server import dao
 
 from argux_server.auth import user, gen_password
 
-from argux_server.trigger import TriggerWorker
-
 from argux_server.monitors import (
     start_monitors
 )
@@ -47,6 +45,7 @@ class RootFactory(object):
     __acl__ = [
         (Allow, 'group:admin', ALL_PERMISSIONS),
         (Allow, 'group:admin', 'admin'),
+        (Allow, '__monitor__', 'monitor_trigger'),
         (Allow, Authenticated, 'view'),
         (Allow, Everyone, 'koffie')
     ]
@@ -185,6 +184,8 @@ def main(global_config, **settings):
                      '/rest/1.0/monitor/dns/{host}/{address}/domain')
     config.add_route('rest_dns_monitor_domain_1',
                      '/rest/1.0/monitor/dns/{host}/{address}/domain/{domain}')
+    config.add_route('rest_trigger_monitor_evaluate_1',
+                     '/rest/1.0/monitor/trigger/evaluate')
 
     config.add_route('rest_admin_user_1',
                      '/rest/1.0/admin/user/{username}')
@@ -209,9 +210,6 @@ def main(global_config, **settings):
     settings['monitor_pass'] = monitor_pass
 
     transaction.commit()
-
-    worker = TriggerWorker()
-    worker.start()
 
     start_monitors(settings=settings)
 

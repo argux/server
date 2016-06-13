@@ -199,3 +199,16 @@ class RESTClient(AbstractRESTClient):
             raise ValueError('Invalid Response, missing \'domains\' attribute')
 
         return json_response['domains']
+
+    def evaluate_triggers(self):
+
+        try:
+            response = self.post(
+                '/rest/1.0/monitor/trigger/evaluate',
+                data='')
+        except ConnectionError as e:
+            raise e
+        except HTTPError as e:
+            raise e 
+
+        return []
