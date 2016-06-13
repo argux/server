@@ -26,7 +26,10 @@ class AbstractMonitor(Thread):
         super(AbstractMonitor, self).__init__()
         self.daemon = True
 
-        self.client = RESTClient('http://localhost:7000', 'admin', 'admin')
+        self.client = RESTClient(
+            'http://localhost:7000',
+            '__monitor__',
+            settings['monitor_pass'])
 
     # pylint: disable=no-self-use
     def run(self):

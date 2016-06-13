@@ -23,9 +23,11 @@ from .models import (
     BASE,
 )
 
+import transaction
+
 from argux_server import dao
 
-from argux_server.auth import user
+from argux_server.auth import user, gen_password
 
 from argux_server.trigger import TriggerWorker
 
@@ -195,6 +197,18 @@ def main(global_config, **settings):
 
     config.scan('.views')
     config.scan('.rest.views')
+
+    transaction.begin()
+
+    monitor_user = settings['dao'].user_dao.get_user(name='__monitor__')
+    monitor_pass = gen_password()
+    settings['dao'].user_dao.set_user_password(
+        monitor_user,
+        monitor_pass)
+
+    settings['monitor_pass'] = monitor_pass
+
+    transaction.commit()
 
     worker = TriggerWorker()
     worker.start()

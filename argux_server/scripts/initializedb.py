@@ -92,6 +92,7 @@ def initdb(settings):
 
         user_dao = UserDAO(DB_SESSION)
         user_dao.create_user('', 'admin', 'admin', hash_method='bcrypt')
+        user_dao.create_user('', '__monitor__', None, hash_method='bcrypt')
 
 
 def main():
@@ -103,4 +104,3 @@ def main():
     setup_logging(config_uri)
     settings = get_appsettings(config_uri, options=options)
     initdb(settings)
-

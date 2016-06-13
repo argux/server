@@ -15,9 +15,21 @@ class UserDAO(BaseDAO):
     """UserDAO Class."""
 
     def create_user(self, namespace, name, password, hash_method=None):
+        user = User(name=name)
+
+        if password is not None:
+            try:
+                self.set_user_password(user, password, hash_method)
+            except ValueError as err:
+                raise err
+
+        self.db_session.add(user)
+
+    def set_user_password(self, user, password, hash_method=None):
         if hash_method:
             method = self.db_session.query(HashMethod)\
                 .filter(HashMethod.name == hash_method)\
+                .filter(HashMethod.allowed == True)\
                 .first()
         else:
             method = self.db_session.query(HashMethod)\
@@ -29,12 +41,10 @@ class UserDAO(BaseDAO):
 
         hashed = argux_server.auth.gen_hash(method.name, password)
 
-        user = User(
-            name=name,
-            passwd_hash=hashed,
-            hashmethod=method)
+        user.passwd_hash=hashed
+        user.hashmethod=method
 
-        self.db_session.add(user)
+        self.db_session.flush()
 
     def get_user(self, name):
         user = self.db_session.query(User)\
@@ -48,6 +58,10 @@ class UserDAO(BaseDAO):
             .first()
 
         if user:
+            # If no hashmethod is set, can't validate user.
+            if user.hashmethod is None:
+                return False
+
             return argux_server.auth.validate(
                     user.hashmethod.name,
                     password,

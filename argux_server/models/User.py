@@ -48,8 +48,10 @@ class User(BASE):
     id = Column(Integer, primary_key=True)  # pylint: disable=invalid-name
     name = Column(Text, nullable=False)
     passwd_hash = Column(Binary, default=None, nullable=True)
-    hashmethod_id = Column(Integer, ForeignKey('hashmethod.id'), nullable=False)
+    hashmethod_id = Column(Integer, ForeignKey('hashmethod.id'), nullable=True, default=None)
     hashmethod = relationship(HashMethod, backref='users')
+    local = Column(Boolean, default=False, nullable=False)
+    locked = Column(Boolean, default=False, nullable=False)
 
 Index('u_user_name', User.name, unique=True)
 Index('i_user_hashmethod_id', User.hashmethod_id)

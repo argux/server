@@ -2,6 +2,9 @@
 
 import inspect
 
+import string
+import random
+
 from . import auth_bcrypt
 
 __VALIDATE_METHODS = {}
@@ -53,6 +56,9 @@ def gen_hash(name, password):
         return __GEN_HASH_METHODS[name](password)
     else:
         return None
+
+def gen_password(size=12, chars=string.ascii_uppercase + string.digits):
+    return ''.join(random.SystemRandom().choice(chars) for _ in range(size))
 
 # Register functions.
 register_auth_functions(
