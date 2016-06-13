@@ -498,9 +498,13 @@ monitors = {
         if (args.options === undefined) {
             args.options = {}
         }
+        if (args.active === undefined) {
+            args.active = true
+        }
 
         data = {
-            "options": args.options
+            "options": args.options,
+            "active": args.active
         };
 
         rest.call({

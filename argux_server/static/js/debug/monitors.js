@@ -48,13 +48,16 @@ $(function() {
 
 // Forms
     $('#monitor-form').submit(function(event) {
+        var running = $('#monitor-running').is(':checked');
         monitors.create({
             'hostname': $('#monitor-host').val(),
             'address': $('#monitor-address').val(),
+            'active': running,
             'options': {
                 'interval': $('#monitor-interval').val(),
             }
         })
+        $('#create-monitor-modal').modal('hide');
         monitors.get_monitors({'type': ARGUX_MONITOR_TYPE});
     });
     $('#monitor-delete-form').submit(function(event) {
