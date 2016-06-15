@@ -18,17 +18,30 @@ $(function() {
         user_table.empty();
 
         $.each(json.users, function(i, value) {
-            user_table.append(
-                '<tr data-username="'+value.name+'"><td>' +
-                value.name +
-                '</td><td>' +
-                '-' +
-                '</td><td>' +
-                '<div class="pull-right">' +
-                '<a href="#" class="user-remove"><span class="glyphicon glyphicon-trash"></span></a>' +
-                '</div>' +
-                '</td></tr>'
-            );
+            if (value.protected !== true) {
+                user_table.append(
+                    '<tr data-username="'+value.name+'"><td>' +
+                    value.name +
+                    '</td><td>' +
+                    '-' +
+                    '</td><td>' +
+                    '<div class="pull-right">' +
+                    '<a href="#" class="user-remove"><span class="glyphicon glyphicon-trash"></span></a>' +
+                    '</div>' +
+                    '</td></tr>'
+                );
+            } else {
+                user_table.append(
+                    '<tr data-username="'+value.name+'"><td>' +
+                    value.name +
+                    '</td><td>' +
+                    '-' +
+                    '</td><td>' +
+                    '<div class="pull-right">' +
+                    '</div>' +
+                    '</td></tr>'
+                );
+            }
         });
 
         create_remove_callbacks();

@@ -85,11 +85,20 @@ class RestUserViews(RestView):
         # Make sure we don't remove the userid of the currently logged in user
         if username == self.request.authenticated_userid:
             return Response(
-                status='400 Bad Request',
+                status='409 Conflict',
                 content_type='application/json',
                 body=json.dumps({
-                    "error": "400 Bad Request",
+                    "error": "409 Conflict",
                     "message" : "Cannot remove userid of session-owner."
+                }))
+        user = self.dao.user_dao.get_user(username)
+        if user.protected:
+            return Response(
+                status='409 Conflict',
+                content_type='application/json',
+                body=json.dumps({
+                    "error": "409 Conflict",
+                    "message" : "User is protected."
                 }))
 
         self.dao.user_dao.delete_user(username)
@@ -107,7 +116,8 @@ class RestUserViews(RestView):
         users = []
         for user in d_users:
             users.append({
-                "name": user.name
+                "name": user.name,  
+                "protected": user.protected
             })
 
         return {

@@ -14,8 +14,8 @@ class UserDAO(BaseDAO):
 
     """UserDAO Class."""
 
-    def create_user(self, namespace, name, password, hash_method=None):
-        user = User(name=name)
+    def create_user(self, namespace, name, password, hash_method=None, protected=False):
+        user = User(name=name,protected=protected)
 
         if password is not None:
             try:

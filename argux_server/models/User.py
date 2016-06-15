@@ -42,6 +42,10 @@ class User(BASE):
     """User class.
 
     Store user (and it's credentials) in the database.
+
+    local: If a user is only allowed to connect from localhost
+    locked: a locked account cannot login
+    protected: a protected account cannot be deleted
     """
 
     __tablename__ = 'user'
@@ -52,6 +56,7 @@ class User(BASE):
     hashmethod = relationship(HashMethod, backref='users')
     local = Column(Boolean, default=False, nullable=False)
     locked = Column(Boolean, default=False, nullable=False)
+    protected = Column(Boolean, default=False, nullable=False)
 
 Index('u_user_name', User.name, unique=True)
 Index('i_user_hashmethod_id', User.hashmethod_id)
