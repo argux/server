@@ -52,7 +52,8 @@
             </div>
             <div id="navbar-footer" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
                 <ul class="nav navbar-nav navbar-right">
-                    <li tal:condition="'group:admin' in request.effective_principals">
+                    <li tal:condition="'group:admin' in request.effective_principals"
+                        tal:attributes="class 'active' if 'admin'==argux_parent_route else nothing">
                         <a href="/admin">Admin</a>
                     </li>
                     <li><a target="_blank" href="https://argux-server.readthedocs.org">Docs</a></li>
