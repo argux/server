@@ -1,33 +1,22 @@
-<!DOCTYPE html>
-<html metal:use-macro="load: main.pt">
+<html metal:use-macro="load: main.pt"
+    tal:define="global argux_parent_route 'admin'">
 
-<div metal:fill-slot="head">
+<metal:slot metal:fill-slot="head">
     <script type="text/javascript">
         var CSRF_TOKEN="${request.session.get_csrf_token()}";
         var ARGUX_BASE="${request.application_url}";
         var ARGUX_ACTION="admin.${action}";
     </script>
-</div>
+</metal:slot>
 
 <div metal:fill-slot="custom-js">
     <script src="${request.static_url('argux_server:static/js/admin.js')}"></script>
 </div>
 
-
-<!--
-<div metal:fill-slot="topmenu">
-    <span tal:define="global aa load: ./admin/menu.pt"/>
-    <div metal:extend-macro='aa'></div>
-</div>
--->
-
-<div metal:fill-slot="content">
-    <div class="page-header">
-        <h2>Administration</h2>
-    </div>
-    <ul class="nav nav-tabs nav-xs">
-      <li tal:define="item_l ('Users', 'Settings')"
-          tal:repeat="item ('users', 'settings')"
+<metal:slot metal:fill-slot="content">
+    <ul class="nav nav-tabs">
+      <li tal:define="item_l ('Users', 'Groups')"
+          tal:repeat="item ('users', 'groups')"
           tal:attributes="class 'active' if item==action else nothing">
         <a tal:attributes="href request.application_url+'/admin/'+item">
             <span tal:content="item_l[repeat.item.index]">
@@ -38,5 +27,6 @@
       </li>
     </ul>
     <div metal:extend-macro='tmpl'></div>
-</div>
+</metal:slot>
+
 </html>

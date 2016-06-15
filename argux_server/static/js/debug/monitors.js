@@ -47,7 +47,7 @@ $(function() {
     });
 
 // Forms
-    $('#monitor-form').submit(function(event) {
+    $('#new-object-form').submit(function(event) {
         var running = $('#monitor-running').is(':checked');
         monitors.create({
             'hostname': $('#monitor-host').val(),

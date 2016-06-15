@@ -8,10 +8,7 @@
     <a class="navbar-brand" href="${request.route_url('home')}">Argux</a>
 </div>
 <div id="navbar" class="navbar-collapse collapse" aria-expanded="false" style="height: 1px;">
-<ul class="nav navbar-nav navbar-right">
-  <div tal:condition="not: exists: argux_parent_route">
-    <div tal:define="global argux_parent_route ''"></div>
-  </div>
-  <li><a href="${request.route_url('logout')}">Logout</a></li>
-</ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li><a href="${request.route_url('logout')}">Logout</a></li>
+    </ul>
 </div>

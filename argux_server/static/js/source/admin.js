@@ -1,5 +1,8 @@
 $(function() {
 
+    /*
+     * Create callback hooks for removing users.
+     */
     function create_remove_callbacks() {
         $('.user-remove').click(function() {
             var username = $(this).parents('tr').data('username');
@@ -14,7 +17,7 @@ $(function() {
     }
 
     function get_users_success_callback(json) {
-        var user_table = $('#users');
+        var user_table = $('#objects');
         user_table.empty();
 
         $.each(json.users, function(i, value) {
@@ -92,7 +95,7 @@ $(function() {
             $('#create-user-modal input').val('');
         });
 
-        $('#new-user-form').submit(function(event) {
+        $('#new-object-form').submit(function(event) {
             event.preventDefault();
             user.create({
                 username: $('#new-username').val(),
