@@ -24,6 +24,7 @@ $(function() {
             if (value.protected !== true) {
                 user_table.append(
                     '<tr data-username="'+value.name+'"><td>' +
+                    '<span class="glyphicon glyphicon-user"></span> ' +
                     value.name +
                     '</td><td>' +
                     '-' +
@@ -36,6 +37,7 @@ $(function() {
             } else {
                 user_table.append(
                     '<tr data-username="'+value.name+'"><td>' +
+                    '<span class="glyphicon glyphicon-user"></span> ' +
                     value.name +
                     '</td><td>' +
                     '-' +
