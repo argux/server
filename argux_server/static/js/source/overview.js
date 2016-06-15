@@ -61,7 +61,7 @@ $(function() {
                 '<strong>Problem:</strong> ' + xhr.responseJSON.message
             );
         } else {
-            $('#create-host-modal').modal('hide');
+            $('#create-object-modal').modal('hide');
             host.get_host_overview({'complete_callback': get_host_complete_callback});
         }
     }
@@ -85,7 +85,7 @@ $(function() {
             complete : get_host_overview_complete_callback
         });
 
-        $('#host-form').submit(function(event) {
+        $('#new-object-form').submit(function(event) {
             event.preventDefault();
             host.create({
                 hostname : $('#host-name').val(),

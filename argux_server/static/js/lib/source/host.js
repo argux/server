@@ -62,9 +62,6 @@ host = {
         if (args.hostname === undefined) {
             throw "Hostname argument missing";
         }
-        if (args.callback_success === undefined) {
-            throw "callback_success missing";
-        }
         rest.call({
             url : ARGUX_BASE+'/rest/1.0/host/'+args.hostname+'/addr',
             success : args.success,
