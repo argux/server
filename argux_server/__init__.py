@@ -163,6 +163,11 @@ def main(global_config, **settings):
     config.add_route('rest_host_address_1',
                      '/rest/1.0/host/{host}/addr/{address}')
 
+    config.add_route('rest_host_groups_1',
+                     '/rest/1.0/hostgroup')
+    config.add_route('rest_host_group_1',
+                     '/rest/1.0/hostgroup/{group}')
+
     config.add_route('rest_note_1',
                      '/rest/1.0/note')
 

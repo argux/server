@@ -3,6 +3,21 @@ var overviewChart = null;
 
 $(function() {
 
+    function get_host_groups_success_callback(json) {
+        $('#objects').empty();
+
+        json.groups = json.groups.sort(function(a, b) {return a.name >= b.name});
+        $.each(json.groups, function(i, value) {
+            $('#objects').append(
+                '<tr><td>' +
+                '<a href="'+ARGUX_BASE+'/hostgroup/' + value.name + '">' +
+                value.name +
+                '</a></td><td>' +
+                '</td></tr>'
+            );
+        });
+    }
+
     function get_host_overview_success_callback(json) {
         var total_active_alerts = 0;
         var graph_data = [0,0,0,0];
@@ -92,6 +107,12 @@ $(function() {
                 description : $('#host-description').val(),
                 error : create_host_error
             })
+        });
+    }
+
+    if (ARGUX_ACTION==='groups') {
+        host.get_groups({
+            success : get_host_groups_success_callback
         });
     }
 });

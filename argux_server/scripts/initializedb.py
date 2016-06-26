@@ -20,7 +20,8 @@ from ..models import (
     HashMethod,
     MonitorType,
     Unit,
-    MetricPrefix
+    MetricPrefix,
+    HostGroup
 )
 
 from ..dao.UserDAO import UserDAO
@@ -79,6 +80,10 @@ def initialise_units():
     model = Unit(name='Bits', symbol='b', metric_prefix=prefix)
     DB_SESSION.add(model)
 
+def initialise_hostgroups():
+    hostgroup_all = HostGroup(name='All', description='All hosts')
+    DB_SESSION.add(hostgroup_all)
+
 def initdb(settings):
     engine = engine_from_config(settings, 'sqlalchemy.')
     DB_SESSION.configure(bind=engine)
@@ -89,6 +94,7 @@ def initdb(settings):
         initialise_hashmethods()
         initialise_monitortypes()
         initialise_units()
+        initialise_hostgroups()
 
         user_dao = UserDAO(DB_SESSION)
         user_dao.create_user('', 'admin', 'admin', hash_method='bcrypt')

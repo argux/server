@@ -5,6 +5,7 @@ import transaction
 from argux_server.models import (
     Host,
     HostAddress,
+    HostGroup,
     Item,
     TriggerSeverity
 )
@@ -41,9 +42,7 @@ class HostDAO(BaseDAO):
 
     def get_all_hosts(self):
         """Return all hosts."""
-        hosts = self.db_session.query(Host)
-        if hosts is None:
-            return []
+        hosts = self.db_session.query(Host).all()
 
         return hosts
 
@@ -101,3 +100,24 @@ class HostDAO(BaseDAO):
             .filter(HostAddress.host == host)\
             .all()
         return d_addresses
+
+    def create_hostgroup(self, name, description=None, hosts=[]):
+        """Create hostgroup."""
+        group = HostGroup(name=name, description=description)
+
+        self.db_session.add(group)
+
+        return group
+
+    def get_hostgroup_by_name(self, name):
+        """Return hostgroup-object based on name."""
+        group = self.db_session.query(HostGroup)\
+            .filter(HostGroup.name == name)\
+            .first()
+        return group
+
+    def get_all_hostgroups(self):
+        """Return all hostgroups."""
+        groups= self.db_session.query(HostGroup).all()
+
+        return groups

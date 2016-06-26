@@ -68,5 +68,13 @@ host = {
             error : args.error,
             complete : args.complete
         });
+    },
+    get_groups: function(args) {
+        rest.call({
+            url : ARGUX_BASE+'/rest/1.0/hostgroup',
+            success : args.success,
+            error : args.error,
+            complete : args.complete
+        });
     }
 };
