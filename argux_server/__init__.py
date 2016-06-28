@@ -103,6 +103,8 @@ def main(global_config, **settings):
                      '/hosts')
     config.add_route('host_overview',
                      '/hosts/{action}')
+    config.add_route('hostgroup_details',
+                     '/hosts/groups/{group}')
     config.add_route('host_default',
                      '/host/{host}')
     config.add_route('host',

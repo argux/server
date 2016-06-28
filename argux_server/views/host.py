@@ -102,3 +102,16 @@ class MainViews(BaseView):
             "addresses": addresses,
             "active_alerts": n_alerts,
             "action": action}
+
+    # pylint: disable=no-self-use
+    @view_config(
+        route_name='hostgroup_details',
+        renderer='templates/hostgroup.pt',
+        permission='view'
+    )
+    def home(self):
+        group = self.request.matchdict['group']
+
+        return {
+            "hostgroup": group
+            }

@@ -14,7 +14,6 @@ BASE = declarative_base()
 
 from .Host import Host
 from .HostGroup import HostGroup
-from .HostGroupMember import HostGroupMember
 from .Item import Item
 from .ItemType import ItemType
 from .ItemCategory import ItemCategory

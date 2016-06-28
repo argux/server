@@ -87,6 +87,7 @@ class RestHostViews(RestView):
         """Create new host."""
         description = None
         addresses = []
+        groups = []
 
         if len(self.request.body) > 0:
             try:
@@ -108,6 +109,25 @@ class RestHostViews(RestView):
             except ValueError:
                 addresses = []
 
+            # Optional (Host-Groups)
+            try:
+                groups = json_body.get('groups', [])
+            except ValueError:
+                groups = []
+
+        for group in groups:
+            g = self.dao.host_dao.get_hostgroup_by_name(group)
+            if g is None:
+                return Response(
+                    status='409 Conflict',
+                    content_type='application/json',
+                    charset='UTF-8',
+                    body=json.dumps({
+                        'hostgroup': group,
+                        'conflict': 'Does not exists'
+                    }))
+                
+
         host = self.dao.host_dao.create_host(
             name=host_name,
             description=description)
@@ -125,6 +145,10 @@ class RestHostViews(RestView):
                 except Exception as e:
                     transaction.abort()
                     return str(e)
+
+        self.dao.host_dao.add_host_to_group('All', host)
+        for group in groups:
+            self.dao.host_dao.add_host_to_group(group, host)
 
         try:
             transaction.commit()

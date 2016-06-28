@@ -48,14 +48,18 @@ class RestHostGroupViews(RestView):
     )
     def host_group_1_view_get(self):
         group_name = self.request.matchdict['group']
+        hosts = []
 
         group = self.dao.host_dao.get_hostgroup_by_name(name=group_name)
         if group is None:
             return 'host-not-found'
 
+        for host in group.hosts:
+            hosts.append(host.name)
+
         return {
             "name": group_name,
-            "hosts": [ ]
+            "hosts": hosts
         }
 
     @view_config(

@@ -121,3 +121,7 @@ class HostDAO(BaseDAO):
         groups= self.db_session.query(HostGroup).all()
 
         return groups
+
+    def add_host_to_group(self, name, host):
+        group = self.get_hostgroup_by_name(name)
+        group.hosts.append(host)
