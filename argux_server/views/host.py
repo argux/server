@@ -92,14 +92,13 @@ class MainViews(BaseView):
         host_desc = ''
         h = self.dao.host_dao.get_host_by_name(host)
 
-        if h:
-            host_desc = h.description
-            addresses = h.addresses
+        if not h:
+            return Response(status="404 Not Found")
 
         return {
             "argux_host": host,
-            "argux_host_desc": host_desc,
-            "addresses": addresses,
+            "argux_host_desc": h.description,
+            "addresses": h.addresses,
             "active_alerts": n_alerts,
             "action": action}
 
