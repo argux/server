@@ -5,7 +5,6 @@
 <div metal:fill-slot="head">
     <script type="text/javascript">
         var ARGUX_BASE="${request.application_url}";
-        var ARGUX_ACTION="${action}";
         var CSRF_TOKEN="${request.session.get_csrf_token()}";
     </script>
 </div>
@@ -25,8 +24,6 @@
             <span tal:condition="item=='alerts'"
                   class="badge" id="alert_count"></span>
         </a>
-        <span tal:condition="action==item">
-        </span>
       </li>
     </ul>
 </div>

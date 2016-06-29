@@ -109,7 +109,7 @@ class MainViews(BaseView):
         renderer='templates/hostgroup.pt',
         permission='view'
     )
-    def home(self):
+    def hostgroup_details(self):
         group = self.request.matchdict['group']
 
         return {

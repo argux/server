@@ -10,7 +10,7 @@ $(function() {
         $.each(json.groups, function(i, value) {
             $('#objects').append(
                 '<tr><td>' +
-                '<a href="'+ARGUX_BASE+'/host/groups/' + value.name + '">' +
+                '<a href="'+ARGUX_BASE+'/hosts/groups/' + value.name + '">' +
                 value.name +
                 '</a></td><td>' +
                 '</td></tr>'
