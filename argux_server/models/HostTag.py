@@ -34,6 +34,7 @@ class HostTag(BASE):
         ForeignKey('host.id'),
         nullable=False)
     host = relationship(Host, backref='tags')
+
     tag_id = Column(
         Integer,
         ForeignKey('tag.id'),

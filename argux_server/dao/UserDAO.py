@@ -14,8 +14,14 @@ class UserDAO(BaseDAO):
 
     """UserDAO Class."""
 
-    def create_user(self, namespace, name, password, hash_method=None, protected=False):
-        user = User(name=name,protected=protected)
+    def create_user(
+            self,
+            name,
+            password,
+            hash_method=None,
+            protected=False):
+        """Create new user."""
+        user = User(name=name, protected=protected)
 
         if password is not None:
             try:
@@ -26,33 +32,36 @@ class UserDAO(BaseDAO):
         self.db_session.add(user)
 
     def set_user_password(self, user, password, hash_method=None):
+        """Set user's password using hash_method."""
         if hash_method:
             method = self.db_session.query(HashMethod)\
                 .filter(HashMethod.name == hash_method)\
-                .filter(HashMethod.allowed == True)\
+                .filter(HashMethod.allowed.is_(True))\
                 .first()
         else:
             method = self.db_session.query(HashMethod)\
-                .filter(HashMethod.allowed == True)\
+                .filter(HashMethod.allowed.is_(True))\
                 .first()
 
         if not method:
-            raise ValueError("Invalid hash_algorithm")           
+            raise ValueError("Invalid hash_algorithm")
 
         hashed = argux_server.auth.gen_hash(method.name, password)
 
-        user.passwd_hash=hashed
-        user.hashmethod=method
+        user.passwd_hash = hashed
+        user.hashmethod = method
 
         self.db_session.flush()
 
     def get_user(self, name):
+        """Return user."""
         user = self.db_session.query(User)\
             .filter(User.name == name)\
             .first()
         return user
 
     def validate_user(self, name, password):
+        """Validate a user's password."""
         user = self.db_session.query(User)\
             .filter(User.name == name)\
             .first()
@@ -63,21 +72,21 @@ class UserDAO(BaseDAO):
                 return False
 
             return argux_server.auth.validate(
-                    user.hashmethod.name,
-                    password,
-                    user.passwd_hash) 
+                user.hashmethod.name,
+                password,
+                user.passwd_hash)
+
         return False
 
     def get_users(self):
+        """Get all user objects."""
         users = self.db_session.query(User)\
             .all()
 
         return users
 
     def delete_user(self, username):
-        """
-        Delete monitor object for host/address of a specific type.
-        """
+        """Delete user."""
         user = self.get_user(username)
         if user is not None:
             self.db_session.delete(user)

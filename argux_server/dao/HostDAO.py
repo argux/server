@@ -37,7 +37,6 @@ class HostDAO(BaseDAO):
         host = Host(name=name, description=description)
 
         self.db_session.add(host)
-
         return host
 
     def get_all_hosts(self):
@@ -53,13 +52,13 @@ class HostDAO(BaseDAO):
 
         severity = self.db_session.query(TriggerSeverity)\
             .filter(TriggerSeverity.id.in_(
-                self.db_session.query(float_trigger_klass.severity_id)\
+                self.db_session.query(float_trigger_klass.severity_id)
                 .filter(float_trigger_klass.item_id.in_(
-                    self.db_session.query(Item.id)\
+                    self.db_session.query(Item.id)
                     .filter(Item.host_id == host.id)
-                ))\
+                ))
                 .filter(float_trigger_klass.id.in_(
-                    self.db_session.query(float_alert_klass.trigger_id)\
+                    self.db_session.query(float_alert_klass.trigger_id)
                     .filter(float_alert_klass.end_time.is_(None))
                 ))
             ))\
@@ -123,5 +122,7 @@ class HostDAO(BaseDAO):
         return groups
 
     def add_host_to_group(self, name, host):
+        """Add host to hostgroup."""
         group = self.get_hostgroup_by_name(name)
         group.hosts.append(host)
+        transaction.commit()

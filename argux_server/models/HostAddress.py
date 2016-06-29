@@ -30,7 +30,10 @@ class HostAddress(BASE):
     id = Column(Integer, primary_key=True)  # pylint: disable=invalid-name
     name = Column(Text, nullable=False)
     description = Column(Text, nullable=False, default="")
-    host_id = Column(Integer, ForeignKey('host.id'), nullable=False)
+    host_id = Column(
+        Integer,
+        ForeignKey('host.id'),
+        nullable=False)
     host = relationship(Host, backref='addresses')
 
 Index('u_host_address_index', HostAddress.name, unique=True, mysql_length=255)

@@ -7,8 +7,7 @@ from sqlalchemy import (
     Float,
     Text,
     ForeignKey,
-    String,
-    Boolean
+    String
 )
 
 from sqlalchemy.orm import (
@@ -17,7 +16,8 @@ from sqlalchemy.orm import (
 
 from . import BASE
 
-from .Item  import Item
+from .Item import Item
+
 
 # pylint: disable=too-few-public-methods
 class HistoryGraph(BASE):
@@ -34,6 +34,8 @@ class HistoryGraph(BASE):
     suggested_min = Column(Float, nullable=True, default=None)
     suggested_max = Column(Float, nullable=True, default=None)
 
+Index('u_h_graph_name_index', HistoryGraph.name, mysql_length=255)
+
 # pylint: disable=too-few-public-methods
 class HistoryGraphItem(BASE):
 
@@ -45,8 +47,20 @@ class HistoryGraphItem(BASE):
 
     __tablename__ = 'history_graph_item'
     id = Column(Integer, primary_key=True)  # pylint: disable=invalid-name
-    history_graph_id = Column(Integer, ForeignKey('history_graph.id'), nullable=False)
+    history_graph_id = Column(
+        Integer,
+        ForeignKey('history_graph.id'),
+        nullable=False)
     history_graph = relationship(HistoryGraph, backref='items')
-    item_id = Column(Integer, ForeignKey('item.id'))
+
+    item_id = Column(
+        Integer,
+        ForeignKey('item.id'))
     item = relationship(Item, backref='history_graphs')
-    color = Column(String(6), nullable=True, default=None);
+
+    color = Column(String(6), nullable=True, default=None)
+
+Index(
+    'h_graph_id_index',
+    HistoryGraphItem.history_graph_id,
+    mysql_length=255)

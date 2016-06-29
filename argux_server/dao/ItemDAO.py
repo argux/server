@@ -190,7 +190,7 @@ class ItemDAO(BaseDAO):
         item = self.db_session.query(Item)\
             .filter(Item.host_id == (
                 self.db_session.query(Host.id)
-                    .filter(Host.name == hostname)
+                .filter(Host.name == hostname)
             ))\
             .first()
 

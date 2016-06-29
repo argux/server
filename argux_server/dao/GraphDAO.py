@@ -32,7 +32,7 @@ class GraphDAO(BaseDAO):
     def get_graph(self, graph_id):
         graph = self.db_session.query(HistoryGraph)\
             .options(joinedload('items'))\
-            .filter(HistoryGraph.id==graph_id)\
+            .filter(HistoryGraph.id == graph_id)\
             .first()
 
         return graph

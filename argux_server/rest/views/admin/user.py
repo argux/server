@@ -51,13 +51,7 @@ class RestUserViews(RestView):
                     status='400 Bad Request',
                     content_type='application/json')
 
-            try:
-                namespace = json_body.get('namespace', None)
-            except ValueError:
-                namespace = ''
-
             user = self.dao.user_dao.create_user (
-                namespace,
                 username,
                 password,
                 hash_method='bcrypt');

@@ -23,9 +23,13 @@ class NoteDAO(BaseDAO):
 
         return note
 
-
     def create_note_for_host(self, host, subject, message, timestamp):
         """Create new note for host."""
-        note = Note(host=host, subject=subject, message=message, timestamp=timestamp)
+        note = Note(
+            host=host,
+            subject=subject,
+            message=message,
+            timestamp=timestamp)
+
         self.db_session.add(note)
         return note

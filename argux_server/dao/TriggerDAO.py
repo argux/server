@@ -82,7 +82,13 @@ class TriggerDAO(BaseDAO):
                 .filter(alert_klass.trigger_id == trigger.id)\
                 .filter(alert_klass.end_time.is_(None)).first()
 
-            (is_active, time) = handler(trigger, self.db_session, i[1], i[2], i[3])
+            # Execute trigger-handler
+            (is_active, time) = handler(
+                trigger,
+                self.db_session,
+                i[1],
+                i[2],
+                i[3])
 
             if is_active:
                 if not alert:

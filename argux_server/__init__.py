@@ -64,9 +64,9 @@ def main(global_config, **settings):
     settings['dao'] = dao.DAO(DB_SESSION)
 
     if settings['session.secure_cookie'] == 'true':
-        secure_cookie=True
+        secure_cookie = True
     else:
-        secure_cookie=False
+        secure_cookie = False
 
     factory = SignedCookieSessionFactory(
         'SEECREET',

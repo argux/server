@@ -24,8 +24,14 @@ from .Host import Host
 
 hostgroupmember_table = Table('hostgroup_member',
     BASE.metadata,
-    Column('host_group.id', Integer, ForeignKey('host_group.id')),
-    Column('host.id', Integer, ForeignKey('host.id'))
+    Column(
+        'host_group.id',
+        Integer,
+        ForeignKey('host_group.id')),
+    Column(
+        'host.id',
+        Integer,
+        ForeignKey('host.id'))
 )
 
 

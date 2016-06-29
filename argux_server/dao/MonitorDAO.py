@@ -60,7 +60,7 @@ class MonitorDAO(BaseDAO):
         monitors = self.db_session.query(Monitor)\
             .filter(Monitor.monitor_type_id == (
                 self.db_session.query(MonitorType.id)
-                    .filter(MonitorType.name == monitor_type)
+                .filter(MonitorType.name == monitor_type)
             ))\
             .all()
 
@@ -73,14 +73,14 @@ class MonitorDAO(BaseDAO):
         monitor = self.db_session.query(Monitor)\
             .filter(Monitor.monitor_type_id == (
                 self.db_session.query(MonitorType.id)
-                    .filter(MonitorType.name == monitor_type)
+                .filter(MonitorType.name == monitor_type)
             ))\
             .filter(Monitor.host_address_id == (
                 self.db_session.query(HostAddress.id)
                     .filter(HostAddress.name == address)
                     .filter(HostAddress.host_id == (
                         self.db_session.query(Host.id)
-                            .filter(Host.name == hostname)
+                        .filter(Host.name == hostname)
                     ))
             ))\
             .first()
@@ -98,8 +98,11 @@ class MonitorDAO(BaseDAO):
         return
 
     def set_domain(self, hostname, address, monitor_type, domain):
+        """Set DNS domain."""
         if monitor_type != 'DNS':
-            raise ValueError("cannot add domain to monitor of type" + monitor_type)
+            raise ValueError(
+                "cannot add domain to monitor of type" +
+                monitor_type)
 
         monitor = self.get_monitor(hostname, address, monitor_type)
 
@@ -114,6 +117,7 @@ class MonitorDAO(BaseDAO):
             self.db_session.add(domain)
 
     def remove_domain(self, hostname, address, monitor_type, domain):
+        """Remove DNS domain."""
 
         monitor = self.get_monitor(hostname, address, monitor_type)
 
@@ -124,6 +128,7 @@ class MonitorDAO(BaseDAO):
                 .delete()
 
     def get_domains(self, hostname, address, monitor_type):
+        """Get all domains for monitor."""
 
         domains = []
         monitor = self.get_monitor(hostname, address, monitor_type)

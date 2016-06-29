@@ -36,8 +36,9 @@ class AbstractRESTClient:
             'Accept': 'application/json'
         }
 
+    # pylint: disable=no-self-use
     def __check_status_code(self, response):
-        if not response.status_code in (
+        if response.status_code not in (
                 requests.codes.ok,
                 requests.codes.created):
             response.raise_for_status()
@@ -57,25 +58,25 @@ class AbstractRESTClient:
 
             self.cookies['argux_server'] = response.cookies['argux_server']
             self.headers['X-Csrf-token'] = response.headers['X-Csrf-token']
-        except ConnectionError as e:
-            print(e)
+        except ConnectionError as err:
+            print(err)
 
     def get(self, path):
         try:
             response = requests.get(
                 self.base_url + path,
-                cookies = self.cookies,
-                headers = self.headers)
+                cookies=self.cookies,
+                headers=self.headers)
 
             self.__check_status_code(response)
 
             # Check if a new cookie is provided.
             if 'argux_server' in response.cookies:
                 self.cookies['argux_server'] = response.cookies['argux_server']
-        except ConnectionError as e:
-            raise e
-        except HTTPError as e:
-            raise e
+        except ConnectionError as err:
+            raise err
+        except HTTPError as err:
+            raise err
 
         return response
 
@@ -83,19 +84,19 @@ class AbstractRESTClient:
         try:
             response = requests.post(
                 self.base_url + path,
-                data = data,
-                cookies = self.cookies,
-                headers = self.headers)
+                data=data,
+                cookies=self.cookies,
+                headers=self.headers)
 
             self.__check_status_code(response)
 
             # Check if a new cookie is provided.
             if 'argux_server' in response.cookies:
                 self.cookies['argux_server'] = response.cookies['argux_server']
-        except ConnectionError as e:
-            raise e
-        except HTTPError as e:
-            raise e
+        except ConnectionError as err:
+            raise err
+        except HTTPError as err:
+            raise err
 
         return response
 
@@ -103,18 +104,18 @@ class AbstractRESTClient:
         try:
             response = requests.delete(
                 self.base_url + path,
-                cookies = self.cookies,
-                headers = self.headers)
+                cookies=self.cookies,
+                headers=self.headers)
 
             self.__check_status_code(response)
 
             # Check if a new cookie is provided.
             if 'argux_server' in response.cookies:
                 self.cookies['argux_server'] = response.cookies['argux_server']
-        except ConnectionError as e:
-            raise e
-        except HTTPError as e:
-            raise e
+        except ConnectionError as err:
+            raise err
+        except HTTPError as err:
+            raise err
 
         return response
 
@@ -135,12 +136,12 @@ class RESTClient(AbstractRESTClient):
             response = self.post(
                 '/rest/1.0/host/'+host+'/item/'+key,
                 data=json.dumps(payload))
-        except ConnectionError as e:
-            raise e
-        except HTTPError as e:
-            raise e 
+        except ConnectionError as err:
+            raise err
+        except HTTPError as err:
+            raise err
 
-        return []
+        return response
 
     def push_value(self, host, key, timestamp, value):
 
@@ -153,50 +154,54 @@ class RESTClient(AbstractRESTClient):
             response = self.post(
                 '/rest/1.0/host/'+host+'/item/'+key+'/values',
                 data=json.dumps(payload))
-        except ConnectionError as e:
-            raise e
-        except HTTPError as e:
-            raise e 
+        except ConnectionError as err:
+            raise err
+        except HTTPError as err:
+            raise err
 
-        return []
+        return response
 
     def get_monitors(self, monitor_type):
         try:
             response = self.get('/rest/1.0/monitor/'+monitor_type)
-        except ConnectionError as e:
-            raise e
-        except HTTPError as e:
-            raise e
+        except ConnectionError as err:
+            raise err
+        except HTTPError as err:
+            raise err
 
         try:
             json_response = response.json()
-        except Exception as e:
+        except Exception as err:
             print("\""+str(response)+"\"")
-            raise ValueError('Invalid Response, could not decode JSON')
+            raise ValueError(
+                'Invalid Response, could not decode JSON')
 
         if json_response is None:
-            raise ValueError('Invalid Response, could not decode JSON')
-        if not 'monitors' in json_response:
-            raise ValueError('Invalid Response, missing \'monitors\' attribute')
+            raise ValueError(
+                'Invalid Response, could not decode JSON')
+        if 'monitors' not in json_response:
+            raise ValueError(
+                'Invalid Response, missing \'monitors\' attribute')
 
         return json_response['monitors']
-
 
     def get_dns_domains(self, host, address):
 
         try:
             response = self.get(
                 '/rest/1.0/monitor/dns/'+host+'/'+address+'/domain')
-        except ConnectionError as e:
-            raise e
-        except HTTPError as e:
-            raise e 
+        except ConnectionError as err:
+            raise err
+        except HTTPError as err:
+            raise err
 
         json_response = response.json()
         if json_response is None:
-            raise ValueError('Invalid Response, could not decode JSON')
-        if not 'domains' in json_response:
-            raise ValueError('Invalid Response, missing \'domains\' attribute')
+            raise ValueError(
+                'Invalid Response, could not decode JSON')
+        if 'domains' not in json_response:
+            raise ValueError(
+                'Invalid Response, missing \'domains\' attribute')
 
         return json_response['domains']
 
@@ -206,9 +211,9 @@ class RESTClient(AbstractRESTClient):
             response = self.post(
                 '/rest/1.0/monitor/trigger/evaluate',
                 data='')
-        except ConnectionError as e:
-            raise e
-        except HTTPError as e:
-            raise e 
+        except ConnectionError as err:
+            raise err
+        except HTTPError as err:
+            raise err
 
-        return []
+        return response

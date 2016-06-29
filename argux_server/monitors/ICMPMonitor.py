@@ -126,7 +126,7 @@ class ICMPMonitor(AbstractMonitor):
 
     @staticmethod
     def validate_options(options):
-        if not 'interval' in options:
+        if 'interval' not in options:
             return False
 
         return True

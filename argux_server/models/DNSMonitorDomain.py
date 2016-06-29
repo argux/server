@@ -30,7 +30,13 @@ class DNSMonitorDomain(BASE):
     __tablename__ = 'dns_monitor_domain'
     id = Column(Integer, primary_key=True)  # pylint: disable=invalid-name
     monitor_id = Column(Integer, ForeignKey('monitor.id'), nullable=False)
-    monitor = relationship(Monitor, backref=backref('domains', cascade='save-update, merge, delete'))
+    monitor = relationship(
+        Monitor,
+        backref=backref(
+            'domains',
+            cascade='save-update, merge, delete'
+        )
+    )
     domain = Column(Text, nullable=False)
     record_a = Column(Boolean, nullable=False)
     record_aaaa = Column(Boolean, nullable=False)
