@@ -48,7 +48,7 @@ class RestHostViews(RestView):
                 "name": host.name,
                 "n_items": n_items,
                 "severity": sev_label,
-                "active_alerts": self.__get_active_alert_count(host)
+                "active_alerts": self.dao.get_active_alert_count(host)
             })
 
         return {'hosts': hosts}
@@ -204,12 +204,12 @@ class RestHostViews(RestView):
         if host_get_items == 'true':
             items = self._get_items(host)
             if host_get_alerts != 'true':
-                active_alert_count = self.__get_active_alert_count(host)
+                active_alert_count = self.dao.get_active_alert_count(host)
 
         if host_get_details == 'true':
             details = []
             if (host_get_alerts != 'true'):
-                active_alert_count = self.__get_active_alert_count(host)
+                active_alert_count = self.dao.get_active_alert_count(host)
 
 
         return {
@@ -219,19 +219,6 @@ class RestHostViews(RestView):
             'alerts': active_alerts,
             'active_alerts': active_alert_count,
         }
-
-    def __get_active_alert_count(self, host):
-        d_items = self.dao.item_dao.get_items_from_host(host)
-        if (d_items == None):
-            return 0
-
-        n_total_alerts = 0
-
-        for item in d_items:
-            n_alerts = self.dao.item_dao.get_active_alert_count(item)
-            n_total_alerts += n_alerts
-
-        return n_total_alerts
 
     def __get_active_alerts(self, host):
         d_items = self.dao.item_dao.get_items_from_host(host)

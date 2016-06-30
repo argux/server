@@ -76,5 +76,16 @@ host = {
             error : args.error,
             complete : args.complete
         });
+    },
+    get_group_members: function(args) {
+        if (args.group === undefined) {
+            throw "group argument missing";
+        }
+        rest.call({
+            url : ARGUX_BASE+'/rest/1.0/hostgroup/'+args.group,
+            success : args.success,
+            error : args.error,
+            complete : args.complete
+        });
     }
 };

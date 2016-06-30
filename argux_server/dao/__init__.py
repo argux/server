@@ -31,3 +31,16 @@ class DAO(object):
         self.trigger_dao = TriggerDAO(db_session)
         self.monitor_dao = MonitorDAO(db_session)
         self.graph_dao = GraphDAO(db_session)
+
+    def get_active_alert_count(self, host):
+        d_items = self.item_dao.get_items_from_host(host)
+        if (d_items == None):
+            return 0
+
+        n_total_alerts = 0
+
+        for item in d_items:
+            n_alerts = self.item_dao.get_active_alert_count(item)
+            n_total_alerts += n_alerts
+
+        return n_total_alerts

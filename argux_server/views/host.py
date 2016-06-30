@@ -112,5 +112,5 @@ class MainViews(BaseView):
         group = self.request.matchdict['group']
 
         return {
-            "hostgroup": group
+            "host_group": group
             }

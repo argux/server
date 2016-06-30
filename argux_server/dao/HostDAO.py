@@ -126,3 +126,4 @@ class HostDAO(BaseDAO):
         group = self.get_hostgroup_by_name(name)
         group.hosts.append(host)
         transaction.commit()
+
