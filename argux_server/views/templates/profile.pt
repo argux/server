@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html metal:use-macro="load: main.pt">
+<html metal:use-macro="load: main.pt"
+    tal:define="global argux_parent_route 'profile'">
 
 <div metal:fill-slot="head">
     <script type="text/javascript">
@@ -10,8 +11,32 @@
 
 <div metal:fill-slot="content">
     <div class="page-header">
-        <h2>Profile</h2>
+      <!--
+      <div class="pull-right">
+          <div class="btn-group btn-group-sm" role="group" aria-label="...">
+            <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-bookmark"></span>
+            </button>
+          </div>
+      </div>
+      -->
+      <h3>Profile <small>${request.authenticated_userid}</small></h3>
     </div>
+    <ul class="nav nav-pills nav-xs">
+        <li tal:define="item_l ('Details', 'Bookmarks')"
+          tal:repeat="item ('details', 'Bookmarks')"
+          tal:attributes="class 'active' if item==action else nothing">
+            <a tal:attributes="href request.application_url+'/profile/'+item">
+                <span tal:content="item_l[repeat.item.index]">
+                <span tal:condition="item=='alerts'"
+                      class="badge" id="alert_count"></span>
+            </a>
+            <span tal:condition="action==item">
+                <span tal:define="global tmpl load: ./profile/${item}.pt"/>
+            </span>
+        </li>
+    </ul>
+    <div metal:extend-macro='tmpl'></div>
 </div>
 
 </html>

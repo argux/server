@@ -16,11 +16,21 @@
 </div>
 
 <div metal:fill-slot="content">
+    <div class="page-header">
+      <div class="pull-right">
+          <div class="btn-group btn-group-sm" role="group" aria-label="...">
+            <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-bookmark"></span>
+            </button>
+          </div>
+      </div>
+      <h3>Host <small>${argux_host}</small></h3>
+    </div>
     <ol class="breadcrumb">
       <li class="dropdown"><a href="/hosts"><span class="glyphicon glyphicon-list"></span></a></li>
       <li class="active">${argux_host}</li>
     </ol>
-    <ul class="nav nav-tabs nav-xs">
+    <ul class="nav nav-pills nav-xs">
       <li tal:define="item_l ('Summary', 'Metrics', 'Alerts', 'Notes')"
           tal:repeat="item ('summary', 'metrics', 'alerts', 'notes')"
           tal:attributes="class 'active' if item==action else nothing">
@@ -31,14 +41,6 @@
         </a>
         <span tal:condition="action==item">
             <span tal:define="global tmpl load: ./host/${item}.pt"/>
-        </span>
-      </li>
-      <li tal:attributes="class 'active pull-right' if 'config'==action else 'pull-right'">
-        <a href="${request.application_url}/host/${argux_host}/config">
-            <span>Config</span>
-        </a>
-        <span tal:condition="'config'==action">
-            <span tal:define="global tmpl load: ./host/config.pt"/>
         </span>
       </li>
     </ul>

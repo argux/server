@@ -106,3 +106,32 @@ input[type="text"].username {
     vertical-align: middle;
     padding: 4px;
 }
+
+a.host {
+    text-decoration: none;
+    color: #000;
+}
+
+a.host:hover {
+    text-decoration: none;
+    color: #000;
+}
+
+a.host > .panel > .panel-heading {
+    padding: 5px 10px;
+}
+
+a.host:hover > .panel > .panel-heading{
+    color: #000;
+}
+
+a.host > .panel > .panel-body > ul {
+    margin: 0;
+    padding: 0;
+}
+
+a.host > .panel > .panel-body > ul > li {
+    margin: 0;
+    list-style: none;
+    padding: 0;
+}

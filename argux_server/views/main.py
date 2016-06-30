@@ -94,5 +94,5 @@ class MainViews(BaseView):
     )
     def profile(self):
         return {
-            "userid": self.request.authenticated_userid,
+            "action": 'details',
             }

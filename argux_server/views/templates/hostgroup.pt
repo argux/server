@@ -14,18 +14,96 @@
     <script src="${request.static_url('argux_server:static/js/lib/argux.js')}"></script>
     <script src="${request.static_url('argux_server:static/js/overview.js')}"></script>
 </div>
+
 <div metal:fill-slot="content">
-    <ul class="nav nav-tabs">
-      <li tal:define="item_l ('Overview', 'Groups', 'Alerts')"
-          tal:repeat="item ('overview', 'groups', 'alerts')"
-          tal:attributes="class 'active' if item=='groups' else nothing">
-        <a tal:attributes="href request.application_url+'/hosts/'+item">
-            <span tal:content="item_l[repeat.item.index]">
-            <span tal:condition="item=='alerts'"
-                  class="badge" id="alert_count"></span>
-        </a>
-      </li>
-    </ul>
+    <div class="page-header">
+      <div class="pull-right">
+          <div class="btn-group btn-group-sm" role="group" aria-label="...">
+            <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-bookmark"></span>
+            </button>
+          </div>
+          <div class="btn-group btn-group-sm" role="group" aria-label="...">
+            <button type="button" class="btn btn-default active">
+                <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+            </button>
+            <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+            </button>
+          </div>
+          <div class="btn-group btn-group-sm" role="group" aria-label="...">
+            <button type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-th-list"></span>
+            </button>
+            <button type="button" class="btn btn-default active">
+                <span class="glyphicon glyphicon-th"></span>
+            </button>
+          </div>
+      </div>
+      <h3>Hostgroup <small>all</small></h3>
+    </div>
+    <ol class="breadcrumb">
+      <li class="dropdown"><a href="/hosts/groups"><span class="glyphicon glyphicon-list"></span></a></li>
+      <li class="active">all</li>
+    </ol>
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <a class="host" href="/host/aaa">
+            <div class="panel panel-danger">
+                <div class="panel-heading active">Host-1
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>Items: 0</li>
+                        <li>Alerts: 0</li>
+                    </ul>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <a class="host" href="/host/aaa">
+            <div class="panel panel-default">
+                <div class="panel-heading active">Host-1
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>Items: 0</li>
+                        <li>Alerts: 0</li>
+                    </ul>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <a class="host" href="/host/aaa">
+            <div class="panel panel-default">
+                <div class="panel-heading active">Host-1
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>Items: 0</li>
+                        <li>Alerts: 0</li>
+                    </ul>
+                </div>
+            </div>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <a class="host" href="/host/aaa">
+            <div class="panel panel-warning">
+                <div class="panel-heading active">Host-1
+                </div>
+                <div class="panel-body">
+                    <ul>
+                        <li>Items: 0</li>
+                        <li>Alerts: 0</li>
+                    </ul>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
 </div>
 
 </html>
