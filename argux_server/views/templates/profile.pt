@@ -24,7 +24,7 @@
     </div>
     <ul class="nav nav-pills nav-xs">
         <li tal:define="item_l ('Details', 'Bookmarks')"
-          tal:repeat="item ('details', 'Bookmarks')"
+          tal:repeat="item ('details', 'bookmarks')"
           tal:attributes="class 'active' if item==action else nothing">
             <a tal:attributes="href request.application_url+'/profile/'+item">
                 <span tal:content="item_l[repeat.item.index]">
