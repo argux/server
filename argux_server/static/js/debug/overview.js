@@ -8,11 +8,37 @@ $(function() {
 
         json.groups = json.groups.sort(function(a, b) {return a.name >= b.name});
         $.each(json.groups, function(i, value) {
+            var okay = (value.total - value.warning - value.critical);
+
+            if (okay > 0) {
+                okay_class = 'success';
+            } else {
+                okay_class = '';
+            }
+
+            if (value.warning > 0) {
+                warning_class = 'warning';
+            } else {
+                warning_class = 'success';
+            }
+
+            if (value.critical > 0) {
+                critical_class = 'danger';
+            } else {
+                critical_class = 'success';
+            }
+
             $('#objects').append(
                 '<tr><td>' +
                 '<a href="'+ARGUX_BASE+'/hosts/groups/' + value.name + '">' +
                 value.name +
-                '</a></td><td>' +
+                '</a></td>' + 
+                '<td class="'+okay_class+'">' +
+                okay +
+                '</td><td class="'+warning_class+'">' +
+                value.warning +
+                '</td><td class="'+critical_class+'">' +
+                value.critical +
                 '</td></tr>'
             );
         });

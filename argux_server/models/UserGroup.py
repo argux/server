@@ -20,7 +20,7 @@ from sqlalchemy.orm import (
 
 from . import BASE
 
-from .User import user
+from .User import User
 
 usergroupmember_table = Table('usergroup_member',
     BASE.metadata,

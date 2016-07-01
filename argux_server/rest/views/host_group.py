@@ -84,8 +84,21 @@ class RestHostGroupViews(RestView):
 
         groups = []
         for group in d_groups:
+            critical = 0
+            warning = 0
+            for host in group.hosts:
+                severity = self.dao.host_dao.get_host_severity(host)
+                if severity:
+                    if severity.key == 'warn':
+                        warning=warning+1
+                    if severity.key == 'crit':
+                        critical=critical+1
+
             groups.append({
-                "name": group.name
+                "name": group.name,
+                "critical": critical,
+                "warning": warning,
+                "total": len(group.hosts)
             })
 
         return {"groups": groups}

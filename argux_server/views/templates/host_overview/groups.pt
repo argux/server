@@ -3,7 +3,9 @@
 
 <thead metal:fill-slot="object-table-head">
     <th>Name</th>
-    <th>Hosts</th>
+    <th>Okay</th>
+    <th>Warning</th>
+    <th>Critical</th>
 </thead>
 
 <div metal:fill-slot="new-object-form">
