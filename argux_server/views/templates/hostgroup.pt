@@ -35,8 +35,8 @@
             </button>
           </div>
           <div class="btn-group btn-group-sm" role="group" aria-label="...">
-            <button type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-th-list hostlist-view hostlist-view-list" data-view="list"></span>
+            <button type="button" class="btn btn-default hostlist-view hostlist-view-list" data-view="list">
+                <span class="glyphicon glyphicon-th-list"></span>
             </button>
             <button type="button" class="btn btn-default hostlist-view hostlist-view-grid active" data-view="grid">
                 <span class="glyphicon glyphicon-th"></span>

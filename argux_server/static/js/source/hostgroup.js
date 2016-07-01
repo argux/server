@@ -69,7 +69,11 @@ $(function() {
                 case 'list':
                     host_list.append(
                         '<tr class="'+severity+'">' +
-                        '<td>'+value.name+'</td>' +
+                        '<td>'+
+                        '<a class="host" href="/host/'+value.name+'">' +
+                        value.name +
+                        '</a>' +
+                        '</td>' +
                         '<td>'+value.n_items+'</td>' +
                         '<td>'+value.active_alerts+'</td>' +
                         '</tr>'
