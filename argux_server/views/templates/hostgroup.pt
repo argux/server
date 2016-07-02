@@ -2,15 +2,17 @@
 <html metal:use-macro="load: main.pt"
     tal:define="global argux_parent_route 'host_overview_default'">
 
-<div metal:fill-slot="head">
+<metal:slot metal:fill-slot="head">
     <script type="text/javascript">
         var ARGUX_BASE="${request.application_url}";
         var CSRF_TOKEN="${request.session.get_csrf_token()}";
         var HOST_GROUP="${host_group}";
         var VIEW_TYPE="grid";
         var VIEW_SORT="asc";
+        var ROUTE_NAME="${route_name}";
+        var ROUTE_PARAMS=${route_params};
     </script>
-</div>
+</metal:slot>
 
 <div metal:fill-slot="custom-js">
     <script src="${request.static_url('argux_server:static/js/ext/Chart.min.js')}"></script>

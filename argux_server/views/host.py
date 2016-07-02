@@ -112,5 +112,7 @@ class MainViews(BaseView):
         group = self.request.matchdict['group']
 
         return {
+            "route_name" : "hostgroup_details",
+            "route_params": json.dumps(self.request.matchdict),
             "host_group": group
             }

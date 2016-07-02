@@ -1,13 +1,13 @@
 <html metal:use-macro="load: main.pt"
     tal:define="global argux_parent_route 'monitor_default'">
 
-<div metal:fill-slot="head">
+<metal:slot metal:fill-slot="head">
     <script type="text/javascript">
         var ARGUX_BASE="${request.application_url}";
         var CSRF_TOKEN="${request.session.get_csrf_token()}";
         var ARGUX_MONITOR_TYPE="${action}";
     </script>
-</div>
+</metal:slot>
 
 <div metal:fill-slot="custom-js">
     <script src="${request.static_url('argux_server:static/js/lib/argux.js')}"></script>
