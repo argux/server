@@ -123,6 +123,9 @@ function update_chart (obj, chart, config, repeat) {
 }
 
 $(function() {
+    $('.btn-graph-export').click(function() {
+        $('#graph-export-modal').modal('show');
+    });
     $('.btn-graph-full').click(function() {
         $('#graph-full-modal').modal('show');
         var graph_id = $(this).data('graphid');
