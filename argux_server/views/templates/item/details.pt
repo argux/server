@@ -1,7 +1,6 @@
-<div class="section-body">
+<div class="row">
     <div metal:extend-macro='load: ./timeframe.pt'></div>
-    <div tal:condition="argux_item.itemtype.name in ['int','float']"
-         class="col-md-6">
+    <div tal:condition="argux_item.itemtype.name in ['int','float']">
         <div metal:use-macro="load: ../graph.pt"
              tal:define='graph_id argux_item.default_graph_id'></div>
         <div metal:use-macro="load: ../graph_full.pt"></div>

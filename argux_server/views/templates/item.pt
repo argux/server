@@ -22,7 +22,7 @@
       <li><a href="${request.application_url}/host/${argux_host}">${argux_host}</a></li>
       <li class="active">${argux_item.name}</li>
     </ol>
-    <ul class="nav nav-tabs nav-xs">
+    <ul class="nav nav-pills nav-xs">
       <li tal:define="item_l ('Details', 'Alerts', 'Triggers')"
           tal:repeat="item ('details', 'alerts','triggers')"
           tal:attributes="class 'active' if item==action else nothing">
