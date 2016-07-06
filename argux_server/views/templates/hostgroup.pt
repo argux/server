@@ -9,8 +9,6 @@
         var HOST_GROUP="${host_group}";
         var VIEW_TYPE="grid";
         var VIEW_SORT="asc";
-        var ROUTE_NAME="${route_name}";
-        var ROUTE_PARAMS=${route_params};
     </script>
 </metal:slot>
 
@@ -24,7 +22,7 @@
     <div class="page-header">
       <div class="pull-right">
           <div class="btn-group btn-group-sm" role="group" aria-label="...">
-            <button type="button" class="btn btn-default">
+            <button type="button" class="btn btn-default btn-bookmark" data-bookmark="${bookmark}">
                 <span class="glyphicon glyphicon-bookmark"></span>
             </button>
           </div>

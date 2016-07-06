@@ -10,13 +10,7 @@ from argux_server.models import (
     TriggerSeverity
 )
 
-from argux_server.dao.util import (
-    TRIGGER_CLASS,
-    ALERT_CLASS
-)
-
 from .BaseDAO import BaseDAO
-
 
 
 class HostDAO(BaseDAO):
@@ -44,28 +38,6 @@ class HostDAO(BaseDAO):
         hosts = self.db_session.query(Host).all()
 
         return hosts
-
-    def get_host_severity(self, host):
-        """Return highest severity of active triggers for this host."""
-        float_trigger_klass = TRIGGER_CLASS.get('float')
-        float_alert_klass = ALERT_CLASS.get('float')
-
-        severity = self.db_session.query(TriggerSeverity)\
-            .filter(TriggerSeverity.id.in_(
-                self.db_session.query(float_trigger_klass.severity_id)
-                .filter(float_trigger_klass.item_id.in_(
-                    self.db_session.query(Item.id)
-                    .filter(Item.host_id == host.id)
-                ))
-                .filter(float_trigger_klass.id.in_(
-                    self.db_session.query(float_alert_klass.trigger_id)
-                    .filter(float_alert_klass.end_time.is_(None))
-                ))
-            ))\
-            .order_by(TriggerSeverity.level.desc())\
-            .first()
-
-        return severity
 
     def delete_host(self, name):
         """Delete host."""

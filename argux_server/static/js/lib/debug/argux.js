@@ -430,7 +430,7 @@ user = {
     },
     remove: function(args) {
         if (args.username === undefined) {
-            throw "Username argument missing";
+            throw "username argument missing";
         }
         rest.call({
             url : ARGUX_BASE+'/rest/1.0/admin/user/'+args.username,
@@ -439,8 +439,29 @@ user = {
             error : args.error,
             complete : args.complete
         });
+    },
+    create_bookmark: function(args) {
+        if (args.bookmark === undefined) {
+            throw "bookmark argument missing";
+        }
+        rest.call({
+            url : ARGUX_BASE+'/rest/1.0/user/bookmark/'+args.bookmark,
+            type : rest.CallType.CREATE,
+            success : args.success,
+            error : args.error,
+            complete : args.complete
+        });
     }
 };
+
+$(function() {
+    $('.btn-bookmark').click(function(e) {
+        var bookmark = $(this).data('bookmark');
+        user.create_bookmark({
+            bookmark : bookmark
+        });
+    });
+});
 
 function update_chart (obj, chart, config, repeat) {
     var chart_id = obj.data('graphid');

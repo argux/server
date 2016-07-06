@@ -111,8 +111,10 @@ class MainViews(BaseView):
     def hostgroup_details(self):
         group = self.request.matchdict['group']
 
+        nav_hash = self.dao.nav_dao.add_nav_item_for_request(
+            self.request)
+
         return {
-            "route_name" : "hostgroup_details",
-            "route_params": json.dumps(self.request.matchdict),
+            "bookmark": nav_hash,
             "host_group": group
-            }
+        }

@@ -41,7 +41,7 @@ class RestHostViews(RestView):
         for host in d_hosts:
             sev_label = 'unknown'
             n_items = self.dao.item_dao.get_item_count_from_host(host)
-            severity = self.dao.host_dao.get_host_severity(host)
+            severity = self.dao.get_host_severity(host)
             if (severity):
                 sev_label = severity.key
             hosts.append({

@@ -5,6 +5,8 @@ from sqlalchemy import (
     Index,
     Integer,
     Text,
+    Table,
+    DateTime,
     ForeignKey,
     Boolean,
     Binary
@@ -35,6 +37,34 @@ class HashMethod(BASE):
 
 Index('u_hashmethod_name', HashMethod.name, unique=True)
 
+user_bookmark_table = Table('user_bookmark',
+    BASE.metadata,
+    Column(
+        'navitem_id',
+        Integer,
+        ForeignKey('nav_item.id')),
+    Column(
+        'user_id',
+        Integer,
+        ForeignKey('user.id'))
+)
+
+user_history_table = Table('user_history',
+    BASE.metadata,
+    Column(
+        'navitem_id',
+        Integer,
+        ForeignKey('nav_item.id')),
+    Column(
+        'user_id',
+        Integer,
+        ForeignKey('user.id')),
+    Column(
+        'timestamp',
+        DateTime,
+        nullable=False)
+)
+
 
 # pylint: disable=too-few-public-methods
 class User(BASE):
@@ -57,6 +87,10 @@ class User(BASE):
     local = Column(Boolean, default=False, nullable=False)
     locked = Column(Boolean, default=False, nullable=False)
     protected = Column(Boolean, default=False, nullable=False)
+    bookmarks = relationship("NavItem",
+        secondary=lambda: user_bookmark_table)
+    history = relationship("NavItem",
+        secondary=lambda: user_history_table)
 
 Index('u_user_name', User.name, unique=True)
 Index('i_user_hashmethod_id', User.hashmethod_id)

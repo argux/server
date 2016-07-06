@@ -57,7 +57,7 @@ class RestHostGroupViews(RestView):
         for host in group.hosts:
             sev_label = 'unknown'
             n_items = self.dao.item_dao.get_item_count_from_host(host)
-            severity = self.dao.host_dao.get_host_severity(host)
+            severity = self.dao.get_host_severity(host)
             if (severity):
                 sev_label = severity.key
 
@@ -87,7 +87,7 @@ class RestHostGroupViews(RestView):
             critical = 0
             warning = 0
             for host in group.hosts:
-                severity = self.dao.host_dao.get_host_severity(host)
+                severity = self.dao.get_host_severity(host)
                 if severity:
                     if severity.key == 'warn':
                         warning=warning+1

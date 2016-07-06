@@ -97,8 +97,8 @@ def initdb(settings):
         initialise_hostgroups()
 
         user_dao = UserDAO(DB_SESSION)
-        user_dao.create_user('', 'admin', 'admin', hash_method='bcrypt')
-        user_dao.create_user('', '__monitor__', None, hash_method='bcrypt',protected=True)
+        user_dao.create_user('admin', 'admin', hash_method='bcrypt')
+        user_dao.create_user('__monitor__', None, hash_method='bcrypt',protected=True)
 
 
 def main():
