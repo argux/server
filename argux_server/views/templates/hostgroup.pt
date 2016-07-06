@@ -13,8 +13,6 @@
 </metal:slot>
 
 <div metal:fill-slot="custom-js">
-    <script src="${request.static_url('argux_server:static/js/ext/Chart.min.js')}"></script>
-    <script src="${request.static_url('argux_server:static/js/lib/argux.js')}"></script>
     <script src="${request.static_url('argux_server:static/js/source/hostgroup.js')}"></script>
 </div>
 
@@ -22,7 +20,10 @@
     <div class="page-header">
       <div class="pull-right">
           <div class="btn-group btn-group-sm" role="group" aria-label="...">
-            <button type="button" class="btn btn-default btn-bookmark" data-bookmark="${bookmark}">
+            <button type="button"
+                tal:attributes="class 'btn btn-default btn-bookmark active' if bookmarked==True else 'btn btn-default btn-bookmark'"
+                class="btn btn-default btn-bookmark"
+                data-bookmark="${bookmark}">
                 <span class="glyphicon glyphicon-bookmark"></span>
             </button>
           </div>

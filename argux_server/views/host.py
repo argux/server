@@ -57,26 +57,9 @@ class MainViews(BaseView):
         permission='view'
     )
     def host_default(self):
-        host_name = self.request.matchdict['host']
-        host_desc = ''
-        n_alerts = 0
-        host = self.dao.host_dao.get_host_by_name(host_name)
+        self.request.matchdict['action'] = 'metrics'
 
-        if host:
-            host_desc = host.description
-
-        has_summary = False
-
-        if has_summary is True:
-            action = 'summary'
-        else:
-            action = 'metrics'
-
-        return {
-            "argux_host": host_name,
-            "argux_host_desc": host_desc,
-            "active_alerts": n_alerts,
-            "action": action}
+        return self.host()
 
     @view_config(
         route_name='host',
@@ -88,6 +71,17 @@ class MainViews(BaseView):
         action = self.request.matchdict['action']
         n_alerts = 0
         addresses = []
+        bookmarked = False
+
+        nav_item = self.dao.nav_dao.add_nav_item_for_request(
+            'host',
+            self.request)
+
+        user = self.dao.user_dao.get_user(
+            self.request.authenticated_userid)
+
+        if nav_item in user.bookmarks:
+            bookmarked = True
 
         host_desc = ''
         h = self.dao.host_dao.get_host_by_name(host)
@@ -100,6 +94,8 @@ class MainViews(BaseView):
             "argux_host_desc": h.description,
             "addresses": h.addresses,
             "active_alerts": n_alerts,
+            "bookmarked": bookmarked,
+            "bookmark": nav_item.nav_hash,
             "action": action}
 
     # pylint: disable=no-self-use
@@ -110,11 +106,20 @@ class MainViews(BaseView):
     )
     def hostgroup_details(self):
         group = self.request.matchdict['group']
+        bookmarked = False
 
-        nav_hash = self.dao.nav_dao.add_nav_item_for_request(
+        nav_item = self.dao.nav_dao.add_nav_item_for_request(
+            'hostgroup_details',
             self.request)
 
+        user = self.dao.user_dao.get_user(
+            self.request.authenticated_userid)
+
+        if nav_item in user.bookmarks:
+            bookmarked = True
+
         return {
-            "bookmark": nav_hash,
+            "bookmarked": bookmarked,
+            "bookmark": nav_item.nav_hash,
             "host_group": group
         }

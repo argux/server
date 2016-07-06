@@ -51,6 +51,27 @@ class RestUserViews(RestView):
 
     @view_config(
         route_name='rest_user_bookmark_1',
+        request_method='DELETE',
+        require_csrf=True,
+        permission='view'
+    )
+    def user_bookmark_1_view_delete(self):
+        bookmark = self.request.matchdict['bookmark'].lower()
+
+        item = self.dao.nav_dao.lookup_nav_item(bookmark)
+        if item is None:
+            # Return Conflict (Item doesn't exist)
+            return None
+
+        user = self.dao.user_dao.get_user(
+            self.request.authenticated_userid)
+
+        user.bookmarks.remove(item)
+
+        return {'ok':'ok'}
+
+    @view_config(
+        route_name='rest_user_bookmark_1',
         request_method='GET',
         require_csrf=True,
         permission='view'

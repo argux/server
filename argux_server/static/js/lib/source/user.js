@@ -51,14 +51,34 @@ user = {
             error : args.error,
             complete : args.complete
         });
+    },
+    delete_bookmark: function(args) {
+        if (args.bookmark === undefined) {
+            throw "bookmark argument missing";
+        }
+        rest.call({
+            url : ARGUX_BASE+'/rest/1.0/user/bookmark/'+args.bookmark,
+            type : rest.CallType.DELETE,
+            success : args.success,
+            error : args.error,
+            complete : args.complete
+        });
     }
 };
 
 $(function() {
     $('.btn-bookmark').click(function(e) {
         var bookmark = $(this).data('bookmark');
-        user.create_bookmark({
-            bookmark : bookmark
-        });
+        if ($(this).hasClass('active')) {
+            $(this).removeClass('active');
+            user.delete_bookmark({
+                bookmark : bookmark
+            });
+        } else {
+            $(this).addClass('active');
+            user.create_bookmark({
+                bookmark : bookmark
+            });
+        }
     });
 });

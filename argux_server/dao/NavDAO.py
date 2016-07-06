@@ -23,9 +23,9 @@ class NavDAO(BaseDAO):
 
     """NavDAO Class."""
 
-    def add_nav_item_for_request(self, request):
-        serialised_route_name = \
-            request.matched_route.name
+    def add_nav_item_for_request(self, route_name, request):
+        serialised_route_name = route_name
+
         serialised_matched_dict = \
             json.dumps(
                 request.matchdict
@@ -58,7 +58,7 @@ class NavDAO(BaseDAO):
                 .filter(NavItem.route_params == '{}')\
                 .first()
 
-        return item.nav_hash
+        return item
 
     def lookup_nav_item(self, nav_hash):
         item = self.db_session.query(NavItem)\
