@@ -29,6 +29,34 @@ class RestUserViews(RestView):
     """
 
     @view_config(
+        route_name='rest_user_bookmarks_1',
+        request_method='GET',
+        require_csrf=True,
+        permission='view'
+    )
+    def user_bookmarks_1_view_get(self):
+        bookmarks = []
+
+        user = self.dao.user_dao.get_user(
+            self.request.authenticated_userid)
+
+        for bookmark in user.bookmarks:
+            matched = json.loads(bookmark.route_matched)
+
+            url = self.request.route_url(
+                route_name=bookmark.route_name,
+                **matched)
+
+            bookmark.append({
+                'url': url,
+                'title': bookmark.title
+            )
+
+        return {
+            'bookmarks' : bookmarks
+        }
+
+    @view_config(
         route_name='rest_user_bookmark_1',
         request_method='POST',
         require_csrf=True,
@@ -87,8 +115,6 @@ class RestUserViews(RestView):
             a = {'route_name': item.route_name}
             a.update(matched)
             print(type(matched))
-
-            url = self.request.route_url(route_name=item.route_name, **matched)
 
             print(url)
 

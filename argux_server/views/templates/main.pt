@@ -46,7 +46,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-btn btn" href="${request.route_url('profile')}">
+                <a class="navbar-btn btn" href="${request.route_url('profile_default')}">
                 <span class="glyphicon glyphicon-user"></span> ${request.authenticated_userid}
                 </a>
             </div>

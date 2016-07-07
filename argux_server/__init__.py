@@ -123,8 +123,10 @@ def main(global_config, **settings):
                      '/login')
     config.add_route('logout',
                      '/logout')
-    config.add_route('profile',
+    config.add_route('profile_default',
                      '/profile')
+    config.add_route('profile',
+                     '/profile/{action}')
     config.add_route('reports_default',
                      '/reports')
 
@@ -199,6 +201,8 @@ def main(global_config, **settings):
     config.add_route('rest_admin_users_1',
                      '/rest/1.0/admin/user')
 
+    config.add_route('rest_user_bookmarks_1',
+                     '/rest/1.0/user/bookmark')
     config.add_route('rest_user_bookmark_1',
                      '/rest/1.0/user/bookmark/{bookmark}')
 

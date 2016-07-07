@@ -35,6 +35,7 @@ class NavItem(BASE):
     route_name = Column(Text, nullable=False)
     route_matched = Column(Text, nullable=False)
     route_params = Column(Text, nullable=False)
+    title = Column(Text, nullable=False)
 
 Index('u_nav_item_index',
     NavItem.nav_hash,

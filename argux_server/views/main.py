@@ -88,11 +88,23 @@ class MainViews(BaseView):
         return response
 
     @view_config(
+        route_name='profile_default',
+        renderer='templates/profile.pt',
+        permission='view'
+    )
+    def profile_default(self):
+        self.request.matchdict['action'] = 'details'
+
+        return self.profile()
+
+    @view_config(
         route_name='profile',
         renderer='templates/profile.pt',
         permission='view'
     )
     def profile(self):
+        action = self.request.matchdict['action']
+
         return {
-            "action": 'details',
+            "action": action,
             }

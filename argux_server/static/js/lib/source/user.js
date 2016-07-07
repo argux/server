@@ -63,6 +63,8 @@ user = {
             error : args.error,
             complete : args.complete
         });
+    },
+    get_bookmarks: function(args) {
     }
 };
 

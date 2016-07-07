@@ -23,7 +23,7 @@ class NavDAO(BaseDAO):
 
     """NavDAO Class."""
 
-    def add_nav_item_for_request(self, route_name, request):
+    def add_nav_item_for_request(self, route_name, request, title):
         serialised_route_name = route_name
 
         serialised_matched_dict = \
@@ -45,7 +45,8 @@ class NavDAO(BaseDAO):
                 nav_hash = hex_nav_hash,
                 route_name = serialised_route_name,
                 route_matched = serialised_matched_dict,
-                route_params = '{}')
+                route_params = '{}',
+                title = title)
 
             self.db_session.add(item)
             self.db_session.flush()
