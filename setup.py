@@ -19,6 +19,7 @@ REQUIRES = [
     'transaction',
     'zope.sqlalchemy',
     'waitress',
+    'requests == 2.9.1',
     'python-dateutil == 2.4',
     'bcrypt == 2.0',
 ]

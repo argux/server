@@ -6,20 +6,17 @@
     <script type="text/javascript">
         var ARGUX_BASE="${request.application_url}";
         var CSRF_TOKEN="${request.session.get_csrf_token()}";
+        var ACTION="${action}";
+        var VIEW_SORT="asc";
     </script>
+</div>
+
+<div metal:fill-slot="custom-js">
+    <script src="${request.static_url('argux_server:static/js/source/profile.js')}"></script>
 </div>
 
 <div metal:fill-slot="content">
     <div class="page-header">
-      <!--
-      <div class="pull-right">
-          <div class="btn-group btn-group-sm" role="group" aria-label="...">
-            <button type="button" class="btn btn-default">
-                <span class="glyphicon glyphicon-bookmark"></span>
-            </button>
-          </div>
-      </div>
-      -->
       <h3>Profile <small>${request.authenticated_userid}</small></h3>
     </div>
     <ul class="nav nav-pills nav-xs">

@@ -47,10 +47,10 @@ class RestUserViews(RestView):
                 route_name=bookmark.route_name,
                 **matched)
 
-            bookmark.append({
+            bookmarks.append({
                 'url': url,
                 'title': bookmark.title
-            )
+            })
 
         return {
             'bookmarks' : bookmarks

@@ -17,6 +17,6 @@ recursive-include argux_server *.woff
 recursive-include argux_server *.woff2
 recursive-include argux_server *.xml
 
-prune argux_server/static/js/source*
+#prune argux_server/static/js/source*
 prune test*
 prune tests*

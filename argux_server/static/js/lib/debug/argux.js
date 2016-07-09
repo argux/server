@@ -463,6 +463,14 @@ user = {
             error : args.error,
             complete : args.complete
         });
+    },
+    get_bookmarks: function(args) {
+        rest.call({
+            url : ARGUX_BASE+'/rest/1.0/user/bookmark',
+            success : args.success,
+            error : args.error,
+            complete : args.complete
+        });
     }
 };
 
