@@ -48,6 +48,7 @@ class RestUserViews(RestView):
                 **matched)
 
             bookmarks.append({
+                'id': bookmark.nav_hash,
                 'url': url,
                 'title': bookmark.title
             })
