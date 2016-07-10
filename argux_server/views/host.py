@@ -76,7 +76,7 @@ class MainViews(BaseView):
         nav_item = self.dao.nav_dao.add_nav_item_for_request(
             'host',
             self.request,
-            'Host "' + host + '" - ' + action)
+            '[Host] ' + host + ' - ' + action)
 
         user = self.dao.user_dao.get_user(
             self.request.authenticated_userid)
@@ -112,7 +112,7 @@ class MainViews(BaseView):
         nav_item = self.dao.nav_dao.add_nav_item_for_request(
             'hostgroup_details',
             self.request,
-            'Hostgroup "' + group + '"')
+            '[Hostgroup] ' + group + '')
 
         user = self.dao.user_dao.get_user(
             self.request.authenticated_userid)

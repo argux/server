@@ -34,7 +34,7 @@ $(function() {
         if(bookmarks.length > 0) {
             $.each(bookmarks, function(i, value) {
                 list.append(
-                    '<tr data-bookmark="'+value.id+'" class="success">' +
+                    '<tr data-bookmark="'+value.id+'">' +
                     '<td>'+
                     '<a class="host" href="'+value.url+'">' +
                     '<span class="glyphicon glyphicon-bookmark"></span> '+

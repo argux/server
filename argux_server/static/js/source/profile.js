@@ -34,7 +34,7 @@ $(function() {
         if(bookmarks.length > 0) {
             $.each(bookmarks, function(i, value) {
                 list.append(
-                    '<tr data-bookmark="'+value.id+'" class="success">' +
+                    '<tr data-bookmark="'+value.id+'">' +
                     '<td>'+
                     '<a class="host" href="'+value.url+'">' +
                     '<span class="glyphicon glyphicon-bookmark"></span> '+
@@ -77,17 +77,18 @@ $(function() {
 
             update_view();
         });
+
+        $('#remove-bookmark-form').submit(function(event) {
+            user.delete_bookmark({
+                'bookmark': $('#remove-bookmark').val()
+            });
+            $('#remove-bookmark-modal').modal('hide');
+
+            user.get_bookmarks({
+                success : get_bookmarks_success_callback
+            });
+        });
     }
 
-    $('#remove-bookmark-form').submit(function(event) {
-        user.delete_bookmark({
-            'bookmark': $('#remove-bookmark').val()
-        });
-        $('#remove-bookmark-modal').modal('hide');
-
-        user.get_bookmarks({
-            success : get_bookmarks_success_callback
-        });
-    });
 });
 
