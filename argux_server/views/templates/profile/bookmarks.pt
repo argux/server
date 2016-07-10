@@ -12,3 +12,34 @@
         </div>
     </div>
 </div>
+<div class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby=""
+     id="remove-bookmark-modal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form id="remove-bookmark-form" action="">
+                <div class="modal-header">
+                    <button type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Remove Bookmark?<h4>
+                </div>
+                <div class="modal-body">
+                    <div role="tabpanel" class="tab-pane active">
+                    <input type="hidden" id="remove-bookmark"></input>
+                    <p id="remove-bookmark-message">Do you really want to remove bookmark...</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Remove Bookmark</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
