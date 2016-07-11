@@ -90,5 +90,9 @@ $(function() {
         });
     }
 
+    if (ACTION === 'details') {
+
+    }
+
 });
 
