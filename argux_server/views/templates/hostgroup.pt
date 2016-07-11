@@ -9,11 +9,12 @@
         var HOST_GROUP="${host_group}";
         var VIEW_TYPE="grid";
         var VIEW_SORT="asc";
+        var ACTION="{action}";
     </script>
 </metal:slot>
 
 <div metal:fill-slot="custom-js">
-    <script src="${request.static_url('argux_server:static/js/source/hostgroup.js')}"></script>
+    <script src="${request.static_url('argux_server:static/js/hostgroup.js')}"></script>
 </div>
 
 <div metal:fill-slot="content">
@@ -50,8 +51,21 @@
       <li class="dropdown"><a href="/hosts/groups"><span class="glyphicon glyphicon-list"></span></a></li>
       <li class="active">${host_group}</li>
     </ol>
-    <div class="row" id="host-list">
-    </div>
+    <ul class="nav nav-pills nav-xs">
+      <li tal:define="item_l ('Hosts', 'Alerts')"
+          tal:repeat="item ('hosts', 'alerts')"
+          tal:attributes="class 'active' if item==action else nothing">
+        <a tal:attributes="href request.application_url+'/hosts/groups/'+host_group+'/'+item">
+            <span tal:content="item_l[repeat.item.index]">
+            <span tal:condition="item=='alerts'"
+                  class="badge" id="alert_count"></span>
+        </a>
+        <span tal:condition="action==item">
+            <span tal:define="global tmpl load: ./hostgroup/${item}.pt"/>
+        </span>
+      </li>
+    </ul>
+    <div metal:extend-macro='tmpl'></div>
 </div>
 
 </html>

@@ -99,7 +99,16 @@ class MainViews(BaseView):
             "bookmark": nav_item.nav_hash,
             "action": action}
 
-    # pylint: disable=no-self-use
+    @view_config(
+        route_name='hostgroup_details_default',
+        renderer='templates/hostgroup.pt',
+        permission='view'
+    )
+    def hostgroup_details_default(self):
+        self.request.matchdict['action'] = 'hosts'
+
+        return self.hostgroup_details()
+
     @view_config(
         route_name='hostgroup_details',
         renderer='templates/hostgroup.pt',
@@ -107,12 +116,13 @@ class MainViews(BaseView):
     )
     def hostgroup_details(self):
         group = self.request.matchdict['group']
+        action = self.request.matchdict['action']
         bookmarked = False
 
         nav_item = self.dao.nav_dao.add_nav_item_for_request(
             'hostgroup_details',
             self.request,
-            '[Hostgroup] ' + group + '')
+            '[Hostgroup] ' + group + ' - ' + action)
 
         user = self.dao.user_dao.get_user(
             self.request.authenticated_userid)
@@ -123,5 +133,6 @@ class MainViews(BaseView):
         return {
             "bookmarked": bookmarked,
             "bookmark": nav_item.nav_hash,
-            "host_group": group
+            "host_group": group,
+            "action": action
         }

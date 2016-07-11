@@ -83,34 +83,36 @@ $(function() {
         });
     }
 
-    host.get_group_members({
-        group : HOST_GROUP,
-        success : get_group_members_success_callback
-    });
+    if (ACTION === "hosts") {
+        host.get_group_members({
+            group : HOST_GROUP,
+            success : get_group_members_success_callback
+        });
 
-    $('.hostlist-view').click(function(e) {
-        VIEW_TYPE = $(this).data('view');
-        if (VIEW_TYPE === "list") {
-            $('.hostlist-view-list').addClass('active');
-            $('.hostlist-view-grid').removeClass('active');
-        } else {
-            $('.hostlist-view-grid').addClass('active');
-            $('.hostlist-view-list').removeClass('active');
-        }
-        update_view();
-    });
+        $('.hostlist-view').click(function(e) {
+            VIEW_TYPE = $(this).data('view');
+            if (VIEW_TYPE === "list") {
+                $('.hostlist-view-list').addClass('active');
+                $('.hostlist-view-grid').removeClass('active');
+            } else {
+                $('.hostlist-view-grid').addClass('active');
+                $('.hostlist-view-list').removeClass('active');
+            }
+            update_view();
+        });
 
-    $('.hostlist-sort').click(function(e) {
-        VIEW_SORT = $(this).data('direction');
-        if (VIEW_SORT === "desc") {
-            group_hosts = group_hosts.sort(function(a, b) {return a.name < b.name});
-            $('.hostlist-sort-desc').addClass('active');
-            $('.hostlist-sort-asc').removeClass('active');
-        } else {
-            group_hosts = group_hosts.sort(function(a, b) {return a.name >= b.name});
-            $('.hostlist-sort-asc').addClass('active');
-            $('.hostlist-sort-desc').removeClass('active');
-        }
-        update_view();
-    });
+        $('.hostlist-sort').click(function(e) {
+            VIEW_SORT = $(this).data('direction');
+            if (VIEW_SORT === "desc") {
+                group_hosts = group_hosts.sort(function(a, b) {return a.name < b.name});
+                $('.hostlist-sort-desc').addClass('active');
+                $('.hostlist-sort-asc').removeClass('active');
+            } else {
+                group_hosts = group_hosts.sort(function(a, b) {return a.name >= b.name});
+                $('.hostlist-sort-asc').addClass('active');
+                $('.hostlist-sort-desc').removeClass('active');
+            }
+            update_view();
+        });
+    }
 });
