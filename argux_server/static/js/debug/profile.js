@@ -77,17 +77,22 @@ $(function() {
 
             update_view();
         });
+
+        $('#remove-bookmark-form').submit(function(event) {
+            user.delete_bookmark({
+                'bookmark': $('#remove-bookmark').val()
+            });
+            $('#remove-bookmark-modal').modal('hide');
+
+            user.get_bookmarks({
+                success : get_bookmarks_success_callback
+            });
+        });
     }
 
-    $('#remove-bookmark-form').submit(function(event) {
-        user.delete_bookmark({
-            'bookmark': $('#remove-bookmark').val()
-        });
-        $('#remove-bookmark-modal').modal('hide');
+    if (ACTION === 'details') {
 
-        user.get_bookmarks({
-            success : get_bookmarks_success_callback
-        });
-    });
+    }
+
 });
 

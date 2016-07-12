@@ -9,7 +9,7 @@
         var HOST_GROUP="${host_group}";
         var VIEW_TYPE="grid";
         var VIEW_SORT="asc";
-        var ACTION="{action}";
+        var ACTION="${action}";
     </script>
 </metal:slot>
 

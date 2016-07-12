@@ -1,6 +1,31 @@
 var group_hosts;
 
 $(function() {
+
+    function get_group_alerts_success_callback(json) {
+        if (VIEW_SORT === "desc") {
+            group_hosts = json.hosts.sort(function(a, b) {return a.name < b.name});
+        } else {
+            group_hosts = json.hosts.sort(function(a, b) {return a.name >= b.name});
+        }
+
+        update_alerts_view();
+    }
+
+    function update_alerts_view() {
+        active_alert_count = 0;
+
+        $.each(group_hosts, function(i, value) {
+            active_alert_count+=value.active_alerts;
+        });
+
+        if (active_alert_count > 0) {
+            $("#alert_count").text(active_alert_count);
+        } else {
+            $("#alert_count").text('');
+        }
+    }
+
     function get_group_members_success_callback(json) {
         if (VIEW_SORT === "desc") {
             group_hosts = json.hosts.sort(function(a, b) {return a.name < b.name});
@@ -8,11 +33,13 @@ $(function() {
             group_hosts = json.hosts.sort(function(a, b) {return a.name >= b.name});
         }
 
-        update_view();
+        update_hosts_view();
     }
 
-    function update_view() {
+    function update_hosts_view() {
         var host_list = $('#host-list');
+        var active_alert_count = 0;
+
         host_list.empty();
         if (VIEW_TYPE === 'list') {
             host_list.append(
@@ -80,7 +107,15 @@ $(function() {
                     );
                     break;
             }
+            active_alert_count+=value.active_alerts;
         });
+
+        if (active_alert_count > 0) {
+            $("#alert_count").text(active_alert_count);
+        } else {
+            $("#alert_count").text('');
+        }
+
     }
 
     if (ACTION === "hosts") {
@@ -98,7 +133,7 @@ $(function() {
                 $('.hostlist-view-grid').addClass('active');
                 $('.hostlist-view-list').removeClass('active');
             }
-            update_view();
+            update_hosts_view();
         });
 
         $('.hostlist-sort').click(function(e) {
@@ -112,7 +147,13 @@ $(function() {
                 $('.hostlist-sort-asc').addClass('active');
                 $('.hostlist-sort-desc').removeClass('active');
             }
-            update_view();
+            update_hosts_view();
+        });
+    }
+    if (ACTION === "alerts") {
+        host.get_group_alerts({
+            group : HOST_GROUP,
+            success : get_group_alerts_success_callback
         });
     }
 });
