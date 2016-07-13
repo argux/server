@@ -23,7 +23,7 @@ class Tag(BASE):
 
     Model for storing Tags.
 
-    It has indicators to determine which 
+    It has indicators to determine which
     """
 
     __tablename__ = 'tag'

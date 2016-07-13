@@ -126,7 +126,7 @@ class RestHostViews(RestView):
                         'hostgroup': group,
                         'conflict': 'Does not exists'
                     }))
-                
+
 
         host = self.dao.host_dao.create_host(
             name=host_name,
@@ -188,7 +188,7 @@ class RestHostViews(RestView):
         items = []
         details = []
         active_alerts = []
-        active_alert_count = 0 
+        active_alert_count = 0
         if host is None:
             return Response(
                 status="404 Not Found",

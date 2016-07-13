@@ -110,7 +110,7 @@ class RestUserViews(RestView):
         users = []
         for user in d_users:
             users.append({
-                "name": user.name,  
+                "name": user.name,
                 "protected": user.protected
             })
 

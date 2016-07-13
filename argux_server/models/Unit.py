@@ -23,7 +23,7 @@ class Unit(BASE):
 
     Model for storing Units.
 
-    It has indicators to determine which 
+    It has indicators to determine which
     """
 
     __tablename__ = 'unit'

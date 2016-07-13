@@ -36,7 +36,7 @@ def __verify_gen_hash_function(func):
     """
     Verify function to generate a hash.
 
-    Should have only one parameter called 'password'. 
+    Should have only one parameter called 'password'.
     """
     sig = inspect.signature(func)
     if len(sig.parameters) != 1:

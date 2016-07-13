@@ -43,7 +43,7 @@ class AuthenticationTests(unittest.TestCase):
         format.
 
         This Test validates the error-message when the function
-        is missing a 'username' argument. 
+        is missing a 'username' argument.
         """
         with self.assertRaises(ValueError) as cm:
             register_auth_functions(
@@ -65,7 +65,7 @@ class AuthenticationTests(unittest.TestCase):
         format.
 
         This Test validates the error-message when the function
-        is missing a 'password' argument. 
+        is missing a 'password' argument.
         """
         with self.assertRaises(ValueError) as cm:
             register_auth_functions(
@@ -109,7 +109,7 @@ class AuthenticationTests(unittest.TestCase):
         format.
 
         This Test validates the error-message when the function
-        is missing a 'username' argument. 
+        is missing a 'username' argument.
         """
         with self.assertRaises(ValueError) as cm:
             register_auth_functions(

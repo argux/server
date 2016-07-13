@@ -179,7 +179,7 @@ class RestGraphViews(RestView):
                 status='400 Bad Request',
                 content_type='application/json')
 
-        return {} 
+        return {}
 
     @view_config(
         route_name='rest_graph_1',
@@ -350,7 +350,7 @@ class RestGraphViews(RestView):
                             tf_max_value = max_value
 
                     sum_value += item.value
-                    interval_end = item 
+                    interval_end = item
 
                 if len(interval_values) > 0:
                     avg_value = sum_value / len(interval_values)

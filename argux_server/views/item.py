@@ -53,7 +53,7 @@ class ItemViews(BaseView):
         i = TIMESPAN_EXPR.match(timespan)
         if i is None:
             timespan = '30m'
-        
+
         has_details = False
 
         host = self.dao.host_dao.get_host_by_name(host_name)
