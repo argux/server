@@ -21,7 +21,7 @@ $(function() {
             '<div class="panel panel-default">' +
             '<table class="table table-striped">' +
             '<thead>' +
-            '<tr><th>Host</th><th>Alert</th><th>Duration</th></tr>' +
+            '<tr><th>Host</th><th>Alert</th><th>Duration</th><th>Acknowledged</th></tr>' +
             '</thead>' +
             '<tbody id="alert-list-body">' +
             '</tbody>' +
@@ -35,13 +35,34 @@ $(function() {
         $.each(group_hosts, function(i, host) {
             active_alert_count+=host.active_alerts;
             $.each(host.alerts, function (i, host_alert) {
+                if(host_alert.severity === 'info') {
+                    icon = 'glyphicon-none';
+                    severity = 'info';
+                } else {
+                    if (host_alert.severity === "crit") {
+                        severity = "danger";
+                    }
+                    if (host_alert.severity === "warn") {
+                        severity = "warning";
+                    }
+                    icon = 'glyphicon-exclamation-sign';
+                }
+                if(host_alert.acknowledgement === null) {
+                    ack = 'No (<a href="#">Acknowledge</a>)';
+                } else {
+                    ack = 'Yes (<a href="#">Show Ack</a>)';
+                }
                 alert_list.append(
-                    '<tr>' +
+                    '<tr class="'+severity+'">' +
                     '<td>'+
                     host.name +
                     '</td>' +
                     '<td>'+host_alert.name+'</td>' +
-                    '<td>0</td>' +
+                    '<td>'+
+                    moment(host_alert.start_time).fromNow(true) +
+                    '</td><td>' +
+                    ack +
+                    '</td>' +
                     '</tr>'
                 );
             });
