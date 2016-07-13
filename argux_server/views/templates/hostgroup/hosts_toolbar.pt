@@ -1,0 +1,26 @@
+<div class="pull-right">  
+<div class="btn-group btn-group-sm" role="group" aria-label="...">
+    <button type="button"
+        tal:attributes="class 'btn btn-default btn-bookmark active' if bookmarked==True else 'btn btn-default btn-bookmark'"
+        class="btn btn-default btn-bookmark"
+        data-bookmark="${bookmark}">
+        <span class="glyphicon glyphicon-bookmark"></span>
+    </button>
+  </div>
+  <div class="btn-group btn-group-sm" role="group" aria-label="...">
+    <button type="button" class="btn btn-default active hostlist-sort hostlist-sort-asc" data-direction="asc">
+        <span class="glyphicon glyphicon-sort-by-alphabet"></span>
+    </button>
+    <button type="button" class="btn btn-default hostlist-sort hostlist-sort-desc" data-direction="desc">
+        <span class="glyphicon glyphicon-sort-by-alphabet-alt"></span>
+    </button>
+  </div>
+  <div class="btn-group btn-group-sm" role="group" aria-label="...">
+    <button type="button" class="btn btn-default hostlist-view hostlist-view-list ${view_opts.buttons.list.state}" data-view="list">
+        <span class="glyphicon glyphicon-th-list"></span>
+    </button>
+    <button type="button" class="btn btn-default hostlist-view hostlist-view-grid ${view_opts.buttons.grid.state}" data-view="grid">
+        <span class="glyphicon glyphicon-th"></span>
+    </button>
+  </div>
+</div>
