@@ -67,7 +67,6 @@ class RestHostGroupViews(RestView):
         group_name = self.request.matchdict['group']
         action = self.request.matchdict['action']
         hosts = []
-        host_alerts = []
         n_alerts = 0
 
         group = self.dao.host_dao.get_hostgroup_by_name(name=group_name)
@@ -75,6 +74,7 @@ class RestHostGroupViews(RestView):
             return 'host-not-found'
 
         for host in group.hosts:
+            host_alerts = []
             sev_label = 'unknown'
             n_items = self.dao.item_dao.get_item_count_from_host(host)
             n_alerts += self.dao.get_active_alert_count(host)

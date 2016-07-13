@@ -14,9 +14,37 @@ $(function() {
 
     function update_alerts_view() {
         active_alert_count = 0;
+        var alert_list = $('#alert-list');
+        alert_list.empty();
+        alert_list.append(
+            '<div class="col-xs-12">' +
+            '<div class="panel panel-default">' +
+            '<table class="table table-striped">' +
+            '<thead>' +
+            '<tr><th>Host</th><th>Alert</th><th>Duration</th></tr>' +
+            '</thead>' +
+            '<tbody id="alert-list-body">' +
+            '</tbody>' +
+            '</table>' +
+            '</div>' +
+            '</div>'
+        );
 
-        $.each(group_hosts, function(i, value) {
-            active_alert_count+=value.active_alerts;
+        alert_list = $('#alert-list-body');
+
+        $.each(group_hosts, function(i, host) {
+            active_alert_count+=host.active_alerts;
+            $.each(host.alerts, function (i, host_alert) {
+                alert_list.append(
+                    '<tr>' +
+                    '<td>'+
+                    host.name +
+                    '</td>' +
+                    '<td>'+host_alert.name+'</td>' +
+                    '<td>0</td>' +
+                    '</tr>'
+                );
+            });
         });
 
         if (active_alert_count > 0) {
@@ -24,6 +52,7 @@ $(function() {
         } else {
             $("#alert_count").text('');
         }
+
     }
 
     function get_group_members_success_callback(json) {
