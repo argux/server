@@ -45,7 +45,6 @@ class FloatSimpleTrigger(AbstractSimpleTrigger, BASE):
 
     __tablename__ = 'simple_trigger_float'
 
-
     @staticmethod
     def validate_rule(rule):
         """Validate FloatSimpleTriger rules."""
@@ -101,6 +100,11 @@ class FloatSimpleAlert(AbstractSimpleAlert, BASE):
         nullable=False)
     trigger = relationship(FloatSimpleTrigger)
 
-Index('floatsimple_alert_start_ts', FloatSimpleAlert.start_time, mysql_length=255)
-Index('floatsimple_alert_end_ts', FloatSimpleAlert.end_time, mysql_length=255)
-
+Index(
+    'floatsimple_alert_start_ts',
+    FloatSimpleAlert.start_time,
+    mysql_length=255)
+Index(
+    'floatsimple_alert_end_ts',
+    FloatSimpleAlert.end_time,
+    mysql_length=255)

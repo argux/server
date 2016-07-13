@@ -8,7 +8,9 @@ engines:
   duplication:
     enabled: true
     exclude_fingerprints:
-    - df955cfb2c96fb691d452179a6be87dc
+    - df955cfb2c96fb691d452179a6be87dc # Float comparisons
+    - 8733798df05b069e56b46c3018b38657 # Int comparisons
+    - 5e4153a895bd84772d47eeb39ea876f5
     config:
       languages:
         python:
