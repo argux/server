@@ -130,9 +130,37 @@ class MainViews(BaseView):
         if nav_item in user.bookmarks:
             bookmarked = True
 
+        if action == 'alerts':
+            default_view_opts = {
+                "type": "list",
+                "sort": "asc",
+                "buttons": {
+                    "list": {
+                        "state": "active",
+                    },
+                    "grid": {
+                        "state": "disabled",
+                    }
+                }
+            }
+        if action == 'hosts':
+            default_view_opts = {
+                "type": "grid",
+                "sort": "asc",
+                "buttons": {
+                    "list": {
+                        "state": "",
+                    },
+                    "grid": {
+                        "state": "active",
+                    }
+                }
+            }
+
         return {
             "bookmarked": bookmarked,
             "bookmark": nav_item.nav_hash,
             "host_group": group,
-            "action": action
+            "action": action,
+            "view_opts": default_view_opts
         }
