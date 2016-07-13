@@ -21,7 +21,6 @@ from .MonitorDAO import MonitorDAO
 from .GraphDAO import GraphDAO
 
 
-
 # pylint: disable=too-few-public-methods
 class DAO(object):
 
@@ -60,35 +59,39 @@ class DAO(object):
         return n_total_alerts
 
     def get_host_severity(self, host):
-        """Return highest severity of active triggers for this host."""
+        """Return highest severity of active triggers for this host.
+
+        This should be optimized... running x queries for each individual
+        host that needs it is very slow. - Want to use UNION, but
+        I couldn't get it working with SQLAlchemy.
+        """
 
         existing_query = None
+        max_severity_level = -1
+        max_severity = None
 
         for key in TRIGGER_CLASS:
             trigger_klass = TRIGGER_CLASS.get(key)
             alert_klass = ALERT_CLASS.get(key)
 
-            new_query = self.db_session.query(trigger_klass.severity_id)\
-            .filter(trigger_klass.item_id.in_(
-                self.db_session.query(Item.id)
-                .filter(Item.host_id == host.id)
-            ))\
-            .filter(trigger_klass.id.in_(
-                self.db_session.query(alert_klass.trigger_id)
-                .filter(alert_klass.end_time.is_(None))
-            ))
+            severity = self.db_session.query(TriggerSeverity)\
+                .filter(TriggerSeverity.id.in_(
+                    self.db_session.query(trigger_klass.severity_id)\
+                    .filter(trigger_klass.item_id.in_(
+                        self.db_session.query(Item.id)
+                        .filter(Item.host_id == host.id)
+                    ))\
+                    .filter(trigger_klass.id.in_(
+                        self.db_session.query(alert_klass.trigger_id)
+                        .filter(alert_klass.end_time.is_(None))
+                    ))
+                ))\
+                .order_by(TriggerSeverity.level.desc())\
+                .first()
+            if severity is not None:
+                if severity.level > max_severity_level:
+                    max_severity_level = severity.level
+                    max_severity = severity
 
-            if existing_query is None:
-                existing_query = new_query
-            else:
-                existing_query.union(new_query)
-    
-        severity = self.db_session.query(TriggerSeverity)\
-            .filter(TriggerSeverity.id.in_(
-                existing_query
-            ))\
-            .order_by(TriggerSeverity.level.desc())\
-            .first()
-
-        return severity
+        return max_severity
 

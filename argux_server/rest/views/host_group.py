@@ -40,7 +40,9 @@ class RestHostGroupViews(RestView):
         except ValueError:
             description = ""
 
-        group = self.dao.host_dao.create_hostgroup(name=group_name, description=description)
+        group = self.dao.host_dao.create_hostgroup(
+            name=group_name,
+            description=description)
 
         return Response(
             status='201 Created',
