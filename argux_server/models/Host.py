@@ -15,7 +15,7 @@ class Host(BASE):
 
     """Host Class.
 
-    Base object for referencing Items, SimpleTriggers, and SimpleAlerts.
+    Base object for monitored hosts.
     """
 
     __tablename__ = 'host'

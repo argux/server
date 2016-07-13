@@ -42,11 +42,11 @@ class NavDAO(BaseDAO):
 
         try:
             item = NavItem(
-                nav_hash = hex_nav_hash,
-                route_name = serialised_route_name,
-                route_matched = serialised_matched_dict,
-                route_params = '{}',
-                title = title)
+                nav_hash=hex_nav_hash,
+                route_name=serialised_route_name,
+                route_matched=serialised_matched_dict,
+                route_params='{}',
+                title=title)
 
             self.db_session.add(item)
             self.db_session.flush()

@@ -47,7 +47,7 @@ class DAO(object):
 
     def get_active_alert_count(self, host):
         d_items = self.item_dao.get_items_from_host(host)
-        if (d_items == None):
+        if (d_items is None):
             return 0
 
         n_total_alerts = 0
@@ -94,4 +94,3 @@ class DAO(object):
                     max_severity = severity
 
         return max_severity
-

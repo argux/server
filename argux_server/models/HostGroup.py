@@ -3,7 +3,6 @@
 from sqlalchemy import (
     Column,
     Index,
-    Boolean,
     Integer,
     Text,
     ForeignKey,
@@ -20,9 +19,8 @@ from sqlalchemy.orm import (
 
 from . import BASE
 
-from .Host import Host
-
-hostgroupmember_table = Table('hostgroup_member',
+HOSTGROUPMEMBER_TABLE = Table(
+    'hostgroup_member',
     BASE.metadata,
     Column(
         'host_group.id',
@@ -47,8 +45,9 @@ class HostGroup(BASE):
     id = Column(Integer, primary_key=True)  # pylint: disable=invalid-name
     name = Column(Text, nullable=False)
     description = Column(Text, nullable=False, default="")
-    hosts = relationship("Host",
-        secondary=lambda: hostgroupmember_table,
+    hosts = relationship(
+        "Host",
+        secondary=lambda: HOSTGROUPMEMBER_TABLE,
         backref='hostgroups')
 
 Index('u_host_group_index', HostGroup.name, unique=True, mysql_length=255)
