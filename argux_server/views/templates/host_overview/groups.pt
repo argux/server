@@ -1,17 +1,163 @@
-<div metal:use-macro="load: ../object_overview.pt"
-    tal:define="local object_table_title 'Host groups'; local new_object_form_title 'New Host Group'; local new_object_form_submit_title 'New Group'">
-
-<thead metal:fill-slot="object-table-head">
-    <th>Name</th>
-    <th>Okay</th>
-    <th>Warning</th>
-    <th>Critical</th>
-</thead>
-
-<div metal:fill-slot="new-object-form">
-    <div role="tabpanel" class="tab-pane active" id="edit">
+<div class="section-body">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            Host groups
+            <div class="pull-right">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle btn-xs"
+                            type="button"
+                            id="dropdownMenu1"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="true">
+                    Add
+                    <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1">
+                    <li><a href="#"
+                           data-target="#create-host-modal"
+                           data-toggle="modal">Host</a>
+                    </li>
+                    <li>
+                        <a href="#"
+                           data-target="#create-hostgroup-modal"
+                           data-toggle="modal">Hostgroup</a>
+                    </li>
+                  </ul>
+                </div>
+            </div>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <th>Name</th>
+                <th>Okay</th>
+                <th>Warning</th>
+                <th>Critical</th>
+            </thead>
+            <tbody id='objects'>
+            </tbody>
+        </table>
     </div>
 </div>
+<div class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="createHostGroupLabel"
+     id="create-hostgroup-modal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
 
+            <!-- Add Object -->
+            <form id="new-object-form" action="">
+                <div class="modal-header">
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><strong>New Hostgroup<strong></h4>
+                </div>
+                <div class="modal-body">
+                    <div role="tabpanel" class="tab-pane active" id="edit">
+                        <label for="hostgroup-name">Name</label>
+                        <input type="text" class="form-control" id="hostgroup-name"/>
+                    </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <label>Available Hosts</label>
+                        <select class="form-control" id="source-hosts" multiple size="10">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2" style="text-align: center;">
+                        <div class="btn-toolbar">
+                            <div class="btn-group-vertical">
+                                <button class="btn btn-default btn-sm" style="text-align: left;">
+                                    <span class="glyphicon glyphicon-chevron-right"></span> Add
+                                </button>
+                                <button class="btn btn-default btn-sm" style="text-align: left;">
+                                    <span class="glyphicon glyphicon-chevron-left"></span> Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <label>Selected Hosts</label>
+                        <select class="form-control" id="dest-hosts" multiple size="10">
+                        </select>
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">New</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+<div class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="createHostGroupLabel"
+     id="create-host-modal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
 
+            <!-- Add Object -->
+            <form id="new-object-form" action="">
+                <div class="modal-header">
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><strong>New Host<strong></h4>
+                </div>
+                <div class="modal-body">
+                    <div role="tabpanel" class="tab-pane active" id="edit">
+                        <label for="host-name">Name</label>
+                        <input type="text" class="form-control" id="host-name"/>
+                        <label for="host-description">Description</label>
+                        <input type="text" class="form-control" id="host-description"/>
+                    </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <label>Available Groups</label>
+                        <select class="form-control" id="source-groups" multiple size="10">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-2" style="text-align: center;">
+                        <div class="btn-toolbar">
+                            <div class="btn-group-vertical">
+                                <button class="btn btn-default btn-sm" style="text-align: left;">
+                                    <span class="glyphicon glyphicon-chevron-right"></span> Add
+                                </button>
+                                <button class="btn btn-default btn-sm" style="text-align: left;">
+                                    <span class="glyphicon glyphicon-chevron-left"></span> Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-5">
+                        <label>Selected Groups</label>
+                        <select class="form-control" id="dst-groups" multiple size="10">
+                        </select>
+                    </div>
+                </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">New</button>
+                </div>
+            </form>
+        </div>
+    </div>
+<
