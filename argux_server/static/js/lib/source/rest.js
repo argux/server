@@ -2,7 +2,7 @@ rest = {
     CallType : {
         CREATE : "POST",
         READ : "GET",
-        UPDATE : "POST",
+        UPDATE : "PATCH",
         DELETE: "DELETE"
     },
     call: function (args) {

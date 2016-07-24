@@ -91,7 +91,30 @@ $(function() {
     }
 
     if (ACTION === 'details') {
+        $('#reset-password-btn').click(function(e) {
+            $('#reset-pwd-a').val('');
+            $('#reset-pwd-b').val('');
+            $('#reset-password-modal').modal('show');
+            $('#reset-pwd-a').focus();
+        });
 
+        $('#reset-password-form button[type=submit]').on('click', function(e) {
+            e.preventDefault(e);
+
+            var pass = $('#reset-pwd-a').val();
+            var confirm_pass = $('#reset-pwd-b').val();
+
+            if (pass === confirm_pass) {
+                $('#reset-password-modal').modal('hide');
+                user.set_password({
+                    password: pass
+                });
+                return true;
+            }
+            // warning
+
+            return false;
+        });
     }
 
 });

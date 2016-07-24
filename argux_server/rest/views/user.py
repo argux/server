@@ -106,17 +106,42 @@ class RestUserViews(RestView):
         permission='view'
     )
     def user_bookmark_1_view_get(self):
-        bookmark = self.request.matchdict['bookmark'].lower()
+        return Response(
+            status='400 Bad Request',
+            content_type='application/json',
+            charset='UTF-8',
+            body='{"error": "400 Bad Request", "message": "Not implemented"}')
 
-        item = self.dao.nav_dao.lookup_nav_item(bookmark)
-        if item is not None:
-            matched = json.loads(item.route_matched)
-            params = json.loads(item.route_params)
+    @view_config(
+        route_name='rest_user_profile_1',
+        request_method='PATCH',
+        require_csrf=True,
+        permission='view'
+    )
+    def user_profile_1_view_patch(self):
+        try:
+            json_body = self.request.json_body
+        except ValueError as err:
+            return Response(
+                status='400 Bad Request',
+                content_type='application/json')
 
-            a = {'route_name': item.route_name}
-            a.update(matched)
-            print(type(matched))
+        user = self.dao.user_dao.get_user(
+            self.request.authenticated_userid)
 
-            print(url)
+        try:
+            password = json_body.get('password', None)
+            if password is not None:
+                self.dao.user_dao.set_user_password(
+                    user,
+                    password)
+                return {'password reset':'ok'}
+        except ValueError as err:
+            return Response(
+                status='400 Bad Request',
+                content_type='application/json')
 
-        return {'ok':'ok'}
+
+        return Response(
+            status='400 Bad Request',
+            content_type='application/json')

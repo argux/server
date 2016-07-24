@@ -209,6 +209,8 @@ def main(global_config, **settings):
                      '/rest/1.0/user/bookmark')
     config.add_route('rest_user_bookmark_1',
                      '/rest/1.0/user/bookmark/{bookmark}')
+    config.add_route('rest_user_profile_1',
+                     '/rest/1.0/user/profile')
 
     # Pretty-print JSON, useful for development.
     if settings['rest.pretty_json'] == 'true':

@@ -9,7 +9,39 @@
     <div class="form-group">
         <label for="password" class="col-xs-4 col-sm-3 control-label">Password</label>
         <div class="col-xs-6 col-sm-4">
-        <button id="password" class="form-control btn btn-primary">Reset Password</button>
+        <a href='#' id="reset-password-btn" class="form-control btn btn-primary">Reset Password</a>
         </div>
     </div>
 </form>
+<div class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="Reset Password"
+     id="reset-password-modal">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <form id="reset-password-form" action="" autocomplete="off">
+                <div class="modal-header">
+                    <button
+                        type="button"
+                        class="close"
+                        data-dismiss="modal"
+                        aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><strong>Reset password<strong></h4>
+                </div>
+                <div class="modal-body">
+                    <div role="tabpanel" class="tab-pane active" id="edit">
+                        <label for="reset-pwd-a">Password</label>
+                        <input type="password" class="form-control" id="reset-pwd-a" autocomplete="off"/>
+                        <label for="reset-pwd-b">Password (Repeat)</label>
+                        <input type="password" class="form-control" id="reset-pwd-b" autocomplete="off"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Reset</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

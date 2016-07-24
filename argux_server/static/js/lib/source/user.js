@@ -71,6 +71,23 @@ user = {
             error : args.error,
             complete : args.complete
         });
+    },
+    set_password: function(args) {
+        if (args.password === undefined) {
+            throw "Password argument missing";
+        }
+
+        data = {
+            "password" : args.password
+        }
+        rest.call({
+            url : ARGUX_BASE+'/rest/1.0/user/profile',
+            type : rest.CallType.UPDATE,
+            data : data,
+            success : args.success,
+            error : args.error,
+            complete : args.complete
+        });
     }
 };
 

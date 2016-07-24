@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html metal:use-macro="load: main.pt"
     tal:define="global argux_parent_route 'host_overview_default'">
 

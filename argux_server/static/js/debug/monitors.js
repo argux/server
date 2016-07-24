@@ -61,7 +61,7 @@ $(function() {
                 data['active'] = "true";
                 rest.call({
                     url : ARGUX_BASE+'/rest/1.0/monitor/'+ARGUX_MONITOR_TYPE+'/'+hostname+'/'+address,
-                    type : rest.CallType.UPDATE,
+                    type : rest.CallType.CREATE, /* Replace */
                     data : data,
                     success : function() {
                         par.removeClass('pause');
@@ -74,7 +74,7 @@ $(function() {
                 data['active'] = "false";
                 rest.call({
                     url : ARGUX_BASE+'/rest/1.0/monitor/'+ARGUX_MONITOR_TYPE+'/'+hostname+'/'+address,
-                    type : rest.CallType.UPDATE,
+                    type : rest.CallType.CREATE, /* Replace */
                     data : data,
                     success : function() {
                         par.addClass('pause');
