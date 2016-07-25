@@ -95,34 +95,12 @@ class ICMPMonitor(AbstractMonitor):
     Queries Monitor dao and schedules monitoring actions.
     """
 
-    def run(self):
-        """Run the ICMPMonitor.
-
-        Ignores the 'interval' option at the moment.
-        ICMP checks are executed at 60second intervals.
+    def __init__(self, settings):
+        """Initialise ICMPMonitor.
         """
 
-        time.sleep(20)
-        self.client.login()
-
-        # Thread body.
-        while True:
-
-            try:
-                mons = self.client.get_monitors('icmp')
-                for mon in mons:
-                    if mon['active']:
-                        try:
-                            ICMPMonitor.monitor_once(self.client, mon)
-                        except Exception as e:
-                            print(str(e))
-            except Exception as e:
-                print("ICMP Monitor Error: "+str(e))
-
-            try:
-                time.sleep(60)
-            except KeyboardInterrupt:
-                self.stop()
+        super(ICMPMonitor, self).__init__(settings)
+        self.monitor_type = 'icmp'
 
     @staticmethod
     def validate_options(options):
@@ -131,8 +109,8 @@ class ICMPMonitor(AbstractMonitor):
 
         return True
 
-    @staticmethod
-    def monitor_once(client, monitor):
+    # pylint: disable=no-self-use
+    def monitor_once(self, client, monitor):
         """
         Monitor once.
         """

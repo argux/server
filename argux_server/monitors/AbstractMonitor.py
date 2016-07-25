@@ -1,7 +1,13 @@
 """ICMPMonitor module."""
 
+import time
+
 from threading import (
     Thread
+)
+
+from requests.exceptions import (
+    HTTPError
 )
 
 from sqlalchemy.orm import (
@@ -16,6 +22,8 @@ class AbstractMonitor(Thread):
 
     Abstract Monitor class for all monitor threads.
     """
+
+    monitor_type = None
 
     def __init__(self, settings):
         """Initialise AbstractMonitor.
@@ -33,8 +41,38 @@ class AbstractMonitor(Thread):
 
     # pylint: disable=no-self-use
     def run(self):
-        """Run placeholder."""
-        raise NotImplementedError
+        """Run the Monitor.
+
+        Ignores the 'interval' option at the moment.
+        checks are executed at 60second intervals.
+        """
+
+        time.sleep(20)
+        self.client.login()
+
+        # Thread body.
+        while True:
+            try:
+                mons = self.client.get_monitors(self.monitor_type)
+                for mon in mons:
+                    if mon['active']:
+                        try:
+                            self.monitor_once(self.client, mon)
+                        except Exception as e:
+                            print(str(e))
+            except HTTPError as err:
+                # If a status_code is 403, try to login again
+                if err.response.status_code == 403:
+                    self.client.login()
+                else:
+                    print("Monitor Error: "+str(e))
+            except Exception as e:
+                print("Monitor Error: "+str(e))
+
+            try:
+                time.sleep(60)
+            except KeyboardInterrupt:
+                self.stop()
 
     # pylint: disable=no-self-use
     def stop(self):
@@ -43,4 +81,8 @@ class AbstractMonitor(Thread):
 
     @classmethod
     def validate_options(cls, options):
+        raise NotImplementedError
+
+    # pylint: disable=no-self-use
+    def monitor_once(self, client, monitor):
         raise NotImplementedError

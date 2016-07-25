@@ -1,7 +1,6 @@
 """SNMPMonitor module."""
 
 import time
-import platform
 
 import re
 import subprocess
@@ -20,19 +19,12 @@ class SNMPMonitor(AbstractMonitor):
     Queries Monitor dao and schedules monitoring actions.
     """
 
-    def run(self):
-        """Run the SNMPMonitor.
-
-        Ignores the 'interval' option at the moment.
-        SNMP checks are executed at 60second intervals.
+    def __init__(self, settings):
+        """Initialise SNMPMonitor.
         """
-        # Thread body.
-        while True:
 
-            try:
-                time.sleep(60)
-            except KeyboardInterrupt:
-                self.stop()
+        super(SNMPMonitor, self).__init__(settings)
+        self.monitor_type = 'snmp'
 
     @staticmethod
     def validate_options(options):
@@ -41,8 +33,8 @@ class SNMPMonitor(AbstractMonitor):
 
         return True
 
-    @staticmethod
-    def monitor_once(dao, monitor):
+    # pylint: disable=no-self-use
+    def monitor_once(self, client, monitor):
         """
         Monitor once.
         """

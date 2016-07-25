@@ -52,36 +52,12 @@ class DNSMonitor(AbstractMonitor):
     Queries Monitor schedules monitoring actions.
     """
 
-    def run(self):
-        """Run the DNSMonitor.
-
-        Ignores the 'interval' option at the moment.
-        DNS checks are executed at 300second intervals.
+    def __init__(self, settings):
+        """Initialise DNSMonitor.
         """
 
-        time.sleep(30)
-        self.client.login()
-
-        # Thread body.
-        while True:
-            cmd = shutil.which('dig', mode=os.X_OK)
-            if cmd:
-                # Only run if dig can be found
-                try:
-                    mons = self.client.get_monitors('dns')
-                    for mon in mons:
-                        if mon['active']:
-                            try:
-                                DNSMonitor.monitor_once(self.client, mon)
-                            except Exception as err:
-                                print(">> "+str(err))
-                except Exception as err:
-                    print("DNS Monitor Error: "+str(err))
-
-            try:
-                time.sleep(15)
-            except KeyboardInterrupt:
-                self.stop()
+        super(DNSMonitor, self).__init__(settings)
+        self.monitor_type = 'dns'
 
     @staticmethod
     def validate_options(options):
@@ -90,8 +66,8 @@ class DNSMonitor(AbstractMonitor):
 
         return True
 
-    @staticmethod
-    def monitor_once(client, monitor):
+    # pylint: disable=no-self-use
+    def monitor_once(self, client, monitor):
         """
         Monitor once.
         """
