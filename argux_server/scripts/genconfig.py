@@ -66,6 +66,7 @@ def main():
         config['server:main']['use'] = 'egg:waitress#main'
         config['server:main']['host'] = '0.0.0.0'
         config['server:main']['port'] = '7000'
+        config['server:main']['url_prefix'] = '/argux'
 
     if wsgi == 'uwsgi':
         config['uwsgi'] = {}
