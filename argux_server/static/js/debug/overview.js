@@ -10,22 +10,28 @@ $(function() {
         $.each(json.groups, function(i, value) {
             var okay = (value.total - value.warning - value.critical);
 
-            if (okay > 0) {
-                okay_class = 'success';
-            } else {
+            if (value.total === 0) {
                 okay_class = '';
-            }
-
-            if (value.warning > 0) {
-                warning_class = 'warning';
+                warning_class = '';
+                critical_class = '';
             } else {
-                warning_class = 'success';
-            }
+                if (okay > 0) {
+                    okay_class = 'success';
+                } else {
+                    okay_class = '';
+                }
 
-            if (value.critical > 0) {
-                critical_class = 'danger';
-            } else {
-                critical_class = 'success';
+                if (value.warning > 0) {
+                    warning_class = 'warning';
+                } else {
+                    warning_class = 'success';
+                }
+
+                if (value.critical > 0) {
+                    critical_class = 'danger';
+                } else {
+                    critical_class = 'success';
+                }
             }
 
             $('#objects').append(
