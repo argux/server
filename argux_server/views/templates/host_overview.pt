@@ -16,7 +16,7 @@
     <script src="${request.static_url('argux_server:static/js/overview.js')}"></script>
 </div>
 <div metal:fill-slot="content">
-    <ul class="nav nav-tabs">
+    <ul class="nav nav-pills">
       <li tal:define="item_l ('Overview', 'Groups', 'Alerts')"
           tal:repeat="item ('overview', 'groups', 'alerts')"
           tal:attributes="class 'active' if item==action else nothing">
