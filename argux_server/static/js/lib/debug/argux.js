@@ -301,9 +301,15 @@ host = {
         } else {
             addresses = args.addresses;
         }
+        if (args.groups === undefined) {
+            groups = []
+        } else {
+            groups = args.groups;
+        }
 
         data = {
             "description": description,
+            "groups": groups,
             "address": addresses
         };
 

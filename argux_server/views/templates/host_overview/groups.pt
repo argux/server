@@ -48,7 +48,7 @@
         <div class="modal-content">
 
             <!-- Add Object -->
-            <form id="new-object-form" action="">
+            <form id="new-hostgroup-form" action="">
                 <div class="modal-header">
                     <button
                         type="button"
@@ -107,7 +107,7 @@
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <!-- Add Object -->
-            <form id="new-object-form" action="">
+            <form id="new-host-form" action="">
                 <div class="modal-header">
                     <button
                         type="button"
@@ -123,23 +123,23 @@
                         <label for="host-description">Description</label>
                         <input type="text" class="form-control" id="host-description"/>
                     </div>
-                    <div class="row">
+                    <div class="tab-pane row">
                         <div class="col-xs-5">
                             <label>Available Groups</label>
                             <select class="form-control" id="source-groups" multiple size="10">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
                             </select>
                         </div>
-                        <div class="col-xs-2" style="text-align: center;">
+                        <div class="col-xs-2" style="text-align: center; padding-top: 40px;">
                             <div class="btn-toolbar">
                                 <div class="btn-group-vertical">
-                                    <button class="btn btn-default btn-sm" style="text-align: left;">
+                                    <button class="btn btn-default btn-sm"
+                                            style="text-align: left;"
+                                            id="add-group">
                                         <span class="glyphicon glyphicon-chevron-right"></span> Add
                                     </button>
-                                    <button class="btn btn-default btn-sm" style="text-align: left;">
+                                    <button class="btn btn-default btn-sm"
+                                            style="text-align: left;"
+                                            id="remove-group">
                                         <span class="glyphicon glyphicon-chevron-left"></span> Remove
                                     </button>
                                 </div>
