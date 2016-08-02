@@ -30,7 +30,7 @@
       <h3>Host <small>${argux_host}</small></h3>
     </div>
     <ol class="breadcrumb">
-      <li class="dropdown"><a href="/hosts"><span class="glyphicon glyphicon-list"></span></a></li>
+      <li class="dropdown"><a href="${request.route_url('hostgroup_details_default', group='All')}"><span class="glyphicon glyphicon-list"></span></a></li>
       <li class="active">${argux_host}</li>
     </ol>
     <ul class="nav nav-pills nav-xs">

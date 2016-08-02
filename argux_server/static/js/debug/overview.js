@@ -7,7 +7,10 @@ $(function() {
         $('#objects').empty();
         $('#source-groups').empty();
 
-        json.groups = json.groups.sort(function(a, b) {return a.name >= b.name});
+        json.groups = json.groups.sort(function(a, b) {
+            return a.name >= b.name
+        });
+
         $.each(json.groups, function(i, value) {
             var okay = (value.total - value.warning - value.critical);
 
@@ -60,6 +63,19 @@ $(function() {
                         .attr('value', value.name)
                         .text(value.name));
             }
+        });
+    }
+
+    function get_host_group_members_success_callback(json) {
+        $('#source-hosts').empty();
+        json.hosts = json.hosts.sort(function(a, b) {
+            return a.name >= b.name
+        });
+        $.each(json.hosts, function(i, value) {
+            $('#source-hosts').append(
+                $('<option></option>')
+                    .attr('value', value.name)
+                    .text(value.name));
         });
     }
 
@@ -122,7 +138,10 @@ $(function() {
             );
         } else {
             $('#create-host-modal').modal('hide');
-            host.get_host_overview({'complete_callback': get_host_complete_callback});
+            $('#create-hostgroup-modal').modal('hide');
+            host.get_groups({
+                success : get_host_groups_success_callback
+            });
         }
     }
 
@@ -150,7 +169,12 @@ $(function() {
         host.get_groups({
             success : get_host_groups_success_callback
         });
+        host.get_group_members({
+            group: 'All',
+            success: get_host_group_members_success_callback
+        });
 
+        /* Host dialog */
         $('#add-group').click(function(event) {
             event.preventDefault();
             $('#source-groups option:selected').each(function() {
@@ -171,12 +195,41 @@ $(function() {
                 groups.push(this.value)
 
             });
-            host.create({
+            host.create_host({
                 hostname : $('#host-name').val(),
                 description : $('#host-description').val(),
                 groups : groups,
                 error : create_host_error
             })
         });
+
+        /* Hostgroup dialog */
+        $('#add-host').click(function(event) {
+            event.preventDefault();
+            $('#source-hosts option:selected').each(function() {
+                $('#dst-hosts').append(this);
+            });
+        });
+        $('#remove-host').click(function(event) {
+            event.preventDefault();
+            $('#dst-hosts option:selected').each(function() {
+                $('#source-hosts').append(this);
+            });
+        });
+
+        $('#new-hostgroup-form').submit(function(event) {
+            event.preventDefault();
+            hosts = []
+            $('#dst-hosts option:selected').each(function() {
+                hosts.push(this.value)
+            });
+
+            host.create_group({
+                group : $('#hostgroup-name').val(),
+                hosts : hosts,
+                error : create_host_error
+            })
+        });
+
     }
 });

@@ -29,7 +29,7 @@ host = {
             complete : args.complete
         });
     },
-    create: function(args) {
+    create_host: function(args) {
         if (args.hostname === undefined) {
             throw "Hostname argument missing";
         }
@@ -70,6 +70,35 @@ host = {
         }
         rest.call({
             url : ARGUX_BASE+'/rest/1.0/host/'+args.hostname+'/addr',
+            success : args.success,
+            error : args.error,
+            complete : args.complete
+        });
+    },
+    create_group: function(args) {
+        if (args.group === undefined) {
+            throw "group argument missing";
+        }
+        if (args.description === undefined) {
+            description = '';
+        } else {
+            description = args.description;
+        }
+        if (args.hosts === undefined) {
+            hosts = []
+        } else {
+            hosts = args.hosts;
+        }
+
+        data = {
+            "description": description,
+            "hosts" : hosts
+        };
+
+        rest.call({
+            url : ARGUX_BASE+'/rest/1.0/hostgroup/'+args.group,
+            type : rest.CallType.CREATE,
+            data : data,
             success : args.success,
             error : args.error,
             complete : args.complete

@@ -28,7 +28,7 @@ class RestHostGroupViews(RestView):
     """
 
     @view_config(
-        route_name='rest_host_group_1',
+        route_name='rest_host_group_default_1',
         request_method='POST',
         permission='view'
     )
