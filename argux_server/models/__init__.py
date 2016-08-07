@@ -15,6 +15,8 @@ from .Note import Note
 from .User import User, HashMethod
 from .UserGroup import UserGroup
 
+from .Event import Event, EventType
+
 from .HistoryGraph import HistoryGraph, HistoryGraphItem
 
 from .HostAddress import HostAddress

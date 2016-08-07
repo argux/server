@@ -25,11 +25,11 @@ from .User import User
 usergroupmember_table = Table('usergroup_member',
     BASE.metadata,
     Column(
-        'user_group.id',
+        'usergroup_id',
         Integer,
         ForeignKey('user_group.id')),
     Column(
-        'user.id',
+        'user_id',
         Integer,
         ForeignKey('user.id'))
 )
