@@ -7,12 +7,12 @@ import subprocess
 
 from datetime import datetime
 
-from .AbstractMonitor import AbstractMonitor
+from .ExternalMonitor import ExternalMonitor
 
 import transaction
 
 
-class SNMPMonitor(AbstractMonitor):
+class SNMPMonitor(ExternalMonitor):
 
     """SNMPMonitor class.
 

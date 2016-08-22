@@ -212,6 +212,11 @@ def main(global_config, **settings):
     config.add_route('rest_user_profile_1',
                      '/rest/1.0/user/profile')
 
+    config.add_route('rest_events_1',
+                     '/rest/1.0/event')
+    config.add_route('rest_event_1',
+                     '/rest/1.0/event/{event}')
+
     # Pretty-print JSON, useful for development.
     if settings['rest.pretty_json'] == 'true':
         config.add_renderer('json', JSON(indent=4))

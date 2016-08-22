@@ -12,7 +12,7 @@ from requests.exceptions import (
 
 from datetime import datetime
 
-from .AbstractMonitor import AbstractMonitor
+from .ExternalMonitor import ExternalMonitor
 
 from argux_server.rest.client import (
     RESTClient,
@@ -88,7 +88,7 @@ PARSE = {
 }
 
 
-class ICMPMonitor(AbstractMonitor):
+class ICMPMonitor(ExternalMonitor):
 
     """ICMPMonitor class.
 

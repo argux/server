@@ -53,13 +53,7 @@ class AbstractMonitor(Thread):
         # Thread body.
         while True:
             try:
-                mons = self.client.get_monitors(self.monitor_type)
-                for mon in mons:
-                    if mon['active']:
-                        try:
-                            self.monitor_once(self.client, mon)
-                        except Exception as e:
-                            print(str(e))
+                self.process_monitor()
             except HTTPError as err:
                 # If a status_code is 403, try to login again
                 if err.response.status_code == 403:
@@ -85,4 +79,8 @@ class AbstractMonitor(Thread):
 
     # pylint: disable=no-self-use
     def monitor_once(self, client, monitor):
+        raise NotImplementedError
+
+    # pylint: disable=no-self-use
+    def process_monitor(self, client, monitor):
         raise NotImplementedError

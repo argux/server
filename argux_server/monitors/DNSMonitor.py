@@ -10,7 +10,7 @@ import os
 
 from datetime import datetime
 
-from .AbstractMonitor import AbstractMonitor
+from .ExternalMonitor import ExternalMonitor
 
 
 def parse_dig(output):
@@ -45,7 +45,7 @@ DIG = 'dig @{address} +noall +answer -t {_type} {domain}'
 
 PARSE = parse_dig
 
-class DNSMonitor(AbstractMonitor):
+class DNSMonitor(ExternalMonitor):
 
     """DNSMonitor class.
 
