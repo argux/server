@@ -32,7 +32,7 @@ class EventMonitor(AbstractMonitor):
         Ignores the 'interval' option at the moment.
         Event checks are executed at 60second intervals.
         """
-        print("A")
+        print("EventMonitor")
 
     @staticmethod
     def validate_options(options):
