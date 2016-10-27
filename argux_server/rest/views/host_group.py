@@ -40,9 +40,19 @@ class RestHostGroupViews(RestView):
         except ValueError:
             description = ""
 
+        try:
+            hosts = self.request.json_body.get('hosts', [])
+        except ValueError:
+            hosts = ""
+
         group = self.dao.host_dao.create_hostgroup(
             name=group_name,
             description=description)
+
+        for host_name in hosts:
+            host = self.dao.host_dao.get_host_by_name(name=host_name)
+            if host:
+                self.dao.host_dao.add_host_to_group(group_name, host)
 
         return Response(
             status='201 Created',
@@ -71,7 +81,7 @@ class RestHostGroupViews(RestView):
 
         group = self.dao.host_dao.get_hostgroup_by_name(name=group_name)
         if group is None:
-            return 'host-not-found'
+            return 'group-not-found'
 
         for host in group.hosts:
             host_alerts = []
