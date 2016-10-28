@@ -47,6 +47,24 @@ gulp.task('minify_js', ['concatenate_js'], function() {
     ]);
 });
 
+gulp.task('concatenate_host_js', function() {
+    pump([
+        gulp.src([
+            'argux_server/static/js/source/host.js'
+        ]),
+        concat('host.js'),
+        gulp.dest('argux_server/static/js/debug')
+    ]);
+});
+
+gulp.task('minify_host_js', ['concatenate_host_js'], function() {
+    pump([
+        gulp.src('argux_server/static/js/debug/host.js'),
+        uglify(),
+        gulp.dest('argux_server/static/js')
+    ]);
+});
+
 gulp.task('concatenate_css', function() {
     pump([
         gulp.src([
@@ -64,4 +82,4 @@ gulp.task('minify_css', ['concatenate_css'], function() { pump([
     ]);
 });
 
-gulp.task('default', ['minify_js', 'minify_css', 'minify_js_lib']);
+gulp.task('default', ['minify_js', 'minify_host_js', 'minify_css', 'minify_js_lib']);

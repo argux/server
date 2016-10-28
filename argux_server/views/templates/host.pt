@@ -5,14 +5,14 @@
 <metal:slot metal:fill-slot="head">
     <script type="text/javascript">
         var ARGUX_BASE="${request.application_url}";
-        var ARGUX_HOST_ACTION="${action}";
+        var ARGUX_ACTION="host.${action}";
         var CSRF_TOKEN="${request.session.get_csrf_token()}";
         var ARGUX_HOST="${argux_host}";
     </script>
 </metal:slot>
 
 <div metal:fill-slot="custom-js">
-    <script src="${request.static_url('argux_server:static/host.js')}"></script>
+    <script src="${request.static_url('argux_server:static/js/host.js')}"></script>
 </div>
 
 <div metal:fill-slot="content">
