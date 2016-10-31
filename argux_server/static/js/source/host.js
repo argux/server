@@ -1,5 +1,8 @@
 $(function() {
 
+    var PAGE=0;
+    var refresh_timer = null;
+
     function get_items_success_callback(json) {
         var categories = {};
         var alerts     = {};
@@ -168,12 +171,147 @@ $(function() {
         );
     }
 
+    function get_notes_success_callback(json) {
+        $('#objects').empty();
+        var last_page = (json.note_count / json.page_size)-1;
+
+        if (json.note_count > json.page_size) {
+            $('#pager').removeClass('hidden');
+            $('#pager').children('.page').remove();
+            for (i = 0; i < (json.note_count / json.page_size); ++i) {
+                if (i == json.page) {
+                    $('#pager').children('.next').before(
+                        '<li class="page disabled active"><a href="#" class="page">'+(i+1)+'</a></li>');
+                } else {
+                    $('#pager').children('.next').before(
+                        '<li class="page"><a href="#" class="page">'+(i+1)+'</a></li>');
+                }
+            }
+            if (parseInt(json.page) === 0) {
+                $('#pager').children('.previous').addClass('disabled');
+            } else {
+                $('#pager').children('.previous').removeClass('disabled');
+            }
+            if (parseInt(json.page) === last_page) {
+                $('#pager').children('.next').addClass('disabled');
+            } else {
+                $('#pager').children('.next').removeClass('disabled');
+            }
+
+            $('a.page').click(function() {
+
+                PAGE = $(this).text()-1;
+
+                if (refresh_timer) {
+                    clearTimeout(refresh_timer);
+                }
+                host.get_notes({
+                    hostname : ARGUX_HOST,
+                    page : PAGE,
+                    success : get_notes_success_callback,
+                    complete : get_notes_complete_callback
+                })
+            });
+        } else {
+            $('#pager').addClass('hidden');
+        }
+
+        // Build the panel contents.
+        $.each(json.notes, function(i, note) {
+
+            // Note timestamp is in ISO format.
+            var ts = moment(note.timestamp);
+
+
+            $('#objects').append(
+                '<div class="panel panel-default">' +
+                '<div class="panel-heading">' +
+                note.subject +
+                '</div>' +
+                '<div class="panel-body">' +
+                '<p>' +
+                note.message +
+                '</p>' +
+                '<div class="xs" data-toggle="tooltip" title="'+
+                ts.toLocaleString() +
+                '">' +
+                '<span class="small pull-right">' +
+                ts.fromNow() +
+                '</span>' +
+                '</div>' +
+                '</div>' +
+                '</div>');
+        });
+    }
+
+    function get_notes_complete_callback() {
+        refresh_timer = setTimeout(
+            host.get_notes,
+            10000,
+            {
+                hostname : ARGUX_HOST,
+                page : PAGE,
+                success : get_notes_success_callback,
+                complete : get_notes_complete_callback
+            }
+        );
+    }
+
     if (ARGUX_ACTION === "host.metrics") {
         host.get_host_items({
             hostname : ARGUX_HOST,
+            page : PAGE,
             success : get_items_success_callback,
             complete : get_items_complete_callback
         });
     }
+    if (ARGUX_ACTION === "host.notes") {
+        $('#notes-form').submit(function(event) {
+            event.preventDefault();
+
+            var subject = $('#note-subject').val();
+            var message = $('#note-body').val();
+
+            if (( subject !== "") &&
+                ( message !== "")) {
+                
+                host.create_note({
+                    hostname : ARGUX_HOST,
+                    message : message,
+                    subject : subject,
+                    error: function(json) {
+                        $('#alerts').empty();
+                        $('#alerts').append(
+                            '<div class="alert alert-danger alert-dismissible">'+
+                            '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>'+
+                            '<strong>Problem:</strong> Creating new Note failed.'+
+                            '</div>');
+                    },
+                    complete: function(json) {
+                        $('#new-note-modal').modal('hide');
+                    }
+                });
+            }
+        });
+        host.get_notes({
+            hostname : ARGUX_HOST,
+            success : get_notes_success_callback,
+            complete : get_notes_complete_callback
+        })
+    }
+
+
+    // Show/hide details below host header.
+    $("#host_detail_btn").click(function(e) {
+        var span = $('#host_detail_btn > span');
+        $('#host_detail').toggleClass('hidden');
+        if ($('#host_detail').is('.hidden')) {
+            span.addClass('glyphicon-chevron-up');
+            span.removeClass('glyphicon-chevron-down');
+        } else {
+            span.addClass('glyphicon-chevron-down');
+            span.removeClass('glyphicon-chevron-up');
+        }
+    });
 });
 

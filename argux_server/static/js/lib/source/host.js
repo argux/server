@@ -133,5 +133,45 @@ host = {
             error : args.error,
             complete : args.complete
         });
+    },
+    get_notes: function(args) {
+        if (args.hostname === undefined) {
+            throw "Hostname argument missing";
+        }
+        if (args.page=== undefined) {
+            args.page = 0;
+        }
+        rest.call({
+            url : ARGUX_BASE+'/rest/1.0/note?host='+args.hostname+'&page='+args.page,
+            success : args.success,
+            error : args.error,
+            complete : args.complete
+        });
+    },
+    create_note: function(args) {
+        if (args.hostname === undefined) {
+            throw "Hostname argument missing";
+        }
+        if (args.message === undefined) {
+            throw "Message argument missing";
+        }
+        if (args.subject === undefined) {
+            throw "Subject argument missing";
+        }
+
+        data = {
+            "host": args.hostname,
+            "message" : args.message,
+            "subject" : args.subject
+        };
+
+        rest.call({
+            url : ARGUX_BASE+'/rest/1.0/note',
+            type : rest.CallType.CREATE,
+            data : data,
+            success : args.success,
+            error : args.error,
+            complete : args.complete
+        });
     }
 };

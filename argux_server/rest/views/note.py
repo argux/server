@@ -94,7 +94,11 @@ class RestNoteViews(RestView):
         if host is None:
             raise ValueError("Host does not exist.")
 
-        d_notes = self.dao.note_dao.get_notes_for_host(host)
+        page = self.request.params.get('page', 0)
+        pagesize = self.request.params.get('pagesize', 10)
+
+        d_notes = self.dao.note_dao.get_notes_for_host(host, page=page, pagesize=pagesize)
+        note_count = self.dao.note_dao.get_note_count_for_host(host)
 
         notes = []
 
@@ -108,7 +112,10 @@ class RestNoteViews(RestView):
                 })
 
         return {
-            'host': host_name,
-            'notes': notes,
+            'host' : host_name,
+            'notes' : notes,
+            'note_count' : note_count,
+            'page' : page,
+            'page_size' : page_size,
             'active_alerts': 0
         }

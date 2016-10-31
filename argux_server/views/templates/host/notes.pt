@@ -3,33 +3,35 @@
     class="host-details col-md-8"
     id="details">
     <nav>
-      <ul class="pagination">
-        <li>
-          <a href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-        <li><a href="#">1</a></li>
-        <li>
-          <a href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
-      <div class="pull-right">
-          <div class="btn-toolbar notes-toolbar">
-            <div class="btn-group">
-                <button type="button"
-                        class="btn btn-default btn-sm"
-                        data-target=".bs-example-modal-lg"
-                        data-toggle="modal">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </div>
+      <div class="row">
+          <ul class="pagination hidden" id="pager">
+            <li class="previous">
+              <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+            <li class="page"><a href="#">1</a></li>
+            <li class="next">
+              <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+              </a>
+            </li>
+          </ul>
+          <div class="pull-right">
+              <div class="btn-toolbar notes-toolbar">
+                <div class="btn-group">
+                    <button type="button"
+                            class="btn btn-default btn-sm"
+                            data-target=".bs-example-modal-lg"
+                            data-toggle="modal">
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </div>
+              </div>
           </div>
       </div>
     </nav>
-    <div id="items">
+    <div id="objects">
     </div>
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" id="new-note-modal">
         <div class="modal-dialog modal-lg">
