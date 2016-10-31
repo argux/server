@@ -26,25 +26,9 @@ class RestNoteViews(RestView):
     @view_config(
         route_name='rest_note_1',
         require_csrf=True,
-        permission='view'
+        permission='view',
+        method='POST'
     )
-    def note_1_view(self):
-        """Return notes or create note."""
-        # Fallback response
-        ret = Response(
-            status='400 Bad Request',
-            content_type='application/json',
-            charset='UTF-8',
-            body='{"error": "400 Bad Request", "message": "dunno"}')
-
-        if self.request.method == "GET":
-            ret = self.note_1_view_read()
-
-        if self.request.method == "POST":
-            ret = self.note_1_view_create()
-
-        return ret
-
     def note_1_view_create(self):
         """Create new note."""
         dao = self.dao
@@ -81,41 +65,3 @@ class RestNoteViews(RestView):
                 {
                     'subject': note.subject
                 }))
-
-
-
-    def note_1_view_read(self):
-        """Return list of notes for host"""
-        host_name = self.request.params.get('host', None)
-        if host_name is None:
-            raise ValueError("Hostname not provided.")
-
-        host = self.dao.host_dao.get_host_by_name(host_name)
-        if host is None:
-            raise ValueError("Host does not exist.")
-
-        page = self.request.params.get('page', 0)
-        pagesize = self.request.params.get('pagesize', 10)
-
-        d_notes = self.dao.note_dao.get_notes_for_host(host, page=page, pagesize=pagesize)
-        note_count = self.dao.note_dao.get_note_count_for_host(host)
-
-        notes = []
-
-        if d_notes:
-            for d_note in d_notes:
-                notes.append({
-                    "subject": d_note.subject,
-                    "message": d_note.message,
-                    "timestamp": d_note\
-                        .timestamp.strftime("%Y-%m-%dT%H:%M:%S")
-                })
-
-        return {
-            'host' : host_name,
-            'notes' : notes,
-            'note_count' : note_count,
-            'page' : page,
-            'page_size' : page_size,
-            'active_alerts': 0
-        }

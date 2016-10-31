@@ -179,16 +179,20 @@ class RestHostViews(RestView):
 
     def host_1_view_get(self, host_name):
         """Return host details."""
-        host_get_details = self.request.params.get('details', 'false')
+        host_get_notes = self.request.params.get('notes', 'false')
         host_get_items = self.request.params.get('items', 'false')
         host_get_alerts = self.request.params.get('alerts', 'false')
+
+        host_note_page = self.request.params.get('page', 0)
+        host_note_pagesize = self.request.params.get('pagesize', 10)
 
         host = self.dao.host_dao.get_host_by_name(host_name)
 
         items = []
         details = []
         active_alerts = []
-        active_alert_count = 0
+        host_notes = []
+
         if host is None:
             return Response(
                 status="404 Not Found",
@@ -197,27 +201,39 @@ class RestHostViews(RestView):
                 body='{"error":"NOT FOUND"}')
 
 
+
         if host_get_alerts == 'true':
             active_alerts = self.__get_active_alerts(host)
-            active_alert_count = len(active_alerts)
 
         if host_get_items == 'true':
             items = self._get_items(host)
             if host_get_alerts != 'true':
                 active_alert_count = self.dao.get_active_alert_count(host)
 
-        if host_get_details == 'true':
-            details = []
-            if (host_get_alerts != 'true'):
-                active_alert_count = self.dao.get_active_alert_count(host)
-
+        if host_get_notes == 'true':
+            notes = self.dao.note_dao.get_notes_for_host(
+                    host,
+                    page=host_note_page,
+                    pagesize=host_note_pagesize)
+            if notes:
+                for note in notes:
+                    host_notes.append({
+                        "subject": note.subject,
+                        "message": note.message,
+                        "timestamp": note\
+                            .timestamp.strftime("%Y-%m-%dT%H:%M:%S")
+                    })
 
         return {
             'name' : host.name,
-            'items': items,
-            'details': details,
-            'alerts': active_alerts,
-            'active_alerts': active_alert_count,
+            'alerts': {
+                'active_count': self.dao.get_active_alert_count(host),
+                'active': active_alerts
+            },
+            'notes' : host_notes,
+            'notes_count': self.dao.note_dao\
+                .get_note_count_for_host(host),
+            'items': items
         }
 
     def __get_active_alerts(self, host):

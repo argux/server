@@ -3,13 +3,36 @@ $(function() {
     var PAGE=0;
     var refresh_timer = null;
 
-    function get_items_success_callback(json) {
+    function get_host_complete_callback() {
+        refresh_timer = setTimeout(
+            host.get_host_items,
+            10000,
+            {
+                hostname : ARGUX_HOST,
+                page : PAGE,
+                success : get_host_success_callback,
+                complete : get_host_complete_callback
+            }
+        );
+    }
+
+    function get_host_success_callback(json) {
+        var object_table = $('#objects');
+        object_table.empty();
+
+        if (ARGUX_ACTION === 'host.metrics') {
+            set_items(json);
+        }
+        if (ARGUX_ACTION === 'host.notes') {
+            set_notes(json);
+        }
+
+    }
+
+    function set_items(json) {
         var categories = {};
         var alerts     = {};
         var collapsed  = {};
-        var item_table = $('#objects');
-        item_table.empty();
-
         // Build the panel contents.
         json.items.sort(function(a,b) {
             if (a.name < b.name) return -1;
@@ -116,9 +139,6 @@ $(function() {
             collapsed[id] = $(this).hasClass('in');
         });
 
-        // Remove all panels and build the page again.
-        $('#objects').empty();
-
         for (var key in categories) {
             if (categories.hasOwnProperty(key)) {
                 $('#objects').append(
@@ -159,20 +179,7 @@ $(function() {
         }
     }
 
-    function get_items_complete_callback() {
-        setTimeout(
-            host.get_host_items,
-            10000,
-            {
-                hostname : ARGUX_HOST,
-                success : get_items_success_callback,
-                complete : get_items_complete_callback
-            }
-        );
-    }
-
-    function get_notes_success_callback(json) {
-        $('#objects').empty();
+    function set_notes(json) {
         var last_page = (json.note_count / json.page_size)-1;
 
         if (json.note_count > json.page_size) {
@@ -244,25 +251,13 @@ $(function() {
         });
     }
 
-    function get_notes_complete_callback() {
-        refresh_timer = setTimeout(
-            host.get_notes,
-            10000,
-            {
-                hostname : ARGUX_HOST,
-                page : PAGE,
-                success : get_notes_success_callback,
-                complete : get_notes_complete_callback
-            }
-        );
-    }
-
     if (ARGUX_ACTION === "host.metrics") {
-        host.get_host_items({
+        host.get_host({
             hostname : ARGUX_HOST,
+            items : 'true',
             page : PAGE,
-            success : get_items_success_callback,
-            complete : get_items_complete_callback
+            success : get_host_success_callback,
+            complete : get_host_complete_callback
         });
     }
     if (ARGUX_ACTION === "host.notes") {
@@ -293,10 +288,12 @@ $(function() {
                 });
             }
         });
-        host.get_notes({
+        host.get_host({
             hostname : ARGUX_HOST,
-            success : get_notes_success_callback,
-            complete : get_notes_complete_callback
+            notes : 'true',
+            page : PAGE,
+            success : get_host_success_callback,
+            complete : get_host_complete_callback
         })
     }
 

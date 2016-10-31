@@ -265,23 +265,30 @@ host = {
             complete : args.complete
         });
     },
-    get_host_items: function(args) {
+    get_host: function(args) {
         if (args.hostname === undefined) {
             throw "Hostname argument missing";
         }
-        rest.call({
-            url : ARGUX_BASE+'/rest/1.0/host/'+args.hostname+'?alerts=false&items=true',
-            success : args.success,
-            error : args.error,
-            complete : args.complete
-        });
-    },
-    get_host_alerts: function(args) {
-        if (args.hostname === undefined) {
-            throw "Hostname argument missing";
+        if (args.items === undefined) {
+            args.items = 'false';
+        }
+        if (args.alerts === undefined) {
+            args.alerts = 'false';
+        }
+        if (args.notes === undefined) {
+            args.notes = 'false';
+        }
+        if (args.page=== undefined) {
+            args.page = 0;
         }
         rest.call({
-            url : ARGUX_BASE+'/rest/1.0/host/'+args.hostname+'?alerts=true&items=false',
+            url : ARGUX_BASE+
+                    '/rest/1.0/host/'+
+                    args.hostname+
+                    '?alerts='+args.alerts+
+                    '&items='+args.items+
+                    '&notes='+args.notes+
+                    '&page='+args.page,
             success : args.success,
             error : args.error,
             complete : args.complete
@@ -387,20 +394,6 @@ host = {
         }
         rest.call({
             url : ARGUX_BASE+'/rest/1.0/hostgroup/'+args.group+'/alerts',
-            success : args.success,
-            error : args.error,
-            complete : args.complete
-        });
-    },
-    get_notes: function(args) {
-        if (args.hostname === undefined) {
-            throw "Hostname argument missing";
-        }
-        if (args.page=== undefined) {
-            args.page = 0;
-        }
-        rest.call({
-            url : ARGUX_BASE+'/rest/1.0/note?host='+args.hostname+'&page='+args.page,
             success : args.success,
             error : args.error,
             complete : args.complete
