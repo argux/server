@@ -27,7 +27,7 @@ class RestNoteViews(RestView):
         route_name='rest_note_1',
         require_csrf=True,
         permission='view',
-        method='POST'
+        request_method='POST'
     )
     def note_1_view_create(self):
         """Create new note."""
