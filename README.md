@@ -37,7 +37,7 @@ Argux depends the following software
  - bootstrap 3.3.7 (http://getbootstrap.com)
  - bootstrap-datetimepicker (https://github.com/Eonasdan/bootstrap-datetimepicker)
  - chartjs (http://chartjs.org) 2.3.0
- - bcrypt 2.0.0
+ - bcrypt 3.1.1
 
 ## Development
 

@@ -20,8 +20,8 @@ REQUIRES = [
     'zope.sqlalchemy',
     'waitress',
     'requests == 2.9.1',
-    'python-dateutil == 2.4',
-    'bcrypt == 2.0',
+    'python-dateutil == 2.5.3',
+    'bcrypt == 3.1.1',
 ]
 
 TEST_REQUIRES = [
