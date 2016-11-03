@@ -10,6 +10,7 @@ from pyramid.response import Response
 from datetime import datetime
 
 import json
+import html
 
 from . import RestView
 
@@ -46,6 +47,11 @@ class RestNoteViews(RestView):
             raise ValueError("Subject is missing.")
         if host_name is None:
             raise ValueError("Hostname is missing.")
+
+        # Escape HTML
+        msg = html.escape(msg)
+        subject = html.escape(subject)
+        host_name = html.escape(host_name)
 
         host = dao.host_dao.get_host_by_name(host_name)
 

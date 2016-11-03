@@ -7,6 +7,8 @@ from pyramid.view import (
 
 from pyramid.response import Response
 
+import html
+
 from . import RestView
 
 from argux_server.util import (
@@ -44,6 +46,10 @@ class RestHostGroupViews(RestView):
             hosts = self.request.json_body.get('hosts', [])
         except ValueError:
             hosts = ""
+
+        # Escape HTML
+        group_name = html.escape(group_name)
+        description = html.escape(description)
 
         group = self.dao.host_dao.create_hostgroup(
             name=group_name,

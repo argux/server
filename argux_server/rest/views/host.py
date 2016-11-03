@@ -8,6 +8,7 @@ from pyramid.view import (
 import transaction
 
 import json
+import html
 
 from pyramid.response import Response
 
@@ -56,38 +57,23 @@ class RestHostViews(RestView):
     @view_config(
         route_name='rest_host_1',
         require_csrf=True,
-        permission='view'
+        permission='view',
+        request_method='POST'
     )
-    def host_1_view(self):
-        """Create host or return host.
-
-        POST creates a host.
-        GET  returns Host details.
+    def host_1_view_create(self):
+        """Create host.
         """
         host_name = self.request.matchdict['host']
+        description = None
+        addresses = []
+        groups = []
+
 
         ret = Response(
             status='400 Bad Request',
             content_type='application/json',
             charset='UTF-8',
             body='{"error": "400 Bad Request", "message": "dunno"}')
-
-        if self.request.method == "DELETE":
-            ret = self.host_1_view_delete(host_name)
-
-        if self.request.method == "POST":
-            ret = self.host_1_view_post(host_name)
-
-        if self.request.method == "GET":
-            ret = self.host_1_view_get(host_name)
-
-        return ret
-
-    def host_1_view_post(self, host_name):
-        """Create new host."""
-        description = None
-        addresses = []
-        groups = []
 
         if len(self.request.body) > 0:
             try:
@@ -127,6 +113,9 @@ class RestHostViews(RestView):
                         'conflict': 'Does not exists'
                     }))
 
+        # Escape HTML
+        host_name = html.escape(host_name)
+        description = html.escape(description)
 
         host = self.dao.host_dao.create_host(
             name=host_name,
@@ -135,12 +124,15 @@ class RestHostViews(RestView):
         for address in addresses:
             address_description = ""
             if 'description' in address:
-                address_description = address['description']
+                # Escape HTML
+                address_description = html.escape(address['description'])
             if 'address' in address:
+                # Escape HTML
+                address_name = html.escape(address['address'])
                 try:
                     self.dao.host_dao.add_address(
                         host,
-                        address['address'],
+                        address_name,
                         address_description)
                 except Exception as e:
                     transaction.abort()
@@ -167,8 +159,16 @@ class RestHostViews(RestView):
             status='201 Created',
             content_type='application/json')
 
-    def host_1_view_delete(self, host_name):
-        """Delete a host."""
+    @view_config(
+        route_name='rest_host_1',
+        require_csrf=True,
+        permission='view',
+        request_method='DELETE'
+    )
+    def host_1_view_delete(self):
+        """Delete host.
+        """
+        host_name = self.request.matchdict['host']
 
         self.dao.host_dao.delete_host(
             name=host_name)
@@ -177,8 +177,17 @@ class RestHostViews(RestView):
             status='200 Ok',
             content_type='application/json')
 
-    def host_1_view_get(self, host_name):
-        """Return host details."""
+    @view_config(
+        route_name='rest_host_1',
+        require_csrf=True,
+        permission='view',
+        request_method='GET'
+    )
+    def host_1_view_read(self):
+        """Read host details.
+        """
+        host_name = self.request.matchdict['host']
+
         host_get_notes = self.request.params.get('notes', 'false')
         host_get_items = self.request.params.get('items', 'false')
         host_get_alerts = self.request.params.get('alerts', 'false')
