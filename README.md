@@ -32,6 +32,7 @@
 # Dependencies
 Argux depends the following software
 
+ - python 3.4
  - pyramid 1.7.3
  - bootstrap 3.3.7 (http://getbootstrap.com)
  - bootstrap-datetimepicker (https://github.com/Eonasdan/bootstrap-datetimepicker)
