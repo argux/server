@@ -105,6 +105,30 @@ def main():
         config['app:main']['sqlalchemy.url'] = \
             'postgresql+psycopg2://'+db_user+':'+db_password+'@'+db_server+'/'+db_name
 
+    config['loggers']['keys'] = 'root, requests, argux_server'
+    config['handlers']['keys'] = 'console'
+    config['formatters']['keys'] = 'generic'
+
+    config['logger_root']['level'] = 'INFO'
+    config['logger_root']['handers'] = 'console'
+
+    config['logger_requests']['level'] = 'WARN'
+    config['logger_requests']['handlers'] = ''
+    config['logger_requests']['qualname'] = 'requests'
+
+    config['logger_argux_server']['level'] = 'WARN'
+    config['logger_argux_server']['handlers'] = ''
+    config['logger_argux_server']['qualname'] = 'argux_server'
+
+    config['handler_console']['class'] = 'StreamHandler'
+    config['handler_console']['args'] = '(sys.stderr,)'
+    config['handler_console']['level'] = 'NOTSET'
+    config['handler_console']['formatter'] = 'generic'
+
+    config['formatter_generic']\
+        ['format'] = \
+        '%(asctime)s %(levelname)-5.5s [%(name)s][%(threadName)s] %(message)s'
+
     with open(filename, 'w') as configfile:
         config.write(configfile)
 
