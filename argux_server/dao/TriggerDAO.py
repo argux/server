@@ -1,5 +1,7 @@
 """Data Access Object class for handling Triggers."""
 
+import logging
+
 from argux_server.models import (
     TriggerSeverity
 )
@@ -18,6 +20,8 @@ class TriggerDAO(BaseDAO):
 
     Data Access Object for handling Triggers.
     """
+
+    logger = logging.getLogger(__name__)
 
     def create_trigger(self, properties):
         """Create trigger."""
@@ -78,29 +82,32 @@ class TriggerDAO(BaseDAO):
         handler = trigger.trigger_handlers.get(i[0], None)
 
         if handler:
-            alert = self.db_session.query(alert_klass)\
-                .filter(alert_klass.trigger_id == trigger.id)\
-                .filter(alert_klass.end_time.is_(None)).first()
+            try:
+                alert = self.db_session.query(alert_klass)\
+                    .filter(alert_klass.trigger_id == trigger.id)\
+                    .filter(alert_klass.end_time.is_(None)).first()
 
-            # Execute trigger-handler
-            (is_active, time) = handler(
-                trigger,
-                self.db_session,
-                i[1],
-                i[2],
-                i[3])
+                # Execute trigger-handler
+                (is_active, time) = handler(
+                    trigger,
+                    self.db_session,
+                    i[1],
+                    i[2],
+                    i[3])
 
-            if is_active:
-                if not alert:
-                    trigger.active_alert = True
-                    alert = alert_klass(trigger_id=trigger.id,
-                                        start_time=time,
-                                        end_time=None)
-                    self.db_session.add(alert)
-            else:
-                if alert:
-                    trigger.active_alert = False
-                    alert.end_time = time
+                if is_active:
+                    if not alert:
+                        trigger.active_alert = True
+                        alert = alert_klass(trigger_id=trigger.id,
+                                            start_time=time,
+                                            end_time=None)
+                        self.db_session.add(alert)
+                else:
+                    if alert:
+                        trigger.active_alert = False
+                        alert.end_time = time
+            except ValueError as e:
+                self.logger.debug(str(e))
         else:
             print("Handler not found")
             return False

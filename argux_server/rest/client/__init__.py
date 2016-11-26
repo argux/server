@@ -3,6 +3,8 @@
 import json
 import requests
 
+import logging
+
 from requests.exceptions import (
     ConnectionError,
     HTTPError
@@ -19,6 +21,8 @@ class AbstractRESTClient:
 
     Class used to interact with ArguxServer
     """
+
+    logger = logging.getLogger(__name__)
 
     def __init__(self, base_url, username, secret):
         """Initialise RESTClient.
@@ -214,6 +218,6 @@ class RESTClient(AbstractRESTClient):
         except ConnectionError as err:
             raise err
         except HTTPError as err:
-            raise err
+            self.logger.error("HttpError:"+ str(err))
 
         return response

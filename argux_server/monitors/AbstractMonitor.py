@@ -1,6 +1,7 @@
 """ICMPMonitor module."""
 
 import time
+import logging
 
 from threading import (
     Thread
@@ -22,6 +23,7 @@ class AbstractMonitor(Thread):
 
     Abstract Monitor class for all monitor threads.
     """
+    logger = logging.getLogger(__name__)
 
     monitor_type = None
 
@@ -59,9 +61,9 @@ class AbstractMonitor(Thread):
                 if err.response.status_code == 403:
                     self.client.login()
                 else:
-                    print("Monitor Error: "+str(e))
+                    self.logger.error("HttpError: "+str(e))
             except Exception as e:
-                print("Monitor Error: "+str(e))
+                self.logger.error("Monitor Error: "+str(e))
 
             try:
                 time.sleep(60)

@@ -32,7 +32,10 @@ class TriggerMonitor(AbstractMonitor):
         Ignores the 'interval' option at the moment.
         Trigger checks are executed at 60second intervals.
         """
-        self.client.evaluate_triggers()
+        try:
+            self.client.evaluate_triggers()
+        except HTTPError as err:
+            pass
 
     @staticmethod
     def validate_options(options):

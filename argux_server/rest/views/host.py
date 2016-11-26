@@ -115,7 +115,8 @@ class RestHostViews(RestView):
 
         # Escape HTML
         host_name = html.escape(host_name)
-        description = html.escape(description)
+        if description:
+            description = html.escape(description)
 
         host = self.dao.host_dao.create_host(
             name=host_name,

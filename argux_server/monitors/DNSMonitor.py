@@ -1,9 +1,11 @@
 """DNSMonitor module."""
 
 import time
+import logging
 
 import re
 import subprocess
+from subprocess import CalledProcessError
 
 import shutil
 import os
@@ -18,6 +20,9 @@ def parse_dig(output):
 
     (python3.3)[stephan@hermes net-monitor]$ dig @server +noall +answer -t A example.com
     """
+
+    logger = logging.getLogger(__name__)
+
     ret_val = []
 
     for row in output.split('\n'):
@@ -78,18 +83,21 @@ class DNSMonitor(ExternalMonitor):
             monitor['host'],
             monitor['address'])
 
+        if (shutil.which('dig') == None):
+            self.logger.warn("dig command could not be found, skipping...")
+            return
+
         for domain in domains:
             if domain['record_a']:
-                DNSMonitor.check_dns(client, monitor, 'A', domain['domain'])
+                self.check_dns(client, monitor, 'A', domain['domain'])
             if domain['record_aaaa']:
-                DNSMonitor.check_dns(client, monitor, 'AAAA', domain['domain'])
+                self.check_dns(client, monitor, 'AAAA', domain['domain'])
             if domain['record_mx']:
-                DNSMonitor.check_dns(client, monitor, 'MX', domain['domain'])
+                self.check_dns(client, monitor, 'MX', domain['domain'])
 
         return
 
-    @staticmethod
-    def check_dns(client, monitor, _type, domain):
+    def check_dns(self, client, monitor, _type, domain):
         """
         Check DNS record
         """
@@ -108,8 +116,10 @@ class DNSMonitor(ExternalMonitor):
             output = subprocess.check_output(
                 dig_cmd, shell=True, universal_newlines=True)
             values = PARSE(output)
+        except CalledProcessError as err:
+            self.logger.warn('warning: '+str(err))
         except Exception as err:
-            print('error: '+str(err))
+            self.logger.error('error: '+str(err))
 
         for index, value in enumerate(
                 sorted(
